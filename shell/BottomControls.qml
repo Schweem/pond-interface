@@ -240,7 +240,9 @@ Card {
   }
 
   readonly property var icons: [
-      { icon: "wifi.svg", width: 13.9972, height: 10.2141 },
+      { icon: Wifi.State.statusIcon,
+        width: Wifi.State.statusIcon === "wifi.svg" ? 13.9972 : 14,
+        height: Wifi.State.statusIcon === "wifi.svg" ? 10.2141 : 14 },
       { icon: "sound.svg", width: 14, height: 14 },
       { icon: "settings.svg", width: 13.6667, height: 11.9167 },
       { icon: "", width: 10.1572, height: 12.3327 }

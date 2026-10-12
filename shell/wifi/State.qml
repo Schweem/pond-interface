@@ -14,6 +14,18 @@ Singleton {
   readonly property bool enabled: Networking.wifiEnabled
   readonly property var adapters: Networking.devices.values.filter(d => d.type === DeviceType.Wifi)
   readonly property var adapter: adapters.find(d => d.connected) || adapters[0] || null
+  readonly property bool wiredConnected: Networking.devices.values.some(
+      d => d.type === DeviceType.Wired && d.connected)
+  readonly property bool wifiConnected: enabled && Networking.wifiHardwareEnabled
+      && !!adapter && adapter.connected
+  // Unknown connectivity does not mean no internet.
+  readonly property bool internetUnavailable: Networking.connectivity === NetworkConnectivity.None
+      || Networking.connectivity === NetworkConnectivity.Portal
+      || Networking.connectivity === NetworkConnectivity.Limited
+  readonly property string statusIcon: wiredConnected
+      ? (internetUnavailable ? "wifi/ethernet-no-internet.svg" : "wifi/ethernet.svg")
+      : !wifiConnected ? "wifi/disconnected.svg"
+      : internetUnavailable ? "wifi/no-internet.svg" : "wifi.svg"
   readonly property string device: adapter ? adapter.name : ""
   readonly property string connectedSsid: networks.find(n => n.connected)?.ssid || ""
   readonly property var networks: (adapter ? adapter.networks.values : [])
