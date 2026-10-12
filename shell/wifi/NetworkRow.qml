@@ -5,6 +5,7 @@ Item {
   id: root
   property var network: ({})
   property bool interactive: true
+  readonly property bool canDisconnect: !!network.connected && !network.wired
   signal rowClicked
   signal detailsRequested
   signal disconnectClicked
@@ -29,15 +30,23 @@ Item {
     }
   }
   SignalIcon {
+    visible: !root.network.wired
     x: 12; y: 12; width: 20; height: 20
     bars: Number(root.network.bars || 1)
+  }
+  Image {
+    visible: !!root.network.wired
+    x: 12; y: 12; width: 20; height: 20
+    source: Qt.resolvedUrl("../assets/wifi/ethernet.svg")
+    sourceSize: Qt.size(40, 40)
+    fillMode: Image.PreserveAspectFit
   }
   Text {
     x: 40
     anchors.verticalCenter: parent.verticalCenter
-    width: (root.network.connected ? 202 : 264) - x
+    width: (root.canDisconnect ? 202 : 264) - x
     elide: Text.ElideRight
-    text: String(root.network.ssid || "")
+    text: String(root.network.wired ? root.network.name : root.network.ssid || "")
     color: "white"
     font.family: Theme.fontFamily
     font.weight: Font.Medium
@@ -54,7 +63,7 @@ Item {
 
   Rectangle {
     id: disconnect
-    visible: !!root.network.connected
+    visible: root.canDisconnect
     x: 208
     y: 2
     width: 90

@@ -7,7 +7,7 @@ DeviceList {
   id: root
   title: "Wifi"
   viewportHeight: 306
-  devices: Wifi.State.enabled ? Wifi.State.networks : []
+  devices: Wifi.State.wiredNetworks.concat(Wifi.State.enabled ? Wifi.State.networks : [])
   headerControl: Component { Toggle {
     checked: Wifi.State.enabled
     enabled: root.interactive
@@ -17,7 +17,7 @@ DeviceList {
     required property var modelData
     width: PanelStyle.rowWidth
     network: modelData
-    interactive: root.interactive
+    interactive: root.interactive && !modelData.wired
     onDisconnectClicked: Wifi.State.disconnect()
     onDetailsRequested: {
       if (modelData.connected || modelData.known)

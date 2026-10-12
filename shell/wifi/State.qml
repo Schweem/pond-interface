@@ -14,8 +14,12 @@ Singleton {
   readonly property bool enabled: Networking.wifiEnabled
   readonly property var adapters: Networking.devices.values.filter(d => d.type === DeviceType.Wifi)
   readonly property var adapter: adapters.find(d => d.connected) || adapters[0] || null
-  readonly property bool wiredConnected: Networking.devices.values.some(
+  readonly property var connectedWiredAdapters: Networking.devices.values.filter(
       d => d.type === DeviceType.Wired && d.connected)
+  readonly property bool wiredConnected: connectedWiredAdapters.length > 0
+  readonly property var wiredNetworks: connectedWiredAdapters.map(d => ({
+      name: d.network?.name || "Ethernet", device: d.name, wired: true, connected: true
+  }))
   readonly property bool wifiConnected: enabled && Networking.wifiHardwareEnabled
       && !!adapter && adapter.connected
   // Unknown connectivity does not mean no internet.
@@ -27,6 +31,7 @@ Singleton {
       : !wifiConnected ? "wifi/disconnected.svg"
       : internetUnavailable ? "wifi/no-internet.svg" : "wifi.svg"
   readonly property string device: adapter ? adapter.name : ""
+  readonly property string rateDevice: wiredConnected ? connectedWiredAdapters[0].name : device
   readonly property string connectedSsid: networks.find(n => n.connected)?.ssid || ""
   readonly property var networks: (adapter ? adapter.networks.values : [])
       .filter(n => n.connected || n.signalStrength > 0)
@@ -46,7 +51,7 @@ Singleton {
   property bool panelOpen: false
   property var rateConsumers: []
   readonly property bool ratesRequested: panelOpen || rateConsumers.length > 0
-  readonly property bool samplingRates: ratesRequested && device !== ""
+  readonly property bool samplingRates: ratesRequested && rateDevice !== ""
   property string linkSpeed: "—"
   property string band: "—"
   property string ipv4: "—"
@@ -252,7 +257,7 @@ Singleton {
     property double previousTime: 0
     property string rate: "0b"
     path: root.samplingRates
-        ? "/sys/class/net/" + root.device + "/statistics/" + counterName : ""
+        ? "/sys/class/net/" + root.rateDevice + "/statistics/" + counterName : ""
     printErrors: false
     onPathChanged: { previous = -1; previousTime = 0; rate = "0b"; }
     onLoaded: {
