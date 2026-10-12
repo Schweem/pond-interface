@@ -37,6 +37,8 @@ Card {
   property bool soundButtonHovered: false
   readonly property bool wifiHovered: wifiButtonHovered
       || (wifiHoverRetained && panelHover.hovered)
+  readonly property bool noInternetHovered: wifiHovered && Wifi.State.internetUnavailable
+      && (Wifi.State.wifiConnected || Wifi.State.wiredConnected)
   // The compact slider belongs only to the sound control. Keep it open while
   // the pointer moves onto the revealed slider, but not merely because the
   // pointer remains somewhere else inside the settings card.
@@ -89,7 +91,8 @@ Card {
     }
     revealExit.stop();
     hoverHeightRetained = true;
-    const outgoingOpacity = requestedReveal === "wifi" ? compactSoundSlider.opacity : wifiMetrics.opacity;
+    const outgoingOpacity = requestedReveal === "wifi" ? compactSoundSlider.opacity
+        : Math.max(wifiMetrics.opacity, noInternetLabel.opacity);
     if (outgoingOpacity > 0.001) {
       displayedReveal = "";
       revealEnter.restart();
@@ -178,13 +181,29 @@ Card {
     }
   }
 
+  Text {
+    id: noInternetLabel
+    anchors.horizontalCenter: parent.horizontalCenter
+    y: 14.5 + noInternetMetrics.capitalHeight - baselineOffset
+    text: "No internet"
+    color: "white"
+    font.family: Theme.fontFamily
+    font.weight: Font.Medium
+    font.pixelSize: 13
+    opacity: root.noInternetHovered && root.wifiContentVisible
+        && root.collapseProgress < 0.22 ? 0.6 : 0
+    visible: opacity > 0
+    FontMetrics { id: noInternetMetrics; font: noInternetLabel.font }
+  }
+
   Row {
     id: wifiMetrics
     anchors.horizontalCenter: parent.horizontalCenter
     y: 12
     height: 19
     spacing: 8
-    opacity: root.wifiContentVisible && root.collapseProgress < 0.22 ? 1 : 0
+    opacity: root.wifiContentVisible && !root.noInternetHovered
+        && root.collapseProgress < 0.22 ? 1 : 0
     visible: opacity > 0
 
 
