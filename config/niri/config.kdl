@@ -1,7 +1,7 @@
-// Shell integration
+// Shell integration (don't modify these)
 include "./shell/config.kdl"
 
-// Personal settings
+// Personal settings (modify these)
 include "./cfg/animation.kdl"
 include "./cfg/autostart.kdl"
 include "./cfg/keybinds.kdl"

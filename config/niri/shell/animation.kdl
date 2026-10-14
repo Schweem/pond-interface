@@ -1,3 +1,4 @@
+// Don't modify this file. Changes will be lost on updates. Modify ~/.config/niri/cfg/animation.kdl to override these defaults.
 animations {
     workspace-switch {
         spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001

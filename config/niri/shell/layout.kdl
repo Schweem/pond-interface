@@ -1,3 +1,4 @@
+// Don't modify this file. Changes will be lost on updates. Modify ~/.config/niri/cfg/layout.kdl to override these defaults.
 layout {
     gaps 10 // Match the modular sidebar's desktop gutter
     center-focused-column "never" // Don’t auto-center focused column
