@@ -8,12 +8,21 @@ import "../settings" as Settings
 Singleton {
   id: root
   property string status: ""
+  property string pending: ""
 
   function start() {
     if (status !== "available") return;
+    pending = "";
     Settings.State.close();
-    Quickshell.execDetached(["sh", "-c",
-      'echo updating > "$1"; pm -u && echo complete > "$1" || echo failed > "$1"', "sh", statusFile.path]);
+    Quickshell.execDetached(["sh", "-c", 'rm -f "$1.after"; echo updating > "$1"; '
+        + 'pm -u && echo complete > "$1" || echo failed > "$1"; '
+        + 'action=$(cat "$1.after" 2>/dev/null) && [ -n "$action" ] && python3 "$2" "$action"',
+      "sh", statusFile.path, Quickshell.shellDir + "/settings/session.py"]);
+  }
+
+  function after(action) {
+    pending = pending === action ? "" : action;
+    afterFile.setText(pending);
   }
 
   Timer {
@@ -59,5 +68,12 @@ Singleton {
         Installs.State.update("system-update", "Update failed", "failed", -1, "");
       }
     }
+  }
+
+  FileView {
+    id: afterFile
+    path: statusFile.path + ".after"
+    printErrors: false
+    onLoaded: root.pending = text().trim()
   }
 }

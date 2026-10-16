@@ -68,6 +68,7 @@ PanelWindow {
     },
     {
       slot: 6, y: 274, action: "reboot", name: "Restart",
+      updatingName: "Restart after update", pendingName: "Restarting after update",
       source: Qt.resolvedUrl("../assets/settings/restart.svg"),
       iconWidth: 32, iconHeight: 32,
       hover: "#CEF058", control: "#1B322D", labelWidth: 99,
@@ -75,6 +76,7 @@ PanelWindow {
     },
     {
       slot: 7, y: 411, action: "shutdown", name: "Power off",
+      updatingName: "Shutdown after update", pendingName: "Shutting down after update",
       source: Qt.resolvedUrl("../assets/settings/power.svg"),
       iconWidth: 32, iconHeight: 32,
       hover: "#FE6146", control: "#632B0F", labelWidth: 127,
@@ -184,6 +186,7 @@ PanelWindow {
 
       delegate: SessionButton {
         required property var modelData
+        readonly property bool afterUpdate: Updates.State.status === "updating" && !!modelData.updatingName
 
         x: 548
         y: modelData.y
@@ -195,12 +198,14 @@ PanelWindow {
         showStatusDot: modelData.dot
         hoverColor: modelData.hover
         hoverControlColor: modelData.control
-        label: modelData.name
+        label: !afterUpdate ? modelData.name
+            : Updates.State.pending === modelData.action ? modelData.pendingName : modelData.updatingName
         labelWidth: modelData.labelWidth
         accessibleName: modelData.name
         revealed: root.cardsOpen
             && root.revealStep >= root.revealRanks[modelData.slot]
-        onClicked: Settings.State.requestSessionAction(modelData.action)
+        onClicked: afterUpdate ? Updates.State.after(modelData.action)
+            : Settings.State.requestSessionAction(modelData.action)
       }
     }
   }
