@@ -39,8 +39,7 @@ Shell.Card {
       Text {
         x: Shell.Theme.sidebarRowHorizontalPadding
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.max(0, (indicator.visible || updateIndicator.visible
-            ? indicator.x - 8 : parent.width - x) - x)
+        width: Math.max(0, indicator.x - 8 - x)
         text: row.name
         textFormat: Text.PlainText
         elide: Text.ElideRight
@@ -52,7 +51,7 @@ Shell.Card {
       }
       Installs.Indicator {
         id: indicator
-        visible: row.jobId !== "system-update"
+        visible: row.jobId !== "system-update" || row.status !== "installing"
         x: parent.width - 32
         y: 8
         progress: row.progress
