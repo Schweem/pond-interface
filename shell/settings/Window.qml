@@ -8,6 +8,7 @@ import "information" as Information
 import "manual" as Manual
 import "system" as System
 import "../battery" as Battery
+import "../updates" as Updates
 import Quickshell
 import Quickshell.Wayland
 
@@ -202,6 +203,13 @@ PanelWindow {
         onClicked: Settings.State.requestSessionAction(modelData.action)
       }
     }
+  }
+
+  Updates.Badge {
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    anchors.bottomMargin: 15
+    visible: root.cardsOpen && status !== ""
   }
 
   Battery.ProfileSelector {

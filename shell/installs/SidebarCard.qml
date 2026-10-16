@@ -32,13 +32,13 @@ Shell.Card {
       width: root.width
       height: 32
       Accessible.role: Accessible.ListItem
-      Accessible.name: name + ": " + summary
+      Accessible.name: jobId === "system-update" ? name : name + ": " + summary
       Accessible.onPressAction: Installs.State.dismiss(jobId)
 
       Text {
         x: Shell.Theme.sidebarRowHorizontalPadding
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.max(0, indicator.x - x - 8)
+        width: Math.max(0, (indicator.visible ? indicator.x - 8 : parent.width - x) - x)
         text: row.name
         textFormat: Text.PlainText
         elide: Text.ElideRight
@@ -50,6 +50,7 @@ Shell.Card {
       }
       Installs.Indicator {
         id: indicator
+        visible: row.jobId !== "system-update"
         x: parent.width - 32
         y: 8
         progress: row.progress
