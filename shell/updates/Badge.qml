@@ -7,13 +7,14 @@ import "../settings" as Settings
 Rectangle {
   id: root
   readonly property string status: Updates.State.status
-  readonly property bool actionable: status === "available" || status === "restart"
+  readonly property bool actionable: status !== "updating"
   readonly property bool restartHovered: status === "restart" && pointer.containsMouse
   readonly property color accent: status === "complete" ? "#cef058" : "#cba6f7"
   readonly property color foreground: restartHovered ? "#3f1d68" : accent
 
   function activate() {
     if (status === "available") Updates.State.start();
+    else if (status === "complete") Updates.State.status = "";
     else if (status === "restart") Settings.State.requestSessionAction("reboot");
   }
 
@@ -79,9 +80,8 @@ Rectangle {
   MouseArea {
     id: pointer
     anchors.fill: parent
-    enabled: root.actionable
     hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
+    cursorShape: root.actionable ? Qt.PointingHandCursor : Qt.ArrowCursor
     onClicked: root.activate()
   }
 }
