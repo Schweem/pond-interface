@@ -46,6 +46,10 @@ Rectangle {
       layer.enabled: true
       layer.effect: MultiEffect { colorization: 1; colorizationColor: root.foreground }
     }
+    Updates.Indicator {
+      anchors.verticalCenter: parent.verticalCenter
+      visible: root.status === "updating"
+    }
     Text {
       id: label
       anchors.verticalCenter: parent.verticalCenter

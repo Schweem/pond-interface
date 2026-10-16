@@ -1,6 +1,7 @@
 import QtQuick
 import "." as Installs
 import ".." as Shell
+import "../updates" as Updates
 
 Shell.Card {
   id: root
@@ -38,7 +39,8 @@ Shell.Card {
       Text {
         x: Shell.Theme.sidebarRowHorizontalPadding
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.max(0, (indicator.visible ? indicator.x - 8 : parent.width - x) - x)
+        width: Math.max(0, (indicator.visible || updateIndicator.visible
+            ? indicator.x - 8 : parent.width - x) - x)
         text: row.name
         textFormat: Text.PlainText
         elide: Text.ElideRight
@@ -55,6 +57,12 @@ Shell.Card {
         y: 8
         progress: row.progress
         status: row.status
+      }
+      Updates.Indicator {
+        id: updateIndicator
+        visible: row.jobId === "system-update" && row.status === "installing"
+        x: indicator.x
+        y: indicator.y
       }
       HoverHandler {
         cursorShape: row.status === "failed" ? Qt.PointingHandCursor : Qt.ArrowCursor
