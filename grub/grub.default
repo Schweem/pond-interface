@@ -7,3 +7,4 @@ GRUB_THEME="/usr/share/grub/themes/pond/theme.txt"
 GRUB_TOP_LEVEL="/boot/vmlinuz-linux-pond"
 GRUB_DISABLE_SUBMENU=true
 GRUB_DISABLE_OS_PROBER=false
+GRUB_DISABLE_BOOTNEXT=true
