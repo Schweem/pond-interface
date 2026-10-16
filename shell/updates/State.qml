@@ -15,7 +15,7 @@ Singleton {
     pending = "";
     Settings.State.close();
     Quickshell.execDetached(["sh", "-c", 'rm -f "$1.after"; echo updating > "$1"; '
-        + 'pm -u && echo complete > "$1" || echo failed > "$1"; '
+        + 'pm -u; case $? in 0) echo complete ;; 2) echo restart ;; *) echo failed ;; esac > "$1"; '
         + 'action=$(cat "$1.after" 2>/dev/null) && [ -n "$action" ] && python3 "$2" "$action"',
       "sh", statusFile.path, Quickshell.shellDir + "/settings/session.py"]);
   }
@@ -57,13 +57,17 @@ Singleton {
     onFileChanged: reload()
     onLoaded: {
       const result = text().trim();
+      const wasUpdating = root.status === "updating";
       if (result === "updating") {
         root.status = "updating";
         Installs.State.update("system-update", "Updating", "installing", -1, "");
-      } else if (root.status === "updating" && result === "complete") {
+      } else if (result === "restart") {
+        root.status = "restart";
+        if (wasUpdating) Installs.State.update("system-update", "Update complete", "installed", -1, "");
+      } else if (wasUpdating && result === "complete") {
         root.status = "complete";
         Installs.State.update("system-update", "Update complete", "installed", -1, "");
-      } else if (root.status === "updating" && result === "failed") {
+      } else if (wasUpdating && result === "failed") {
         root.status = "available";
         Installs.State.update("system-update", "Update failed", "failed", -1, "");
       }

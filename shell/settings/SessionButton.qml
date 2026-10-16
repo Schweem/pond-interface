@@ -18,9 +18,10 @@ Item {
   property bool revealed: false
   property string accessibleName: label
   property bool labelShown: false
+  property bool highlighted: false
   signal clicked
 
-  readonly property bool hovered: pointer.containsMouse
+  readonly property bool hovered: pointer.containsMouse || highlighted
 
   implicitWidth: Settings.Style.sessionSize
   implicitHeight: Settings.Style.sessionSize
@@ -31,6 +32,15 @@ Item {
 
   onRevealedChanged: {
     if (!revealed) {
+      labelDelay.stop();
+      labelShown = false;
+    }
+  }
+
+  onHoveredChanged: {
+    if (hovered && revealed) {
+      labelDelay.restart();
+    } else {
       labelDelay.stop();
       labelShown = false;
     }
@@ -148,15 +158,6 @@ Item {
     enabled: root.revealed && root.opacity > 0.9
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
-
-    onContainsMouseChanged: {
-      if (containsMouse && root.revealed) {
-        labelDelay.restart();
-      } else {
-        labelDelay.stop();
-        root.labelShown = false;
-      }
-    }
 
     onClicked: root.clicked()
   }

@@ -196,6 +196,7 @@ PanelWindow {
         iconWidth: modelData.iconWidth
         iconHeight: modelData.iconHeight
         showStatusDot: modelData.dot
+        highlighted: modelData.action === "reboot" && updateBadge.restartHovered
         hoverColor: modelData.hover
         hoverControlColor: modelData.control
         label: !afterUpdate ? modelData.name
@@ -211,6 +212,7 @@ PanelWindow {
   }
 
   Updates.Badge {
+    id: updateBadge
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
     anchors.bottomMargin: 15
