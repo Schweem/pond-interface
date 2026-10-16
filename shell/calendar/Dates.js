@@ -21,10 +21,8 @@ function monthDays(month) {
   const year = month.getFullYear();
   const index = month.getMonth();
   const offset = (new Date(year, index, 1, 12).getDay() + 6) % 7;
-  const count = new Date(year, index + 1, 0, 12).getDate();
-  const rows = Math.ceil((offset + count) / 7);
   const days = [];
-  for (let i = 0; i < rows * 7; i++)
+  for (let i = 0; i < 42; i++)
     days.push(new Date(year, index, i - offset + 1, 12));
   return days;
 }
