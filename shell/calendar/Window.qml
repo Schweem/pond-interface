@@ -3,7 +3,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "." as Calendar
-import "../notifications" as Notifications
 import ".." as Shell
 
 PanelWindow {
@@ -13,13 +12,18 @@ PanelWindow {
   readonly property real panelTop: Shell.Theme.sidebarOuterMargin
 
   screen: bar.screen
-  visible: bar.calendarOpen
+  visible: bar.popup === "calendar"
   color: "transparent"
   anchors { left: true; right: true; top: true; bottom: true }
   WlrLayershell.layer: WlrLayer.Overlay
   WlrLayershell.namespace: "pond-calendar-" + (screen ? screen.name : "unknown")
-  WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+  WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
+
+  mask: Region {
+    intersection: Intersection.Subtract
+    regions: [root.bar.mask]
+  }
 
   onVisibleChanged: {
     if (visible) {
@@ -31,7 +35,7 @@ PanelWindow {
   MouseArea {
     anchors.fill: parent
     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
-    onClicked: root.bar.calendarOpen = false
+    onClicked: root.bar.popup = ""
   }
 
   Calendar.Card {
@@ -39,17 +43,12 @@ PanelWindow {
     x: root.panelLeft
     y: root.panelTop
     Keys.onPressed: event => {
-      if (event.key === Qt.Key_Escape) root.bar.calendarOpen = false;
+      if (event.key === Qt.Key_Escape) root.bar.popup = "";
       else if (event.key === Qt.Key_PageUp) moveMonth(-1);
       else if (event.key === Qt.Key_PageDown) moveMonth(1);
       else if (event.key === Qt.Key_Home) goToday();
       else return;
       event.accepted = true;
     }
-  }
-
-  Connections {
-    target: Notifications.State
-    function onPanelOpenChanged() { if (Notifications.State.panelOpen) root.bar.calendarOpen = false; }
   }
 }

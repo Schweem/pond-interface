@@ -15,7 +15,7 @@ import Pond.Screenshot as Screenshot
 PanelWindow {
   id: root
   required property bool expanded
-  property bool calendarOpen: false
+  property string popup: ""
   property real collapseProgress: expanded ? 0 : 1
   signal toggleRequested
   readonly property real cardWidth: Theme.lerp(Theme.sidebarCardExpandedWidth,
@@ -42,12 +42,18 @@ PanelWindow {
     dismissPanels();
     if (wasOpen) return;
     Settings.State.close();
-    calendarOpen = false;
+    popup = "";
     Notifications.State.closePanel();
     if (wasVisible) {
       pendingPanel = name;
       panelSwitchDelay.restart();
     } else panel.open();
+  }
+
+  function togglePopup(name) {
+    dismissPanels();
+    Notifications.State.closePanel();
+    popup = popup === name ? "" : name;
   }
 
   Timer {
@@ -64,9 +70,13 @@ PanelWindow {
     target: Settings.State
     function onOpening() {
       root.dismissPanels();
-      root.calendarOpen = false;
+      root.popup = "";
       Notifications.State.closePanel();
     }
+  }
+  Connections {
+    target: Notifications.State
+    function onPanelOpenChanged() { if (Notifications.State.panelOpen) root.popup = ""; }
   }
   Connections {
     target: Bluetooth.State
@@ -137,11 +147,8 @@ PanelWindow {
       id: timeCard
       width: root.cardWidth
       collapseProgress: root.collapseProgress
-      onClicked: {
-        root.dismissPanels();
-        Notifications.State.closePanel();
-        root.calendarOpen = !root.calendarOpen;
-      }
+      onClicked: root.togglePopup("calendar")
+      onBatteryClicked: root.togglePopup("battery")
     }
 
     Minimap.Map {

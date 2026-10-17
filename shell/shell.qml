@@ -2,6 +2,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "battery" as Battery
 import "calendar" as Calendar
 import "settings" as Settings
 import "settings/appearance" as Appearance
@@ -47,9 +48,11 @@ ShellRoot {
         expanded: root.expanded
         onToggleRequested: root.expanded = !root.expanded
       }
-      Notifications.ToastWindow { bar: sidebar }
+      Notifications.ToastWindow { id: toast; bar: sidebar }
       Notifications.CenterWindow { bar: sidebar }
       Calendar.Window { bar: sidebar }
+      Battery.Window { bar: sidebar }
+      Battery.Notification { bar: sidebar; above: toast }
       PanelDismissWindow { bar: sidebar }
       Settings.Window { menuScreen: modelData }
     }

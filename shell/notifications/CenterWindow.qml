@@ -54,6 +54,11 @@ PanelWindow {
       + (outputName || "unknown")
   WlrLayershell.exclusionMode: ExclusionMode.Ignore
 
+  mask: Region {
+    intersection: Intersection.Subtract
+    regions: [root.bar.mask]
+  }
+
   Behavior on reveal { Shell.Motion { duration: Notifications.Style.panelDuration } }
 
   MouseArea {
