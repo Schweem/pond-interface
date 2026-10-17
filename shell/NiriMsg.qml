@@ -335,11 +335,26 @@ Singleton {
     const iconName = entry?.icon || lower;
     const info = {
       iconName: iconName,
-      iconSource: Quickshell.iconPath(iconName, "application-x-executable")
+      iconSource: entry && !Quickshell.hasThemeIcon(iconName) && _hicolorIcon(iconName)
+          || Quickshell.iconPath(iconName, "application-x-executable")
     };
     if (entry)
       _appInfoCache[appId] = info;
     return info;
+  }
+
+  function _hicolorIcon(name) {
+    const dataHome = Quickshell.env("XDG_DATA_HOME") || Quickshell.env("HOME") + "/.local/share";
+    const dataDirs = (Quickshell.env("XDG_DATA_DIRS") || "/usr/local/share:/usr/share").split(":");
+    for (const dir of [dataHome, ...dataDirs]) {
+      for (const size of ["scalable", "512x512", "256x256", "128x128", "64x64", "48x48"]) {
+        const path = dir + "/icons/hicolor/" + size + "/apps/" + name
+            + (size === "scalable" ? ".svg" : ".png");
+        if (Quickshell.iconPath(path, true))
+          return "file://" + path;
+      }
+    }
+    return "";
   }
 
   function _wsIdxOf(wsId) {
