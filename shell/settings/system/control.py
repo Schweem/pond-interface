@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 from PyQt6.QtCore import QDateTime, QLocale, QTimeZone
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from kdl import atomic_write, set_properties
+from kdl import atomic_write, get_properties, set_properties
 
 INPUT = Path(os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config')) / 'niri/cfg/input.kdl'
 ENGLISH = QLocale('en_US')
@@ -58,12 +58,19 @@ def timezones(current):
     return sorted(groups.values(), key=lambda z: (z['minutes'], z['label']))
 
 
+def mouse():
+    values = get_properties(INPUT.read_text(), ('input', 'mouse'))
+    return {'speed': (values.get('accel-speed', 0) + 1) / 2, 'scroll': values.get('scroll-factor', 1),
+            'acceleration': values.get('accel-profile') != 'flat'}
+
+
 def status():
     ids = {item['label']: item['id'] for item in languages()}
     names = keyboard()['names']
     timezone = bytes(QTimeZone.systemTimeZoneId()).decode()
     return {'selectedLanguages': [ids.get(name, name) for name in names], 'languageNames': names,
-            'timezone': timezone, 'timezoneLabel': zone(timezone, QDateTime.currentDateTimeUtc())['label']}
+            'timezone': timezone, 'timezoneLabel': zone(timezone, QDateTime.currentDateTimeUtc())['label'],
+            'mouse': mouse()}
 
 
 def load():
@@ -109,10 +116,21 @@ def set_timezone(identifier):
     return status()
 
 
+def set_mouse(speed, scroll, acceleration):
+    text = INPUT.read_text()
+    for device in ('mouse', 'touchpad'):
+        text = set_properties(text, ('input', device), {
+            'accel-speed': round(float(speed) * 2 - 1, 2), 'scroll-factor': round(max(float(scroll), .1), 2),
+            'accel-profile': 'adaptive' if acceleration == 'true' else 'flat'})
+    atomic_write(INPUT, text)
+    run('niri', 'msg', 'action', 'load-config-file')
+    return status()
+
+
 if __name__ == '__main__':
     try:
         action, *args = sys.argv[1:]
-        print(json.dumps({'load': load, 'keyboard': toggle_language, 'timezone': set_timezone}[action](*args)))
+        print(json.dumps({'load': load, 'keyboard': toggle_language, 'timezone': set_timezone, 'mouse': set_mouse}[action](*args)))
     except Exception as error:
         print(json.dumps({'error': str(error)}))
         sys.exit(1)

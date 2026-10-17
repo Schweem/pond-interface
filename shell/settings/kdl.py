@@ -76,6 +76,19 @@ def insert_child(text, brace, body):
     return text[:line] + textwrap.indent(body, indent + '    ') + text[line:]
 
 
+def get_properties(text, path):
+    ts, opening, closing = tokens(text), -1, None
+    for name in path:
+        block = next((n for n in nodes(ts, opening + 1, closing) if ts[n[0]][0] == name and n[2] is not None), None)
+        if block is None: return {}
+        _, _, opening, closing = block
+    result = {}
+    for first, _, _, _ in nodes(ts, opening + 1, closing):
+        try: result[ts[first][0]] = json.loads(ts[first + 1][0])
+        except (IndexError, ValueError): pass
+    return result
+
+
 def set_properties(text, path, properties):
     ts, opening, closing = tokens(text), -1, None
     for depth, name in enumerate(path):

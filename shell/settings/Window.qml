@@ -241,7 +241,7 @@ PanelWindow {
     active: root.presented && (root.modalOpen || opacity > 0)
     sourceComponent: ({
       information: informationPage, manual: manualPage, display: displayPage, arrange: arrangePage,
-      system: systemPage, keyboard: keyboardPage, timezone: timezonePage
+      system: systemPage, mouse: mousePage, keyboard: keyboardPage, timezone: timezonePage
     })[root.displayedPage] || appearancePage
     enabled: root.modalOpen
     opacity: root.modalOpen ? 1 : 0
@@ -281,6 +281,13 @@ PanelWindow {
   Component {
     id: systemPage
     System.Panel {
+      availableHeight: Math.max(200, root.height - 70)
+      scale: Math.min(1, (root.width - 60) / implicitWidth)
+    }
+  }
+  Component {
+    id: mousePage
+    System.Mouse {
       availableHeight: Math.max(200, root.height - 70)
       scale: Math.min(1, (root.width - 60) / implicitWidth)
     }

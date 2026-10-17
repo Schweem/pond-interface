@@ -14,6 +14,12 @@ Settings.Modal {
     id: fields
     x: 30; width: root.width - 60; spacing: 8
     Settings.Field {
+      objectName: "systemMouse"
+      width: parent.width; navigation: true
+      title: "Mouse sensitivity"; value: Math.round(System.State.mouse.speed * 100) + "%"
+      onClicked: Settings.State.openPage("mouse")
+    }
+    Settings.Field {
       objectName: "systemKeyboard"
       width: parent.width; navigation: true
       title: "Keyboard language"; value: System.State.languageNames.join(", ")
