@@ -22,12 +22,22 @@ def run(*args, timeout=15):
     return p.stdout
 
 
-def languages():
-    result = []
-    for layout in ET.parse('/usr/share/X11/xkb/rules/evdev.xml').iterfind('layoutList/layout'):
-        name = layout.findtext('configItem/name')
-        if name == 'custom': continue
-        result.append({'id': name, 'label': layout.findtext('configItem/description')})
+def layouts():
+    result = {}
+    for rules in ('evdev.xml', 'evdev.extras.xml'):
+        for layout in ET.parse(f'/usr/share/X11/xkb/rules/{rules}').iterfind('layoutList/layout'):
+            name = layout.findtext('configItem/name')
+            if name == 'custom': continue
+            result.setdefault(name, {'id': name, 'label': layout.findtext('configItem/description'),
+                                     'listed': rules == 'evdev.xml'})
+            for variant in layout.iterfind('variantList/variant'):
+                identifier = f"{name}({variant.findtext('configItem/name')})"
+                result[identifier] = {'id': identifier, 'label': variant.findtext('configItem/description')}
+    return list(result.values())
+
+
+def languages(names=()):
+    result = [item for item in layouts() if item.get('listed') or item['label'] in names]
     return sorted(result, key=lambda item: item['label'].casefold())
 
 
@@ -65,7 +75,7 @@ def mouse():
 
 
 def status():
-    ids = {item['label']: item['id'] for item in languages()}
+    ids = {item['label']: item['id'] for item in layouts()}
     names = keyboard()['names']
     timezone = bytes(QTimeZone.systemTimeZoneId()).decode()
     return {'selectedLanguages': [ids.get(name, name) for name in names], 'languageNames': names,
@@ -75,7 +85,7 @@ def status():
 
 def load():
     result = status()
-    return dict(result, languages=languages(), timezones=timezones(result['timezone']))
+    return dict(result, languages=languages(result['languageNames']), timezones=timezones(result['timezone']))
 
 
 def apply_languages(text, names):
@@ -88,7 +98,7 @@ def apply_languages(text, names):
 
 
 def toggle_language(identifier):
-    catalog = languages()
+    catalog = layouts()
     labels = {item['id']: item['label'] for item in catalog}
     ids = {item['label']: item['id'] for item in catalog}
     current = keyboard()
@@ -100,9 +110,10 @@ def toggle_language(identifier):
     else: chosen.append(identifier)
     if not chosen: raise ValueError('Keep at least one keyboard language')
     names = [labels[value] for value in chosen]
+    layout, variant = zip(*(value.rstrip(')').partition('(')[::2] for value in chosen))
     previous = INPUT.read_text()
     try: apply_languages(set_properties(previous, ('input', 'keyboard', 'xkb'),
-                                        {'layout': ','.join(chosen), 'variant': ',' * (len(chosen) - 1)}), names)
+                                        {'layout': ','.join(layout), 'variant': ','.join(variant)}), names)
     except Exception:
         apply_languages(previous, current['names'])
         raise
