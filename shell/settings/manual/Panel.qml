@@ -37,12 +37,32 @@ Settings.Modal {
     scrollItem.contentY = Math.max(0, Math.min(contentHeight - scrollItem.height, scrollItem.contentY + distance));
   }
 
-  Image {
+  Item {
     id: manual
     objectName: "manualContent"
-    width: 500; height: 2984
-    source: Qt.resolvedUrl("../../assets/manual/manual.svg")
-    sourceSize.width: width * Screen.devicePixelRatio
+    width: 500; height: 3422
+    Item {
+      width: 500; height: 1538
+      clip: true
+      Image {
+        width: 500; height: 2984
+        source: Qt.resolvedUrl("../../assets/manual/manual.svg")
+        sourceSize.width: width * Screen.devicePixelRatio
+      }
+    }
+    Item {
+      y: 1976; width: 500; height: 1446
+      clip: true
+      Image {
+        y: -1538; width: 500; height: 2984
+        source: Qt.resolvedUrl("../../assets/manual/manual.svg")
+        sourceSize.width: width * Screen.devicePixelRatio
+      }
+    }
+    NavigationTutorial {
+      x: 30; y: 1566
+      active: y + height > root.scrollItem.contentY && y < root.scrollItem.contentY + root.scrollItem.height
+    }
     Item {
       id: note
       objectName: "manualSuperNote"
@@ -57,7 +77,7 @@ Settings.Modal {
     }
 
     Row {
-      x: 180; y: 2894; spacing: 10
+      x: 180; y: 3332; spacing: 10
       FooterButton { service: "discord" }
       FooterButton { service: "x" }
       FooterButton { service: "mail" }
