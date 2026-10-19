@@ -79,14 +79,13 @@ T.Slider {
 
     Text {
       anchors.centerIn: parent
+      anchors.verticalCenterOffset: 1
       visible: root.showInlineValue && !root.handleHovered && !root.pressed
       text: Math.round(root.visualValue * 100)
       color: PanelStyle.surface
       font.family: Theme.fontFamily
       font.weight: Font.Medium
       font.pixelSize: 13
-      horizontalAlignment: Text.AlignHCenter
-      verticalAlignment: Text.AlignVCenter
     }
   }
 
