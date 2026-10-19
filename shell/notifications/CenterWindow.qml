@@ -108,21 +108,21 @@ PanelWindow {
 
   Text {
     id: clearAll
+    property real hoverOpacity: clearPointer.containsMouse ? 1 : 0.5
     x: panelBackground.x + Notifications.Style.panelWidth
        - Notifications.Style.contentPadding - width
     y: panelBackground.y + 21
     height: 19
     text: "Clear all"
     color: Notifications.Style.foreground
-    opacity: root.listMode ? (clearPointer.containsMouse ? root.reveal
-                                                         : root.reveal * 0.5) : 0
+    opacity: root.reveal * hoverOpacity
     font.family: Shell.Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: 13
     visible: root.listMode && opacity > 0.001
     z: 4
 
-    Behavior on opacity { Shell.HoverAnimation {} }
+    Behavior on hoverOpacity { Shell.HoverAnimation {} }
 
     MouseArea {
       id: clearPointer
