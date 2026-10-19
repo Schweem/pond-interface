@@ -34,15 +34,16 @@ Singleton {
     query.stdinEnabled = true;
     query.running = true;
   }
-  function usage(bytes) {
-    return bytes?.total > 0
-        ? `${(bytes.used / 2 ** 30).toFixed(1)} GiB / ${(bytes.total / 2 ** 30).toFixed(1)} GiB`
+  function usage(used, total) {
+    return total > 0
+        ? `${(used / 2 ** 30).toFixed(1)} GiB / ${(total / 2 ** 30).toFixed(1)} GiB`
         : "Unavailable";
   }
   function updateFacts(text, usageOnly) {
     const data = {};
     for (const item of JSON.parse(text)) data[item.type] = item.result;
-    const next = {memory: usage(data.Memory), disk: usage(data.Disk?.[0]?.bytes)};
+    const disk = data.Disk?.[0]?.bytes;
+    const next = {memory: usage(data.Memory?.used, data.Memory?.total), disk: usage(disk?.total - disk?.free, disk?.total)};
     if (!usageOnly) {
       const threads = data.CPU?.cores?.online;
       Object.assign(next, {
