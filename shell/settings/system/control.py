@@ -37,7 +37,7 @@ def layouts():
 
 
 def languages(names=()):
-    result = [item for item in layouts() if item.get('listed') or item['label'] in names]
+    result = [item for item in layouts() if item.get('listed') or item['id'] == 'us(colemak_dh)' or item['label'] in names]
     return sorted(result, key=lambda item: item['label'].casefold())
 
 
