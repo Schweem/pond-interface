@@ -328,10 +328,10 @@ Singleton {
     if (_appInfoCache[appId])
       return _appInfoCache[appId];
     const lower = appId.toLowerCase();
-    const entry = DesktopEntries.heuristicLookup(appId)
+    const entry = appId && (DesktopEntries.heuristicLookup(appId)
            || DesktopEntries.byId(appId)
            || DesktopEntries.byId(lower)
-           || DesktopEntries.heuristicLookup(lower);
+           || DesktopEntries.heuristicLookup(lower));
     const iconName = entry?.icon || lower;
     const info = {
       iconName: iconName,
