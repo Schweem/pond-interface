@@ -95,7 +95,8 @@ def status(data=None):
                         if (m['width'], m['height']) == (mode['width'], mode['height'])}, reverse=True)
         # Fractional scaling is a compositor capability, not an EDID mode list.
         scales = sorted(set(SCALES) | {monitor['logical']['scale']})
-        monitors.append(dict(name=name, label=monitor.get('model') or monitor.get('make') or name,
+        label = 'Built-in' if name.startswith(('eDP-', 'LVDS-', 'DSI-', 'DPI-')) else monitor.get('model') or monitor.get('make') or name
+        monitors.append(dict(name=name, label=label,
             identity=identity(monitor), logical=placement(monitor), mode=mode_id(mode),
             width=mode['width'], height=mode['height'], refresh=mode['refresh_rate'],
             scale=monitor['logical']['scale'], scales=scales,
