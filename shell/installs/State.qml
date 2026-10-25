@@ -32,6 +32,26 @@ Singleton {
     if (index >= 0 && jobs.get(index).status === "failed") jobs.remove(index);
   }
 
+  function findApp(name) {
+    const wanted = name.toLowerCase();
+    const matches = DesktopEntries.applications.values.filter(entry =>
+        !entry.runInTerminal && entry.command.length > 0 && entry.name.toLowerCase() === wanted);
+    return matches.length === 1 ? matches[0] : null;
+  }
+
+  function activate(id) {
+    const index = indexOf(id);
+    if (index < 0) return;
+    const job = jobs.get(index);
+    if (job.status === "installed") {
+      if (job.jobId === "system-update") return;
+      const app = findApp(job.name);
+      if (!app) return;
+      app.execute();
+    } else if (job.status !== "failed") return;
+    jobs.remove(index);
+  }
+
   IpcHandler {
     target: "installs"
     function update(id: string, name: string, status: string, percentage: int, message: string): void {

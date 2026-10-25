@@ -25,6 +25,9 @@ Shell.Card {
       required property string name
       required property string status
       required property real progress
+      readonly property bool canLaunch: status === "installed" && jobId !== "system-update"
+          && Installs.State.findApp(name) !== null
+      readonly property bool actionable: status === "failed" || canLaunch
       readonly property string summary: status === "installed" ? "Installed"
           : status === "failed" ? "Failed" : progress < 0 ? "Installing"
           : "Installing " + Math.round(progress * 100) + "%"
@@ -64,11 +67,11 @@ Shell.Card {
         y: indicator.y
       }
       HoverHandler {
-        cursorShape: row.status === "failed" ? Qt.PointingHandCursor : Qt.ArrowCursor
+        cursorShape: row.actionable ? Qt.PointingHandCursor : Qt.ArrowCursor
       }
       TapHandler {
-        enabled: row.status === "failed"
-        onTapped: Installs.State.dismiss(row.jobId)
+        enabled: row.actionable
+        onTapped: Installs.State.activate(row.jobId)
       }
     }
   }
