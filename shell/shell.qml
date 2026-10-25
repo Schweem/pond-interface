@@ -32,6 +32,11 @@ ShellRoot {
     function toggle() { root.expanded = !root.expanded; }
   }
 
+  IpcHandler {
+    target: "manual"
+    function open() { Settings.State.open("", "manual"); }
+  }
+
   Variants {
     model: Quickshell.screens
     delegate: Scope {
