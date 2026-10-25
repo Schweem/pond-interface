@@ -2,10 +2,12 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 
 Singleton {
   id: root
   property ListModel jobs: ListModel {}
+  property real lastResumeAt: 0
 
   function indexOf(id) {
     for (let i = 0; i < jobs.count; ++i) {
@@ -59,14 +61,22 @@ Singleton {
     }
   }
 
+  IdleMonitor {
+    id: idleMonitor
+    timeout: 20
+    respectInhibitors: false
+    onIsIdleChanged: if (!isIdle) root.lastResumeAt = Date.now()
+  }
+
   Timer {
     interval: 250
-    running: root.jobs.count > 0
+    running: root.jobs.count > 0 && !idleMonitor.isIdle
     repeat: true
     onTriggered: {
       for (let i = root.jobs.count - 1; i >= 0; --i) {
         const job = root.jobs.get(i);
-        if (job.status === "installed" && Date.now() - job.finishedAt >= 30000) jobs.remove(i);
+        if (job.status === "installed"
+            && Date.now() - Math.max(job.finishedAt, root.lastResumeAt) >= 30000) root.jobs.remove(i);
       }
     }
   }
