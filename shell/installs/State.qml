@@ -46,7 +46,7 @@ Singleton {
     onTriggered: {
       for (let i = root.jobs.count - 1; i >= 0; --i) {
         const job = root.jobs.get(i);
-        if (job.status === "installed" && Date.now() - job.finishedAt >= 3000) jobs.remove(i);
+        if (job.status === "installed" && Date.now() - job.finishedAt >= 30000) jobs.remove(i);
       }
     }
   }
