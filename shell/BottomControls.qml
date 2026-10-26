@@ -161,7 +161,6 @@ Card {
           height: 32
           externalValue: Audio.State.outputVolume
           trackColor: Theme.daylight ? Theme.sidebarInnerOutline : PanelStyle.border
-          showHandle: false
           interactive: false
           hoverEnabled: false
         }
