@@ -20,7 +20,12 @@ Card {
   property bool settingsOpen: false
   property bool wifiHoverRetained: false
   property bool keyboardVolumeVisible: false
-  readonly property bool collapsedVolumeVisible: collapseProgress >= 0.56 && keyboardVolumeVisible && !soundOpen
+  readonly property var activeToplevel: ToplevelManager.activeToplevel
+  readonly property bool fullscreenCovered: activeToplevel !== null && activeToplevel.fullscreen
+      && QsWindow.window !== null && activeToplevel.screens.some(s => s.name === QsWindow.window.screen.name)
+  readonly property bool collapsed: collapseProgress >= 0.56
+  readonly property bool besideSidebar: collapsed && !fullscreenCovered
+  readonly property bool collapsedVolumeVisible: (collapsed || fullscreenCovered) && keyboardVolumeVisible && !soundOpen
   // Wi-Fi metrics and the compact sound control share the same staged exit:
   // fade the content, hold the shell, then collapse its height.
   property bool hoverHeightRetained: false
@@ -127,20 +132,24 @@ Card {
   LazyLoader {
     active: root.collapsedVolumeVisible
     PanelWindow {
+      id: volumeWindow
+      readonly property real cardX: root.besideSidebar ? Theme.sidebarOuterMargin + root.width + 4
+          : Math.round((screen.width + Theme.sidebarOuterMargin
+              + Theme.sidebarCardCollapsedWidth - Theme.sidebarCardExpandedWidth) / 2)
+      readonly property real cardBottom: root.besideSidebar ? Math.round(Theme.sidebarOuterMargin + root.height - 46 - 36) : 40
       screen: root.QsWindow.window ? root.QsWindow.window.screen : null
       color: "transparent"
       BackgroundEffect.blurRegion: Theme.daylight ? volumeCard.blurRegion : null
-      implicitWidth: Theme.sidebarOuterMargin + root.width + 4 + Theme.sidebarCardExpandedWidth + 67
-      implicitHeight: 36 + 134
+      implicitWidth: cardX + Theme.sidebarCardExpandedWidth + 67
+      implicitHeight: cardBottom + 36 + 67
       anchors { left: true; bottom: true }
-      margins.bottom: Math.round(Theme.sidebarOuterMargin + root.height - 46 - 36 - 67)
       WlrLayershell.layer: WlrLayer.Overlay
       WlrLayershell.namespace: "pond-volume"
       WlrLayershell.exclusionMode: ExclusionMode.Ignore
       mask: Region {}
 
       Item {
-        x: Theme.sidebarOuterMargin + root.width + 4
+        x: volumeWindow.cardX
         y: 67
         width: Theme.sidebarCardExpandedWidth
         height: 36
