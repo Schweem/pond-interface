@@ -42,7 +42,7 @@ Card {
   property bool soundButtonHovered: false
   readonly property bool wifiHovered: wifiButtonHovered
       || (wifiHoverRetained && panelHover.hovered)
-  readonly property bool noInternetHovered: wifiHovered && Wifi.State.internetUnavailable
+  readonly property bool noInternet: Wifi.State.internetUnavailable
       && (Wifi.State.wifiConnected || Wifi.State.wiredConnected)
   // The compact slider belongs only to the sound control. Keep it open while
   // the pointer moves onto the revealed slider, but not merely because the
@@ -198,7 +198,7 @@ Card {
     font.family: Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: 13
-    opacity: root.noInternetHovered && root.wifiContentVisible
+    opacity: root.noInternet && root.wifiContentVisible
         && root.collapseProgress < 0.22 ? 0.6 : 0
     visible: opacity > 0
     FontMetrics { id: noInternetMetrics; font: noInternetLabel.font }
@@ -210,7 +210,7 @@ Card {
     y: 12
     height: 19
     spacing: 8
-    opacity: root.wifiContentVisible && !root.noInternetHovered
+    opacity: root.wifiContentVisible && !root.noInternet
         && root.collapseProgress < 0.22 ? 1 : 0
     visible: opacity > 0
 
