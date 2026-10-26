@@ -7,8 +7,8 @@ Item {
   property bool opened: false
   readonly property int closeAllDuration: 200
 
-  width: PanelStyle.width
-  height: soundCard.implicitHeight
+  width: 336
+  height: soundCard.implicitHeight + 22
   visible: opened || closeCleanup.running
   opacity: opened ? 1 : 0
   scale: opened ? 1 : 0.9
@@ -41,15 +41,24 @@ Item {
   }
 
   Shadow {
-    anchors.fill: parent
+    anchors.fill: soundCard
     cornerRadius: PanelStyle.radius
     shadows: PanelStyle.frontShadows
   }
 
   Devices {
     id: soundCard
-    anchors.fill: parent
+    y: 22
+    width: PanelStyle.width
+    height: root.height - y
     interactive: root.opened
+  }
+
+  PanelCloseButton {
+    x: 296
+    y: 2
+    enabled: root.opened
+    onClicked: root.closeAll()
   }
 
   Timer {
