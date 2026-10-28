@@ -16,14 +16,14 @@ Singleton {
     return -1;
   }
 
-  function update(id, name, status, percentage, message) {
+  function update(id, name, status, percentage, message, icon = "") {
     if (!id || !name || !["installing", "installed", "failed"].includes(status)
         || percentage < -1 || percentage > 100) return;
     const index = indexOf(id);
     const entry = {
       jobId: id, name: name, status: status,
       progress: percentage < 0 ? -1 : percentage / 100,
-      message: message, finishedAt: status === "installed" ? Date.now() : 0
+      message: message, icon: icon, finishedAt: status === "installed" ? Date.now() : 0
     };
     if (index < 0) jobs.append(entry);
     else jobs.set(index, entry);
@@ -31,7 +31,7 @@ Singleton {
 
   function dismiss(id) {
     const index = indexOf(id);
-    if (index >= 0 && jobs.get(index).status === "failed") jobs.remove(index);
+    if (index >= 0 && jobs.get(index).status !== "installing") jobs.remove(index);
   }
 
   function findApp(name) {
@@ -41,23 +41,19 @@ Singleton {
     return matches.length === 1 ? matches[0] : null;
   }
 
-  function activate(id) {
+  function launch(id) {
     const index = indexOf(id);
-    if (index < 0) return;
-    const job = jobs.get(index);
-    if (job.status === "installed") {
-      if (job.jobId === "system-update") return;
-      const app = findApp(job.name);
-      if (!app) return;
-      app.execute();
-    } else if (job.status !== "failed") return;
+    const app = index < 0 ? null : findApp(jobs.get(index).name);
+    if (!app) return;
+    app.execute();
     jobs.remove(index);
   }
 
   IpcHandler {
     target: "installs"
-    function update(id: string, name: string, status: string, percentage: int, message: string): void {
-      root.update(id, name, status, percentage, message);
+    function update(id: string, name: string, status: string, percentage: int, message: string,
+        icon: string): void {
+      root.update(id, name, status, percentage, message, icon);
     }
   }
 
