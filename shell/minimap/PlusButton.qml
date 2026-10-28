@@ -16,9 +16,9 @@ Item {
     anchors.fill: parent
     radius: width / 2
     antialiasing: true
-    color: pointer.containsMouse ? Shell.Theme.workspaceControlHover : "transparent"
+    color: pointer.containsMouse ? Shell.Theme.palette.workspaceControlHover : "transparent"
     border.width: pointer.containsMouse ? 0 : Shell.Theme.sidebarStrokeWidth
-    border.color: Shell.Theme.workspaceIconOutline
+    border.color: Shell.Theme.palette.workspaceIconOutline
     Behavior on color {
       ColorAnimation { duration: Shell.Theme.sidebarHoverDuration; easing.type: Easing.OutCubic }
     }

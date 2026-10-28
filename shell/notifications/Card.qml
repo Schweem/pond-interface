@@ -29,10 +29,9 @@ Item {
     width: root.surfaceWidth
     height: root.height
     radius: 16
-    color: root.inlinePreview && Shell.Theme.daylight
-        ? Qt.tint(Shell.Theme.sidebarHoverFill,
-                  root.hovered ? Shell.Theme.sidebarHoverFill : Shell.Theme.sidebarClearFill)
-        : root.inlinePreview ? (root.hovered ? "#313131" : "#242424") : Shell.Theme.sidebarV3Background
+    color: root.inlinePreview
+        ? (root.hovered ? Shell.Theme.palette.previewHoverFill : Shell.Theme.palette.previewFill)
+        : Shell.Theme.sidebarV3Background
     antialiasing: true
     Behavior on color {
       enabled: !root.inlinePreview

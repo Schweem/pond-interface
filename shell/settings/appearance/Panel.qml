@@ -21,7 +21,7 @@ Settings.Modal {
     }
     Text {
       x: 418; y: 83; height: 25
-      text: Shell.Theme.daylight ? "Daylight" : "Unthemed"
+      text: Shell.Theme.palette.label
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
       color: "#cba6f7"; opacity: 0.7; verticalAlignment: Text.AlignVCenter
     }
@@ -37,13 +37,13 @@ Settings.Modal {
     ThemeButton {
       id: daylight; objectName: "themeDaylight"
       x: 243; y: 12; themeKey: "daylight"; label: "Daylight"
-      selected: Shell.Theme.daylight
+      selected: Shell.Theme.name === "daylight"
       onClicked: Appearance.State.selectTheme("daylight")
     }
     ThemeButton {
       id: unthemed; objectName: "themeUnthemed"
       x: 194; y: 103; themeKey: "unthemed"; label: "Unthemed"
-      selected: !Shell.Theme.daylight
+      selected: Shell.Theme.name === "unthemed"
       onClicked: Appearance.State.selectTheme("unthemed")
     }
     ThemeButton {

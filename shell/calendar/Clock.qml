@@ -29,8 +29,8 @@ Shell.Card {
   implicitHeight: Shell.Theme.lerp(battery ? (low ? 115 : 75) : Shell.Theme.sidebarTimeExpandedHeight,
       battery ? 147 : 105, Shell.Theme.collapseHeight(collapseProgress))
   radius: Shell.Theme.lerp(12, Shell.Theme.sidebarCardRadius, Shell.Theme.collapseWidth(collapseProgress))
-  color: Shell.Theme.daylight
-      ? (cardHovered && !battery ? Shell.Theme.sidebarCardHoverFill : Shell.Theme.sidebarCardFill)
+  color: Shell.Theme.palette.uniformCards
+      ? (cardHovered && !battery ? Shell.Theme.palette.cardHoverFill : Shell.Theme.palette.cardFill)
       : classicColor
 
   readonly property real expandedOpacity:
@@ -108,7 +108,7 @@ Shell.Card {
       radius: 6
       color: "transparent"
       border.width: 1
-      border.color: Shell.Theme.daylight ? Shell.Theme.sidebarInnerOutline : Shell.Theme.sidebarV3Border
+      border.color: Shell.Theme.palette.innerOutline
       antialiasing: true
 
       FontMetrics { id: dateMetrics; font: weekdayText.font }

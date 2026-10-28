@@ -55,7 +55,7 @@ Item {
             height: 6
             radius: 3
             color: index < Math.round(Theme.clamp01(card.value) * 10) ? "white"
-                : Theme.daylight ? Theme.sidebarInnerOutline : PanelStyle.border
+                : Theme.palette.track
           }
         }
       }
@@ -67,7 +67,7 @@ Item {
     PanelWindow {
       screen: root.screen
       color: "transparent"
-      BackgroundEffect.blurRegion: Theme.daylight ? indicator.blurRegion : null
+      BackgroundEffect.blurRegion: Theme.palette.blur ? indicator.blurRegion : null
       implicitWidth: Theme.sidebarCardExpandedWidth + (root.collapsed ? 134 : 0)
       implicitHeight: root.collapsed ? 67 + 36 + 40 : 36
       anchors { left: true; bottom: true }

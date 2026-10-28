@@ -31,7 +31,7 @@ Item {
     PanelWindow {
       screen: root.screen
       color: "transparent"
-      BackgroundEffect.blurRegion: Theme.daylight ? card.blurRegion : null
+      BackgroundEffect.blurRegion: Theme.palette.blur ? card.blurRegion : null
       implicitWidth: Theme.sidebarCardExpandedWidth + (root.collapsed ? 134 : 0)
       implicitHeight: root.cardHeight + (root.collapsed ? 107 : 0)
       anchors { left: true; top: !root.collapsed; bottom: root.collapsed }
@@ -82,7 +82,7 @@ Item {
               Rectangle {
                 anchors.right: parent.right
                 width: 16; height: 16; radius: 8
-                color: Theme.sidebarInnerOutline
+                color: Theme.palette.innerOutline
                 Rectangle {
                   anchors.centerIn: parent
                   width: 12; height: 12; radius: 6

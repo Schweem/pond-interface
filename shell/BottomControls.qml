@@ -13,7 +13,7 @@ Card {
   width: Theme.lerp(156, 48, widthProgress)
   height: Theme.lerp(openExpandedHeight, 168, heightProgress)
   contentClipped: false
-  radius: Theme.daylight ? Theme.lerp(12, 16, heightProgress) : Theme.sidebarCardRadius
+  radius: Theme.lerp(Theme.palette.compactCardRadius, Theme.sidebarCardRadius, heightProgress)
 
   property bool wifiOpen: false
   property bool soundOpen: false
@@ -121,7 +121,7 @@ Card {
     height: 32
     externalValue: Audio.State.outputVolume
     muted: Audio.State.outputMuted
-    trackColor: Theme.daylight ? Theme.sidebarInnerOutline : PanelStyle.border
+    trackColor: Theme.palette.track
     interactive: root.soundSliderRequested
     hoverEnabled: root.soundSliderContentVisible
     visible: opacity > 0.001
@@ -140,7 +140,7 @@ Card {
       readonly property real cardBottom: root.besideSidebar ? Math.round(Theme.sidebarOuterMargin + root.height - 46 - 36) : 40
       screen: root.QsWindow.window ? root.QsWindow.window.screen : null
       color: "transparent"
-      BackgroundEffect.blurRegion: Theme.daylight ? volumeCard.blurRegion : null
+      BackgroundEffect.blurRegion: Theme.palette.blur ? volumeCard.blurRegion : null
       implicitWidth: cardX + Theme.sidebarCardExpandedWidth + 67
       implicitHeight: cardBottom + 36 + 67
       anchors { left: true; bottom: true }
@@ -171,7 +171,7 @@ Card {
           height: 32
           externalValue: Audio.State.outputVolume
           muted: Audio.State.outputMuted
-          trackColor: Theme.daylight ? Theme.sidebarInnerOutline : PanelStyle.border
+          trackColor: Theme.palette.track
           interactive: false
           hoverEnabled: false
         }
@@ -321,8 +321,8 @@ Card {
         bottomLeftRadius: action.slot === 0 ? Theme.lerp(12, 4, root.collapseProgress)
             : action.slot === 3 ? Theme.lerp(4, 12, root.collapseProgress) : 4
         bottomRightRadius: action.slot === 3 ? 12 : 4
-        color: Theme.daylight ? (action.selected || action.hovered ? Theme.sidebarHoverFill : Theme.sidebarClearFill)
-            : action.selected ? "#303030" : action.hovered ? "#262626" : Qt.rgba(38/255, 38/255, 38/255, 0)
+        color: action.selected ? Theme.palette.actionSelected
+            : action.hovered ? Theme.palette.actionHover : Theme.palette.actionIdle
         Behavior on color { ColorAnimation { duration: 120; easing.type: Easing.OutCubic } }
       }
 

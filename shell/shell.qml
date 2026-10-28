@@ -54,7 +54,7 @@ ShellRoot {
       Wallpaper.Window {
         screen: modelData
         custom: Appearance.State.wallpaperMode === "custom"
-        dimmed: Theme.daylight
+        dimmed: Theme.palette.dimWallpaper
         imageSource: Appearance.State.wallpaperUrl
       }
       Sidebar {

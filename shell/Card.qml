@@ -12,9 +12,10 @@ Rectangle {
     item: root
     radius: root.radius
   }
-  color: Theme.daylight ? (cardHovered ? Theme.sidebarCardHoverFill : Theme.sidebarCardFill) : classicColor
-  border.width: Theme.daylight ? 1 : 0
-  border.color: Theme.sidebarCardOutline
+  color: Theme.palette.uniformCards
+      ? (cardHovered ? Theme.palette.cardHoverFill : Theme.palette.cardFill) : classicColor
+  border.width: Theme.palette.cardBorderWidth
+  border.color: Theme.palette.cardOutline
   radius: Theme.sidebarCardRadius
   antialiasing: true
   // Clip the contents without cutting off the outline's antialiasing.
@@ -25,7 +26,7 @@ Rectangle {
   }
   HoverHandler { id: cardHover }
   Behavior on color {
-    enabled: Theme.daylight || animateClassicColor
+    enabled: Theme.palette.uniformCards || animateClassicColor
     ColorAnimation { duration: 120; easing.type: Easing.OutCubic }
   }
 }

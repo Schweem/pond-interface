@@ -123,7 +123,7 @@ Shell.Card {
   component HoverFill: Rectangle {
     property bool active
     radius: 8
-    color: Shell.Theme.daylight ? Shell.Theme.sidebarHoverFill : "#262626"
+    color: Shell.Theme.palette.hoverFill
     opacity: active ? 1 : 0
     Behavior on opacity { Shell.HoverAnimation {} }
   }

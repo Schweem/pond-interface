@@ -42,7 +42,7 @@ Shell.Card {
       Shell.Theme.collapseHeight(collapseProgress))
   readonly property bool workspaceNumbersRevealed: expandedLayer.enabled
       && (expandedComponentHover.hovered
-          || (dragSession.active && (!dragSession.windowDrag || Shell.Theme.daylight)))
+          || (dragSession.active && (!dragSession.windowDrag || Shell.Theme.palette.dragPreview)))
 
   focus: dragSession.active
   Keys.onEscapePressed: dragSession.cancel()
@@ -86,10 +86,10 @@ Shell.Card {
   width: Shell.Theme.lerp(Shell.Theme.sidebarCardExpandedWidth,
       Shell.Theme.sidebarCardCollapsedWidth, widthProgress)
   height: Math.min(maximumHeight, naturalHeight)
-  radius: Shell.Theme.daylight ? 12 : Shell.Theme.sidebarCardRadius
-  color: Shell.Theme.daylight
+  radius: Shell.Theme.palette.compactCardRadius
+  color: Shell.Theme.palette.uniformCards
       ? (cardHovered || (dragSession.active && dragSession.windowDrag)
-          ? Shell.Theme.sidebarCardHoverFill : Shell.Theme.sidebarCardFill)
+          ? Shell.Theme.palette.cardHoverFill : Shell.Theme.palette.cardFill)
       : classicColor
   // The number hit target reaches ten pixels outside the expanded card. The
   // panel gutter contains it; clipping returns once the compact layer takes
@@ -194,10 +194,10 @@ Shell.Card {
             height: parent.height + Shell.Theme.workspaceControlGap
             radius: 12
             color: expandedWorkspace.model.isActive || expandedWorkspace.dragTarget
-                ? Shell.Theme.workspaceActiveIndicatorColor
-                : Qt.rgba(Shell.Theme.workspaceActiveIndicatorColor.r,
-                          Shell.Theme.workspaceActiveIndicatorColor.g,
-                          Shell.Theme.workspaceActiveIndicatorColor.b, 0)
+                ? Shell.Theme.palette.workspaceActiveIndicatorColor
+                : Qt.rgba(Shell.Theme.palette.workspaceActiveIndicatorColor.r,
+                          Shell.Theme.palette.workspaceActiveIndicatorColor.g,
+                          Shell.Theme.palette.workspaceActiveIndicatorColor.b, 0)
 
             Behavior on color {
               ColorAnimation {
@@ -262,7 +262,7 @@ Shell.Card {
                       && expandedWorkspace.model.isActive
                   readonly property int visualIndex: root.windowIndex(Number(expandedWorkspace.model.workspaceId),
                       expandedWorkspace.windowItems, index)
-                  readonly property bool daylightDropTarget: Shell.Theme.daylight && expandedWorkspace.dragTarget
+                  readonly property bool previewDropTarget: Shell.Theme.palette.dragPreview && expandedWorkspace.dragTarget
                       && visualIndex === dragSession.destination?.slot
 
                   visible: root.collapseProgress === 0 || (index >= expandedWorkspace.windowStart
@@ -278,10 +278,10 @@ Shell.Card {
 
                   Rectangle {
                     anchors.fill: parent
-                    visible: workspaceSlot.emptyWorkspaceActive && !workspaceSlot.daylightDropTarget
+                    visible: workspaceSlot.emptyWorkspaceActive && !workspaceSlot.previewDropTarget
                     radius: width / 2
-                    color: Shell.Theme.workspaceLauncherActive
-                    border.color: Shell.Theme.daylight ? Shell.Theme.workspaceIconOutline : Shell.Theme.sidebarV3Border
+                    color: Shell.Theme.palette.workspaceLauncherActive
+                    border.color: Shell.Theme.palette.workspaceIconOutline
                     border.width: Shell.Theme.sidebarStrokeWidth
                     antialiasing: true
                   }
@@ -289,11 +289,11 @@ Shell.Card {
                   Rectangle {
                     anchors.centerIn: parent
                     visible: root.collapseProgress === 0 && !workspaceSlot.hasWindow && !workspaceSlot.emptyWorkspaceActive
-                        && (!dragSession.active || Shell.Theme.daylight) && !workspaceSlot.daylightDropTarget
+                        && (!dragSession.active || Shell.Theme.palette.dragPreview) && !workspaceSlot.previewDropTarget
                     width: Shell.Theme.workspacePlaceholderDotSize
                     height: Shell.Theme.workspacePlaceholderDotSize
                     radius: width / 2
-                    color: Shell.Theme.workspacePlaceholderColor
+                    color: Shell.Theme.palette.workspacePlaceholderColor
                     opacity: workspaceSlot.plusRevealed ? 0 : 1
                     Behavior on opacity { Shell.HoverAnimation {} }
                   }
@@ -395,12 +395,12 @@ Shell.Card {
                 antialiasing: true
                 Behavior on x { Shell.HoverAnimation { duration: Shell.Theme.workspaceDragSnapDuration } }
                 ShapePath {
-                  strokeColor: Shell.Theme.daylight ? Shell.Theme.workspaceDropFill : "#4F3D64"
+                  strokeColor: Shell.Theme.palette.dropStroke
                   strokeWidth: 1
-                  strokeStyle: Shell.Theme.daylight ? ShapePath.SolidLine : ShapePath.DashLine
+                  strokeStyle: Shell.Theme.palette.dropDashed ? ShapePath.DashLine : ShapePath.SolidLine
                   dashPattern: [3, 3]
                   capStyle: ShapePath.RoundCap
-                  fillColor: Shell.Theme.daylight ? Shell.Theme.workspaceDropFill : "#191919"
+                  fillColor: Shell.Theme.palette.dropFill
                   PathRectangle { x: 0.5; y: 0.5; width: 39; height: 39; radius: 20 }
                 }
               }
@@ -420,15 +420,15 @@ Shell.Card {
               height: 20
               radius: 10
               color: numberPointer.containsMouse || numberPointer.pressed
-                  || (Shell.Theme.daylight && dragSession.active && dragSession.windowDrag)
-                  ? Shell.Theme.workspaceNumberDragBackground : Shell.Theme.workspaceNumberBackground
+                  || (Shell.Theme.palette.dragPreview && dragSession.active && dragSession.windowDrag)
+                  ? Shell.Theme.palette.workspaceNumberDragBackground : Shell.Theme.palette.workspaceNumberBackground
               antialiasing: true
               Behavior on color { ColorAnimation { duration: 120; easing.type: Easing.OutCubic } }
               Text {
                 anchors.fill: parent
                 visible: !numberPointer.containsMouse && !workspaceDrag.active
                 text: expandedWorkspace.workspaceNumber
-                color: Shell.Theme.daylight ? "white" : Shell.Theme.sidebarV3Foreground
+                color: Shell.Theme.palette.workspaceNumberText
                 font.family: Shell.Theme.plexFontFamily
                 font.weight: Font.Medium
                 font.pixelSize: 11
@@ -521,7 +521,7 @@ Shell.Card {
                 width: Shell.Theme.workspacePlaceholderDotSize
                 height: Shell.Theme.workspacePlaceholderDotSize
                 radius: width / 2
-                color: Shell.Theme.workspacePlaceholderColor
+                color: Shell.Theme.palette.workspacePlaceholderColor
               }
             }
           }
@@ -595,10 +595,10 @@ Shell.Card {
             height: Math.max(0, parent.height - (collapsedWorkspace.active ? 7 : 8))
             radius: 13
             color: collapsedWorkspace.active || collapsedRowPointer.containsMouse
-                ? Shell.Theme.workspaceActiveIndicatorColor
-                : Qt.rgba(Shell.Theme.workspaceActiveIndicatorColor.r,
-                          Shell.Theme.workspaceActiveIndicatorColor.g,
-                          Shell.Theme.workspaceActiveIndicatorColor.b, 0)
+                ? Shell.Theme.palette.workspaceActiveIndicatorColor
+                : Qt.rgba(Shell.Theme.palette.workspaceActiveIndicatorColor.r,
+                          Shell.Theme.palette.workspaceActiveIndicatorColor.g,
+                          Shell.Theme.palette.workspaceActiveIndicatorColor.b, 0)
 
             Behavior on color {
               ColorAnimation {

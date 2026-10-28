@@ -23,7 +23,7 @@ Item {
   Shell.Shadow {
     anchors.fill: chrome
     cornerRadius: chrome.radius
-    shadows: root.visible && root.lifted && Shell.Theme.daylight ? Shell.PanelStyle.controlShadows : []
+    shadows: root.visible && root.lifted && Shell.Theme.palette.dragPreview ? Shell.PanelStyle.controlShadows : []
   }
 
   Rectangle {
@@ -32,12 +32,12 @@ Item {
     radius: width / 2
     antialiasing: true
     // Fade alpha without interpolating the fill through transparent black.
-    color: root.lifted ? Shell.Theme.workspaceDragBackground : root.hovered ? Shell.Theme.workspaceControlHover
-        : Qt.rgba(Shell.Theme.workspaceControlHover.r, Shell.Theme.workspaceControlHover.g,
-                  Shell.Theme.workspaceControlHover.b, 0)
-    border.color: root.lifted ? "#CBA6F7" : Shell.Theme.workspaceIconOutline
+    color: root.lifted ? Shell.Theme.palette.workspaceDragBackground : root.hovered ? Shell.Theme.palette.workspaceControlHover
+        : Qt.rgba(Shell.Theme.palette.workspaceControlHover.r, Shell.Theme.palette.workspaceControlHover.g,
+                  Shell.Theme.palette.workspaceControlHover.b, 0)
+    border.color: root.lifted ? "#CBA6F7" : Shell.Theme.palette.workspaceIconOutline
     border.width: root.hovered ? 0 : Shell.Theme.sidebarStrokeWidth
-    layer.enabled: root.lifted && !Shell.Theme.daylight
+    layer.enabled: root.lifted && !Shell.Theme.palette.dragPreview
     layer.effect: MultiEffect {
       shadowEnabled: true
       shadowBlur: 0.5
@@ -58,12 +58,12 @@ Item {
   IconImage {
     anchors.centerIn: parent
     visible: (root.windowData.iconSource || "") !== ""
-    width: Shell.Theme.workspaceIconSize * (root.lifted ? Shell.Theme.workspaceDragGlyphScale : 1)
+    width: Shell.Theme.workspaceIconSize * (root.lifted ? Shell.Theme.palette.workspaceDragGlyphScale : 1)
     height: width
     source: root.windowData.iconSource || ""
     asynchronous: true
     smooth: true
-    opacity: Shell.Theme.daylight || root.hovered || root.lifted ? 1.0 : 0.9
+    opacity: root.hovered || root.lifted ? 1.0 : Shell.Theme.palette.idleIconOpacity
 
     Behavior on opacity { Shell.HoverAnimation {} }
   }
@@ -74,7 +74,7 @@ Item {
     dotState: root.windowData.dotState || "read"
     loaderVariant: root.windowData.loaderVariant || 1
     scale: root.controlSize / Shell.Theme.workspaceControlSize
-        * (root.lifted ? Shell.Theme.workspaceDragGlyphScale : 1)
+        * (root.lifted ? Shell.Theme.palette.workspaceDragGlyphScale : 1)
   }
 
   MouseArea {

@@ -3,16 +3,16 @@ import QtQuick
 import QtCore
 import Quickshell
 import Quickshell.Io
+import "palettes" as Palettes
 
 Singleton {
   id: root
   property string name: "daylight"
-  readonly property bool daylight: name === "daylight"
-  readonly property color sidebarCardOutline: Qt.rgba(1, 1, 1, 0.10)
-  readonly property color sidebarCardFill: Qt.rgba(0, 0, 0, 0.10)
-  readonly property color sidebarCardHoverFill: Qt.tint(sidebarCardFill, sidebarHoverFill)
-  readonly property color sidebarHoverFill: Qt.rgba(1, 1, 1, 0.04)
-  readonly property color sidebarClearFill: Qt.rgba(1, 1, 1, 0)
+  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette })
+  readonly property Palettes.ThemePalette palette: palettes[name]
+
+  Palettes.Daylight { id: daylightPalette }
+  Palettes.Unthemed { id: unthemedPalette }
 
   function reload() { themeFile.reload(); }
 
@@ -23,13 +23,14 @@ Singleton {
     printErrors: false
     onFileChanged: reload()
     onLoaded: {
-      try { root.name = JSON.parse(text()).theme === "unthemed" ? "unthemed" : "daylight"; }
+      try {
+        const theme = JSON.parse(text()).theme;
+        root.name = root.palettes.hasOwnProperty(theme) ? theme : "daylight";
+      }
       catch (error) { console.warn("Could not read theme selection:", error); }
     }
   }
 
-  readonly property color sidebarInnerOutline: daylight ? Qt.rgba(1, 1, 1, 0.20) : sidebarV3Control
-  readonly property color sidebarControlHover: daylight ? sidebarHoverFill : sidebarV3Control
   readonly property int sidebarOuterMargin: 10
   readonly property int sidebarCardExpandedWidth: 156
   readonly property int sidebarCardCollapsedWidth: 48
@@ -43,19 +44,9 @@ Singleton {
   readonly property color sidebarV3Border: "#303030"
   readonly property color sidebarV3Divider: "#383838"
   readonly property color sidebarV3WorkspaceActive: "#242424"
-  readonly property color workspaceLauncherActive: daylight ? sidebarHoverFill : "#262626"
-  readonly property color workspaceActiveIndicatorColor: daylight ? sidebarHoverFill : "#262626"
   readonly property color sidebarV3Control: "#303030"
   readonly property color sidebarV3Foreground: "#F8F9F9"
   readonly property color mediaHoverBackground: "#262626"
-  readonly property color workspaceIconOutline: daylight ? sidebarCardOutline : sidebarInnerOutline
-  readonly property color workspaceControlHover: daylight ? Qt.rgba(1, 1, 1, 0.10) : sidebarControlHover
-  readonly property color workspacePlaceholderColor: daylight ? Qt.rgba(1, 1, 1, 0.30) : sidebarInnerOutline
-  readonly property color workspaceDropFill: Qt.rgba(1, 1, 1, 0.20)
-  readonly property color workspaceNumberBackground: daylight ? "#5B5B5B" : sidebarV3WorkspaceActive
-  readonly property color workspaceNumberDragBackground: daylight ? "#787878" : sidebarV3Control
-  readonly property color workspaceDragBackground: daylight ? "#53525D" : "#292929"
-  readonly property real workspaceDragGlyphScale: daylight ? 13.913043975830078 / 16 : 1
   readonly property int workspaceControlSize: 40
   readonly property int workspaceCollapsedControlSize: 32
   readonly property int workspaceControlGap: 8
