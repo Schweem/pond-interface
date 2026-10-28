@@ -24,6 +24,7 @@ Singleton {
       source && source.audio ? source.audio.volume : 0)
   readonly property bool hasOutput: !!(sink && sink.audio)
   readonly property bool hasInput: !!(source && source.audio)
+  readonly property bool outputMuted: hasOutput && sink.audio.muted
 
   property int observedSinkId: -1
   property double suppressExternalUntil: 0
@@ -71,7 +72,9 @@ Singleton {
   }
 
   function toggleOutputMute() {
-    if (hasOutput) sink.audio.muted = !sink.audio.muted;
+    if (!hasOutput) return;
+    sink.audio.muted = !sink.audio.muted;
+    keyboardOutputVolumeChanged(outputVolume);
   }
 
   function toggleInputMute() {

@@ -69,6 +69,7 @@ Item {
       width: PanelStyle.fieldWidth
       height: 32
       externalValue: root.selectedVolume
+      muted: root.selectedTab === "output" && Audio.State.outputMuted
       interactive: root.interactive && root.selectedAudioAvailable
       onMoved: {
         if (root.selectedTab === "output")

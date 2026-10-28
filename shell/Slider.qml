@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Templates as T
 
 T.Slider {
@@ -6,6 +7,7 @@ T.Slider {
 
   property real externalValue: 0
   property bool showInlineValue: true
+  property bool muted: false
   property bool interactive: true
   property color trackColor: PanelStyle.border
   signal dragStarted
@@ -31,22 +33,49 @@ T.Slider {
   implicitHeight: 32
   clip: false
 
-  Rectangle {
-    x: 0
-    y: 12
-    width: parent.width
-    height: 12
-    radius: 6
-    color: root.trackColor
+  Item {
+    anchors.fill: parent
+    layer.enabled: root.muted
+    layer.effect: MultiEffect {
+      maskEnabled: true
+      maskInverted: true
+      maskSource: handleMask
+    }
+
+    Rectangle {
+      x: 0
+      y: 12
+      width: parent.width
+      height: 12
+      radius: 6
+      color: root.muted ? "transparent" : root.trackColor
+      border.width: root.muted ? 1 : 0
+      border.color: Qt.rgba(1, 1, 1, 0.2)
+    }
+
+    Rectangle {
+      x: root.muted ? 5 : 1
+      y: root.muted ? 17 : 13
+      width: Math.max(0, root.handleCenterX - x)
+      height: root.muted ? 2 : 10
+      radius: height / 2
+      color: root.muted ? Qt.rgba(1, 1, 1, 0.2) : PanelStyle.sliderFill
+    }
   }
 
-  Rectangle {
-    x: 1
-    y: 13
-    width: Math.max(0, root.handleCenterX - 1)
-    height: 10
-    radius: 5
-    color: PanelStyle.sliderFill
+  Item {
+    id: handleMask
+    anchors.fill: parent
+    visible: false
+    layer.enabled: root.muted
+
+    Rectangle {
+      x: handle.x
+      y: handle.y
+      width: handle.width
+      height: handle.height
+      radius: width / 2
+    }
   }
 
   Rectangle {
@@ -56,10 +85,11 @@ T.Slider {
     width: root.handleSize
     height: root.handleSize
     radius: width / 2
-    color: root.pressed ? PanelStyle.accent : PanelStyle.sliderFill
+    color: root.pressed ? PanelStyle.accent
+        : root.muted ? Qt.rgba(1, 1, 1, 0.1) : PanelStyle.sliderFill
     border.width: 1
-    border.color: root.handleHovered && !root.pressed
-        ? PanelStyle.accent : PanelStyle.border
+    border.color: root.handleHovered && !root.pressed ? PanelStyle.accent
+        : root.muted ? Qt.rgba(1, 1, 1, 0.5) : PanelStyle.border
     antialiasing: true
 
     Behavior on width {
@@ -78,12 +108,21 @@ T.Slider {
     Text {
       anchors.centerIn: parent
       anchors.verticalCenterOffset: 1
-      visible: root.showInlineValue && !root.handleHovered && !root.pressed
+      visible: root.showInlineValue && !root.muted && !root.handleHovered && !root.pressed
       text: Math.round(root.visualValue * 100)
       color: PanelStyle.surface
       font.family: Theme.fontFamily
       font.weight: Font.Medium
       font.pixelSize: 13
+    }
+
+    Image {
+      anchors.centerIn: parent
+      visible: root.muted
+      width: 16
+      height: 16
+      source: Qt.resolvedUrl("assets/volume-mute.svg")
+      sourceSize: Qt.size(width * 2, height * 2)
     }
   }
 
