@@ -37,6 +37,16 @@ ShellRoot {
     function open() { Settings.State.open("", "manual"); }
   }
 
+  IpcHandler {
+    target: "settings"
+    function toggle() { Settings.State.toggle(); }
+    function open(page: string) {
+      if (page && Settings.State.pages.indexOf(page) < 0) return;
+      Settings.State.open("", page);
+    }
+    function close() { Settings.State.close(); }
+  }
+
   Variants {
     model: Quickshell.screens
     delegate: Scope {
