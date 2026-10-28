@@ -19,6 +19,9 @@ Singleton {
   readonly property var sessionActions: [
     "lock", "suspend", "reboot", "shutdown"
   ]
+  readonly property var pages: [
+    "appearance", "information", "manual", "display", "arrange", "system", "mouse", "keyboard", "timezone"
+  ]
 
   Timer {
     id: sessionActionDelay
@@ -49,7 +52,7 @@ Singleton {
   }
 
   function openPage(name) {
-    if (["appearance", "information", "manual", "display", "arrange", "system", "mouse", "keyboard", "timezone"].indexOf(name) < 0) return;
+    if (pages.indexOf(name) < 0) return;
     pageHistory = pageHistory.concat(page);
     page = name;
   }

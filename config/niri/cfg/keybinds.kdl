@@ -15,6 +15,13 @@ binds {
     // Mod+K                               hotkey-overlay-title="Switch Keyboard Language" { switch-layout "next"; }
     // Mod+ALT+L                           hotkey-overlay-title="Lock Screen" { spawn-sh "/usr/bin/qs -p /usr/share/pond-interface/lockscreen ipc call lockscreen lock || /usr/bin/qs -d -p /usr/share/pond-interface/lockscreen"; }
 
+    // ─── Shell ───
+    // Optional: uncomment to enable.
+    // Settings pages: appearance, display, system, mouse, keyboard, timezone, information, manual
+    // Mod+B                               repeat=false hotkey-overlay-title="Toggle Sidebar" { spawn "qs" "-c" "pond-shell" "ipc" "call" "sidebar" "toggle"; }
+    // Mod+Comma                           repeat=false hotkey-overlay-title="Toggle Settings" { spawn "qs" "-c" "pond-shell" "ipc" "call" "settings" "toggle"; }
+    // Mod+Shift+Comma                     repeat=false hotkey-overlay-title="Open Display Settings" { spawn "qs" "-c" "pond-shell" "ipc" "call" "settings" "open" "display"; }
+
     // ─── Media Controls ───
     // XF86AudioRaiseVolume                allow-when-locked=true { spawn "qs" "-c" "pond-shell" "ipc" "call" "volume" "increase"; }
     // XF86AudioLowerVolume                allow-when-locked=true { spawn "qs" "-c" "pond-shell" "ipc" "call" "volume" "decrease"; }
