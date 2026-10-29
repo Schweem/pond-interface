@@ -111,4 +111,8 @@ ThemePalette {
   selectionFill: root.lilac
   selectionText: root.ink
   sliderHandle: root.yellow
+  lowColors: [root.yellow, root.orange, "#FA6D80"]
+  lowSurfaces: [root.yellow, root.orange, "#FA6D80"]
+  lowInkText: true
+  lowBannerOpacity: 1
 }
