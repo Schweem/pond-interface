@@ -115,4 +115,9 @@ ThemePalette {
   lowSurfaces: [root.yellow, root.orange, "#FA6D80"]
   lowInkText: true
   lowBannerOpacity: 1
+  placeholderBorder: "#9BA7B5"
+  placeholderHover: Qt.alpha(root.ink, 0.05)
+  placeholderGlyph: "#9BA7B5"
+  themeTileIdle: Qt.tint(root.paper, Qt.alpha(root.ink, 0.08))
+  themeLabel: root.ink
 }
