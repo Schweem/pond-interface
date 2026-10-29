@@ -8,6 +8,12 @@ import "palettes" as Palettes
 Singleton {
   id: root
   property string name: "daylight"
+  // The theme chosen in theme.json. It applies straight away unless something
+  // holds the switch (a transition), which calls apply() when it is ready.
+  property string requested: "daylight"
+  property bool holdSwitch: false
+  property bool loaded: false
+  function apply() { name = requested; }
   readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, pond: pondPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
@@ -26,7 +32,10 @@ Singleton {
     onLoaded: {
       try {
         const theme = JSON.parse(text()).theme;
-        root.name = root.palettes.hasOwnProperty(theme) ? theme : "daylight";
+        root.requested = root.palettes.hasOwnProperty(theme) ? theme : "daylight";
+        // The first read applies directly so the shell starts in its theme.
+        if (!root.holdSwitch || !root.loaded) root.apply();
+        root.loaded = true;
       }
       catch (error) { console.warn("Could not read theme selection:", error); }
     }
