@@ -135,7 +135,8 @@ QtObject {
   property color themeTileIdle: "#262626"
   property color themeLabel: root.accent
 
-  // Cells that hide a switch into this theme (ThemeTransition).
+  // Cells that hide a switch into this theme (ThemeSwitchTransition), and that
+  // cover the screen while it powers off.
   property color transitionFill: root.accent
   property color transitionEdge: "#1D1D1D"
 }

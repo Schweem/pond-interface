@@ -14,6 +14,7 @@ ShellRoot {
   property bool expanded: true
 
   Shortcuts {}
+  ThemeSwitchTransition {}
 
   FileView {
     path: Quickshell.screens.length
@@ -83,7 +84,7 @@ ShellRoot {
       Battery.Notification { bar: sidebar; above: toast }
       PanelDismissWindow { bar: sidebar }
       Settings.Window { menuScreen: modelData }
-      ThemeTransitionOverlay { screen: modelData }
+      ScreenTransitionOverlay { screen: modelData }
     }
   }
 }
