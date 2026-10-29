@@ -7,6 +7,8 @@ PanelWindow {
   property alias dimmed: background.dimmed
   property alias imageSource: background.imageSource
   property alias plainColor: background.plainColor
+  property alias gridColor: background.gridColor
+  property alias gridSpacing: background.gridSpacing
   property alias now: background.now
   anchors { top: true; bottom: true; left: true; right: true }
   color: "#0b101c"
