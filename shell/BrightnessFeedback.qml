@@ -54,7 +54,7 @@ Item {
             width: 6
             height: 6
             radius: 3
-            color: index < Math.round(Theme.clamp01(card.value) * 10) ? "white"
+            color: index < Math.round(Theme.clamp01(card.value) * 10) ? Theme.palette.foregroundBright
                 : Theme.palette.track
           }
         }

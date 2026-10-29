@@ -31,7 +31,7 @@ Item {
     radius: 16
     color: root.inlinePreview
         ? (root.hovered ? Shell.Theme.palette.previewHoverFill : Shell.Theme.palette.previewFill)
-        : Shell.Theme.sidebarV3Background
+        : Shell.Theme.palette.surface
     antialiasing: true
     Behavior on color {
       enabled: !root.inlinePreview

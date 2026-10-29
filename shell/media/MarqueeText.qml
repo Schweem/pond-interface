@@ -9,7 +9,7 @@ Item {
   id: root
 
   property string text: ""
-  property color textColor: Shell.Theme.sidebarV3Foreground
+  property color textColor: Shell.Theme.palette.foreground
   property string fontFamily: Shell.Theme.fontFamily
   property int fontWeight: Font.Normal
   property real fontPixelSize: 13

@@ -70,7 +70,7 @@ Shell.Card {
           text: row.name
           textFormat: Text.PlainText
           elide: Text.ElideRight
-          color: "white"
+          color: Shell.Theme.palette.foregroundBright
           font.family: Shell.Theme.fontFamily
           font.pixelSize: 13
           font.weight: Font.Medium

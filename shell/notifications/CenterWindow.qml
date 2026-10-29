@@ -85,7 +85,7 @@ PanelWindow {
     width: Notifications.Style.panelWidth
     height: root.panelHeight
     radius: Notifications.Style.radius
-    color: Shell.Theme.sidebarV3Background
+    color: Shell.Theme.palette.surface
     opacity: root.reveal
     antialiasing: true
     z: 2

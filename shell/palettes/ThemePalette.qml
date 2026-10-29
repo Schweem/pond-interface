@@ -1,7 +1,8 @@
 import QtQuick
 
 // Everything that differs between themes. Each theme in this directory
-// instantiates a ThemePalette and sets every property.
+// instantiates a ThemePalette; properties with a default here are shared by
+// the dark themes and only need setting when a theme departs from them.
 QtObject {
   property string label
 
@@ -44,4 +45,14 @@ QtObject {
   property color dropStroke
   property color dropFill
   property bool dropDashed
+
+  property color surface: "#1D1D1D"
+  property color surfaceBorder: "#303030"
+  property color divider: "#383838"
+  property color control: "#303030"
+  property color foreground: "#F8F9F9"
+  property color foregroundBright: "white"
+  property color foregroundSecondary: "#B7B7B7"
+  property color mediaHover: "#262626"
+  property color subtleFill: Qt.rgba(1, 1, 1, 0.08)
 }

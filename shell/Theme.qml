@@ -40,13 +40,6 @@ Singleton {
   readonly property int sidebarRowHorizontalPadding: 16
   readonly property int sidebarSimpleRowHeight: 48
   readonly property int sidebarTimeExpandedHeight: 58
-  readonly property color sidebarV3Background: "#1D1D1D"
-  readonly property color sidebarV3Border: "#303030"
-  readonly property color sidebarV3Divider: "#383838"
-  readonly property color sidebarV3WorkspaceActive: "#242424"
-  readonly property color sidebarV3Control: "#303030"
-  readonly property color sidebarV3Foreground: "#F8F9F9"
-  readonly property color mediaHoverBackground: "#262626"
   readonly property int workspaceControlSize: 40
   readonly property int workspaceCollapsedControlSize: 32
   readonly property int workspaceControlGap: 8

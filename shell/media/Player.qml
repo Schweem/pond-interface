@@ -30,7 +30,7 @@ Shell.Card {
   height: Shell.Theme.lerp(expandedTargetHeight, collapsedTargetHeight,
       Shell.Theme.collapseHeight(collapseProgress))
   visible: height > 0
-  classicColor: revealed ? Shell.Theme.mediaHoverBackground : Shell.Theme.sidebarV3Background
+  classicColor: revealed ? Shell.Theme.palette.mediaHover : Shell.Theme.palette.surface
   animateClassicColor: true
 
   Behavior on expandedTargetHeight {
@@ -84,7 +84,7 @@ Shell.Card {
           width: parent.width
           height: 19
           text: root.displayTitle
-          textColor: Shell.Theme.sidebarV3Foreground
+          textColor: Shell.Theme.palette.foreground
           fontWeight: Font.Medium
           playing: Media.State.isPlaying
         }
@@ -92,7 +92,7 @@ Shell.Card {
           width: parent.width
           height: 19
           text: Media.State.subtitle
-          textColor: Qt.rgba(0.973, 0.976, 0.976, 0.5)
+          textColor: Qt.alpha(Shell.Theme.palette.foreground, 0.5)
           fontWeight: Font.Normal
           playing: Media.State.isPlaying
         }
@@ -151,7 +151,7 @@ Shell.Card {
     width: artSize
     height: artSize
     radius: 4
-    color: Shell.Theme.sidebarV3Border
+    color: Shell.Theme.palette.surfaceBorder
 
     Image {
       anchors.fill: parent

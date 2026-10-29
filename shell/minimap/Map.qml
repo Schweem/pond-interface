@@ -625,7 +625,7 @@ Shell.Card {
             text: collapsedWorkspace.displayNumber < 10
                 ? "0" + collapsedWorkspace.displayNumber
                 : String(collapsedWorkspace.displayNumber)
-            color: Shell.Theme.sidebarV3Foreground
+            color: Shell.Theme.palette.foreground
             opacity: collapsedWorkspace.active
                 ? 1.0 : 0.5
             font.family: Shell.Theme.plexFontFamily
@@ -685,7 +685,7 @@ Shell.Card {
                 antialiasing: true
                 readonly property string dotState: collapsedWorkspace.windowItems[index].dotState || ""
                 color: dotState === "working" ? "#CBA6F7" : dotState === "unread" ? "#FF9F67"
-                    : dotState === "read" ? "#CBE25B" : iconColor.colors[0] ?? "white"
+                    : dotState === "read" ? "#CBE25B" : iconColor.colors[0] ?? Shell.Theme.palette.foregroundBright
 
                 // ColorQuantizer needs a file; theme icons use an image-provider URL.
                 Image {
@@ -731,7 +731,7 @@ Shell.Card {
             anchors.bottom: parent.bottom
             width: 16
             height: 1
-            color: Shell.Theme.sidebarV3Divider
+            color: Shell.Theme.palette.divider
             opacity: 0.8
           }
         }

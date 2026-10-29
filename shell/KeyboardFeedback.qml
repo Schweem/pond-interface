@@ -75,7 +75,7 @@ Item {
                 width: parent.width - 24
                 y: (parent.height + metrics.capitalHeight) / 2 - baselineOffset
                 text: row.modelData; elide: Text.ElideRight
-                color: "#f8f9f9"; opacity: 0.6
+                color: Theme.palette.foreground; opacity: 0.6
                 font.family: Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Medium
                 FontMetrics { id: metrics; font: label.font }
               }
@@ -86,7 +86,7 @@ Item {
                 Rectangle {
                   anchors.centerIn: parent
                   width: 12; height: 12; radius: 6
-                  color: "white"
+                  color: Theme.palette.foregroundBright
                   visible: row.index === NiriMsg.keyboardLayoutIndex
                 }
               }

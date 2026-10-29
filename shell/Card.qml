@@ -5,7 +5,7 @@ Rectangle {
   id: root
   default property alias contentData: content.data
   property bool contentClipped: true
-  property color classicColor: Theme.sidebarV3Background
+  property color classicColor: Theme.palette.surface
   property bool animateClassicColor: false
   readonly property bool cardHovered: cardHover.hovered
   readonly property Region blurRegion: Region {

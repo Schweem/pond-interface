@@ -196,7 +196,7 @@ Card {
     anchors.horizontalCenter: parent.horizontalCenter
     y: 14.5 + noInternetMetrics.capitalHeight - baselineOffset
     text: "No internet"
-    color: "white"
+    color: Theme.palette.foregroundBright
     font.family: Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: 13
@@ -230,7 +230,7 @@ Card {
       Text {
         height: 19
         text: Wifi.State.uploadRate
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
@@ -242,7 +242,7 @@ Card {
       width: 1
       height: 14
       anchors.verticalCenter: parent.verticalCenter
-      color: Theme.sidebarV3Foreground
+      color: Theme.palette.foreground
       opacity: 0.24
     }
 
@@ -259,7 +259,7 @@ Card {
       Text {
         height: 19
         text: Wifi.State.downloadRate
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
