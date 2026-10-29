@@ -60,7 +60,7 @@ Item {
           text: root.empty ? "Notifications" : String(Notifications.State.notificationCount)
           visible: !root.empty || root.collapseProgress < 0.31
           opacity: root.empty ? 0.6 : 1
-          color: root.empty ? Notifications.Style.foreground : Shell.Theme.palette.foregroundSecondary
+          color: root.empty ? Shell.Theme.palette.foreground : Shell.Theme.palette.foregroundSecondary
           font.family: Shell.Theme.fontFamily
           font.weight: Font.Medium
           font.pixelSize: 13

@@ -1,0 +1,59 @@
+import QtQuick
+
+// Flat paper and ink, after butterfly.so: pale blue fills, 1px ink lines,
+// chartreuse for whatever is active.
+ThemePalette {
+  id: root
+  readonly property color paper: "#E1EBF7"
+  readonly property color ink: "#111111"
+  readonly property color slate: "#4C5164"
+  readonly property color chartreuse: "#CEF058"
+  readonly property color yellow: "#FFD330"
+
+  label: "Pond"
+  blur: false
+  dimWallpaper: false
+  uniformCards: true
+  dragPreview: true
+
+  cardBorderWidth: 1
+  compactCardRadius: 12
+  idleIconOpacity: 1.0
+
+  cardFill: root.paper
+  cardHoverFill: Qt.tint(root.paper, Qt.alpha(root.ink, 0.04))
+  cardOutline: root.ink
+  hoverFill: Qt.alpha(root.ink, 0.06)
+  innerOutline: root.ink
+  track: Qt.alpha(root.ink, 0.2)
+  actionSelected: root.chartreuse
+  actionHover: Qt.alpha(root.ink, 0.06)
+  actionIdle: Qt.alpha(root.ink, 0)
+  previewFill: Qt.alpha(root.ink, 0.04)
+  previewHoverFill: Qt.alpha(root.ink, 0.08)
+
+  workspaceLauncherActive: root.chartreuse
+  workspaceActiveIndicatorColor: root.chartreuse
+  workspaceIconOutline: root.ink
+  workspaceControlHover: Qt.alpha(root.ink, 0.08)
+  workspacePlaceholderColor: Qt.alpha(root.ink, 0.3)
+  workspaceNumberBackground: root.ink
+  workspaceNumberDragBackground: root.slate
+  workspaceNumberText: root.paper
+  workspaceDragBackground: root.yellow
+  workspaceDragGlyphScale: 13.913043975830078 / 16
+  dropStroke: root.ink
+  dropFill: Qt.alpha(root.ink, 0.06)
+  dropDashed: true
+
+  surface: root.paper
+  surfaceBorder: "#9BA7B5"
+  divider: root.ink
+  control: Qt.alpha(root.ink, 0.08)
+  foreground: root.ink
+  foregroundBright: root.ink
+  foregroundSecondary: root.slate
+  iconTint: root.ink
+  mediaHover: Qt.tint(root.paper, Qt.alpha(root.ink, 0.04))
+  subtleFill: Qt.alpha(root.ink, 0.06)
+}

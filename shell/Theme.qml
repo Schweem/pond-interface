@@ -8,11 +8,12 @@ import "palettes" as Palettes
 Singleton {
   id: root
   property string name: "daylight"
-  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette })
+  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, pond: pondPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
   Palettes.Daylight { id: daylightPalette }
   Palettes.Unthemed { id: unthemedPalette }
+  Palettes.Pond { id: pondPalette }
 
   function reload() { themeFile.reload(); }
 
