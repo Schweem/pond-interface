@@ -87,8 +87,12 @@ Singleton {
   function requestSessionAction(action) {
     if (sessionActions.indexOf(action) < 0)
       return;
-    pendingSessionAction = action;
     opened = false;
+    if (action === "lock") {
+      Shell.ScreenLock.lock();
+      return;
+    }
+    pendingSessionAction = action;
     // Powering off ends the session, so the screens cover and stay covered.
     const power = action === "reboot" || action === "shutdown";
     if (power && Shell.ScreenTransition.run({ hold: true, covered: runSessionAction }))

@@ -18,21 +18,29 @@ def run(action):
     # Reuse an existing installed or source instance before starting one.
     paths = list(dict.fromkeys((installed, local)))
     for path in paths:
-        result = subprocess.run(['qs', '-p', str(path), 'ipc', 'call', 'lockscreen', method],
-                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        if result.returncode == 0:
-            return
-    path = installed if installed.is_dir() else local
-    subprocess.run(['qs', '-d', '-p', str(path)], check=True)
-    if action == 'lock':
-        return
+        if call(path, method).returncode == 0:
+            break
+    else:
+        path = installed if installed.is_dir() else local
+        subprocess.run(['qs', '-d', '-p', str(path)], check=True)
+        if action == 'suspend' and not retry(lambda: call(path, method).returncode == 0):
+            raise RuntimeError('Pond lockscreen did not start; refusing to suspend')
+    # A lock exits once it is secure, so a cover over the screen can clear.
+    if action == 'lock' and not retry(lambda: call(path, 'isSecure').stdout.strip() == 'true'):
+        raise RuntimeError('Pond lockscreen did not confirm the lock')
+
+
+def call(path, method):
+    return subprocess.run(['qs', '-p', str(path), 'ipc', 'call', 'lockscreen', method],
+                          capture_output=True, text=True)
+
+
+def retry(check):
     for _ in range(30):
-        result = subprocess.run(['qs', '-p', str(path), 'ipc', 'call', 'lockscreen', method],
-                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        if result.returncode == 0:
-            return
+        if check():
+            return True
         time.sleep(0.1)
-    raise RuntimeError('Pond lockscreen did not start; refusing to suspend')
+    return False
 
 
 if __name__ == '__main__':
