@@ -15,6 +15,7 @@ ShellRoot {
 
   Shortcuts {}
   ThemeSwitchTransition {}
+  LoginReveal {}
 
   FileView {
     path: Quickshell.screens.length

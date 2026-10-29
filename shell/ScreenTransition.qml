@@ -57,12 +57,11 @@ Singleton {
     return { x: point.x, y: point.y, left, top, cols, rows, far };
   }
 
-  // next: { palette, covered, hold }. covered() runs once every screen is
-  // covered; hold keeps them covered until release(). False if one is running.
-  function run(next) {
-    if (running) return false;
+  function prepare(next) {
     request = next;
-    palette = next.palette ?? Theme.palette;
+    // Without one, follow the theme: at startup it loads after the cover is up.
+    if (next.palette) palette = next.palette;
+    else palette = Qt.binding(() => Theme.palette);
     let far = 0;
     for (const screen of Quickshell.screens)
       far = Math.max(far, layout(screen.width, screen.height,
@@ -71,7 +70,24 @@ Singleton {
     // Never step faster than a frame.
     interval = Math.max(16, Math.round(duration / Math.max(1, far)));
     step = 0;
+  }
+
+  // next: { palette, covered, hold }. covered() runs once every screen is
+  // covered; hold keeps them covered until release(). False if one is running.
+  function run(next) {
+    if (running) return false;
+    prepare(next);
     phase = "cover";
+    return true;
+  }
+
+  // Start out covered and hold until release(), for changes made before
+  // anything is on screen (the shell starting). False if one is running.
+  function hold(next) {
+    if (running) return false;
+    prepare(next);
+    phase = "held";
+    holdTimer.restart();
     return true;
   }
 

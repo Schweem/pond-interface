@@ -32,6 +32,8 @@ Singleton {
     path: StandardPaths.writableLocation(StandardPaths.ConfigLocation) + "/pond-interface/theme.json"
     watchChanges: true
     printErrors: false
+    // Read the first load in place so the shell's first frame is in its theme.
+    blockLoading: true
     onFileChanged: reload()
     onLoaded: {
       try {
