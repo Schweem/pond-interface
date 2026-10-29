@@ -10,8 +10,9 @@ Item {
   // Retarget from the current values when hover or selection interrupts motion.
   property real emphasis: available && (hovered || selected) ? 1 : 0
   property real selection: selected ? 1 : 0
-  readonly property real idleRotation: themeKey === "daylight" ? 45 : 90
-  readonly property real idleScale: themeKey === "daylight" ? 40 / 56 : 40 / 78
+  // Resting pose of the symbol; hover and selection ease it upright to full size.
+  property real idleRotation: 90
+  property real idleScale: 40 / 78
   Behavior on emphasis { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }
   Behavior on selection { NumberAnimation { duration: 250; easing.type: Easing.InOutCubic } }
   signal clicked

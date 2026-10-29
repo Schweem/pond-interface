@@ -27,8 +27,9 @@ Settings.Modal {
     }
     Text {
       x: 418; y: 107; height: 25
-      text: upcoming.hovered ? "Coming soon" : daylight.hovered && !daylight.selected ? "Daylight"
-          : unthemed.hovered && !unthemed.selected ? "Unthemed" : ""
+      text: daylight.hovered && !daylight.selected ? "Daylight"
+          : unthemed.hovered && !unthemed.selected ? "Unthemed"
+          : pond.hovered && !pond.selected ? "Pond" : ""
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
       color: "#b3b3b3"; verticalAlignment: Text.AlignVCenter
       opacity: text ? 1 : 0
@@ -37,6 +38,7 @@ Settings.Modal {
     ThemeButton {
       id: daylight; objectName: "themeDaylight"
       x: 243; y: 12; themeKey: "daylight"; label: "Daylight"
+      idleRotation: 45; idleScale: 40 / 56
       selected: Shell.Theme.name === "daylight"
       onClicked: Appearance.State.selectTheme("daylight")
     }
@@ -47,8 +49,11 @@ Settings.Modal {
       onClicked: Appearance.State.selectTheme("unthemed")
     }
     ThemeButton {
-      id: upcoming; objectName: "themeComingSoon"
-      x: 294; y: 103; available: false; label: "Coming soon"
+      id: pond; objectName: "themePond"
+      x: 294; y: 103; themeKey: "pond"; label: "Pond"
+      idleRotation: 45; idleScale: 28 / 40
+      selected: Shell.Theme.name === "pond"
+      onClicked: Appearance.State.selectTheme("pond")
     }
   }
   Column {
