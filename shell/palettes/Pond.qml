@@ -88,4 +88,26 @@ ThemePalette {
   closeCompact: "#9BA7B5"
   closeFill: root.lilac
   closeHoverFill: Qt.lighter(root.lilac, 1.08)
+
+  settingsOverlay: "#9BA7B5"
+  settingsCard: root.paper
+  settingsHover: Qt.tint(root.paper, Qt.alpha(root.ink, 0.06))
+  settingsBorderWidth: 1
+  sessionControl: Qt.tint(root.paper, Qt.alpha(root.ink, 0.08))
+  foregroundMuted: root.slate
+  foregroundFaint: "#6B7385"
+  controlFill: Qt.alpha(root.ink, 0.05)
+  controlHover: Qt.alpha(root.ink, 0.10)
+  controlBorder: root.ink
+  controlBorderHover: root.ink
+  controlSelected: Qt.alpha(root.lilac, 0.25)
+  controlRaised: Qt.alpha(root.ink, 0.15)
+  accentSurface: Qt.alpha(root.lilac, 0.3)
+  outlineStrong: root.ink
+  outlineSubtle: Qt.alpha(root.ink, 0.3)
+  sliderMark: root.ink
+  errorText: "#C4314B"
+  selectionFill: root.lilac
+  selectionText: root.ink
+  sliderHandle: root.yellow
 }
