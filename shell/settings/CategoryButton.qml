@@ -26,16 +26,16 @@ Item {
   Behavior on opacity {
     NumberAnimation {
       duration: root.revealed ? Settings.Style.revealDuration
-                              : Settings.Style.closeDuration
-      easing.type: Easing.OutCubic
+                              : Settings.Style.exitDuration
+      easing.type: root.revealed ? Easing.OutCubic : Settings.Style.exitEasing
     }
   }
 
   Behavior on scale {
     NumberAnimation {
       duration: root.revealed ? Settings.Style.revealDuration
-                              : Settings.Style.closeDuration
-      easing.type: Easing.OutCubic
+                              : Settings.Style.exitDuration
+      easing.type: root.revealed ? Easing.OutCubic : Settings.Style.exitEasing
     }
   }
 

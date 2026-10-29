@@ -131,8 +131,8 @@ PanelWindow {
 
     Behavior on opacity {
       NumberAnimation {
-        duration: Settings.Style.closeDuration
-        easing.type: Easing.OutCubic
+        duration: root.targetOpen ? Settings.Style.closeDuration : Settings.Style.exitDuration
+        easing.type: root.targetOpen ? Easing.OutCubic : Settings.Style.exitEasing
       }
     }
   }
@@ -151,10 +151,8 @@ PanelWindow {
     height: 538
     anchors.centerIn: parent
     clip: false
+    // Each card fades itself; fading the container as well would compound.
     enabled: root.cardsOpen
-    visible: opacity > 0
-    opacity: root.cardsOpen ? 1 : 0
-    Behavior on opacity { NumberAnimation { duration: Settings.Style.closeDuration; easing.type: Easing.OutCubic } }
 
     Repeater {
       model: root.primaryButtons
@@ -229,7 +227,10 @@ PanelWindow {
     opacity: root.cardsOpen ? 1 : 0
     Keys.onEscapePressed: Settings.State.close()
     Behavior on opacity {
-      NumberAnimation { duration: Settings.Style.closeDuration; easing.type: Easing.OutCubic }
+      NumberAnimation {
+        duration: root.cardsOpen ? Settings.Style.closeDuration : Settings.Style.exitDuration
+        easing.type: root.cardsOpen ? Easing.OutCubic : Settings.Style.exitEasing
+      }
     }
   }
 
@@ -246,8 +247,18 @@ PanelWindow {
     enabled: root.modalOpen
     opacity: root.modalOpen ? 1 : 0
     scale: root.modalOpen ? 1 : 0.96
-    Behavior on opacity { NumberAnimation { duration: Settings.Style.closeDuration; easing.type: Easing.OutCubic } }
-    Behavior on scale { NumberAnimation { duration: Settings.Style.closeDuration; easing.type: Easing.OutCubic } }
+    Behavior on opacity {
+      NumberAnimation {
+        duration: root.modalOpen ? Settings.Style.closeDuration : Settings.Style.exitDuration
+        easing.type: root.modalOpen ? Easing.OutCubic : Settings.Style.exitEasing
+      }
+    }
+    Behavior on scale {
+      NumberAnimation {
+        duration: root.modalOpen ? Settings.Style.closeDuration : Settings.Style.exitDuration
+        easing.type: root.modalOpen ? Easing.OutCubic : Settings.Style.exitEasing
+      }
+    }
     onLoaded: item.forceActiveFocus()
   }
   Component {
@@ -339,7 +350,8 @@ PanelWindow {
 
   Timer {
     id: closeCleanup
-    interval: Settings.Style.closeDuration
+    // Margin so the surface never unmaps on the fade's last frame.
+    interval: Settings.Style.exitDuration + 40
     onTriggered: {
       if (!root.targetOpen)
         root.presented = false;

@@ -25,7 +25,7 @@ Singleton {
 
   Timer {
     id: sessionActionDelay
-    interval: Settings.Style.closeDuration
+    interval: Settings.Style.exitDuration
     onTriggered: {
       const action = root.pendingSessionAction;
       root.pendingSessionAction = "";

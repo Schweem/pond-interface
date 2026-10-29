@@ -13,5 +13,8 @@ QtObject {
   readonly property int staggerInterval: 28
   readonly property int revealDuration: 32
   readonly property int closeDuration: 180
+  // Leaving eases in so the fade starts gently instead of dropping out at once.
+  readonly property int exitDuration: 260
+  readonly property int exitEasing: Easing.InOutCubic
   readonly property int hoverDuration: 100
 }
