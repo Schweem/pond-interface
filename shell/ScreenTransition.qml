@@ -24,6 +24,12 @@ Singleton {
   property int maxRing: 0
   // Colors the cells; a theme switch passes the incoming palette.
   property var palette: Theme.palette
+  // A held cover can start as one plain color, edges and all, so it meets
+  // whatever was on screen before; clearing then sends a band this many
+  // rings wide of the palette's cells out ahead of the reveal.
+  property color base: "transparent"
+  readonly property bool hasBase: base.a > 0
+  readonly property int band: 3
   // Where the change was asked for, in screen coordinates: { screen, x, y, time }.
   // Recent picks start from there; other screens start from their center.
   property var origin: null
@@ -62,6 +68,7 @@ Singleton {
     // Without one, follow the theme: at startup it loads after the cover is up.
     if (next.palette) palette = next.palette;
     else palette = Qt.binding(() => Theme.palette);
+    base = next.base ?? "transparent";
     let far = 0;
     for (const screen of Quickshell.screens)
       far = Math.max(far, layout(screen.width, screen.height,
@@ -72,7 +79,7 @@ Singleton {
     step = 0;
   }
 
-  // next: { palette, covered, hold }. covered() runs once every screen is
+  // next: { palette, base, covered, hold }. covered() runs once every screen is
   // covered; hold keeps them covered until release(). False if one is running.
   function run(next) {
     if (running) return false;
@@ -123,6 +130,7 @@ Singleton {
         root.phase = "idle";
         root.origin = null;
         root.request = null;
+        root.base = "transparent";
         root.finished();
       }
     }

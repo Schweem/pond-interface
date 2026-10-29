@@ -15,7 +15,7 @@ ShellRoot {
 
   Shortcuts {}
   ThemeSwitchTransition {}
-  LoginReveal {}
+  LoginReveal { id: loginReveal }
 
   FileView {
     path: Quickshell.screens.length
@@ -39,6 +39,12 @@ ShellRoot {
     function open() { Settings.State.open("", "manual"); }
   }
 
+  // Lock keys call this, falling back to the lock screen directly.
+  IpcHandler {
+    target: "session"
+    function lock(): void { ScreenLock.lock(); }
+  }
+
   IpcHandler {
     target: "settings"
     function toggle() { Settings.State.toggle(); }
@@ -59,6 +65,7 @@ ShellRoot {
         custom: Appearance.State.wallpaperMode === "custom"
         dimmed: Theme.palette.dimWallpaper
         imageSource: Appearance.State.wallpaperUrl
+        FirstFrame { onDrawn: loginReveal.drawn() }
       }
       // pond-wallpaper ships separately; older versions lack plainColor and
       // keep the sky rather than failing to load the shell.
@@ -77,6 +84,7 @@ ShellRoot {
         screen: modelData
         expanded: root.expanded
         onToggleRequested: root.expanded = !root.expanded
+        FirstFrame { onDrawn: loginReveal.drawn() }
       }
       Notifications.ToastWindow { id: toast; bar: sidebar }
       Notifications.CenterWindow { bar: sidebar }
