@@ -11,7 +11,7 @@ Rectangle {
   signal clicked
   signal toggled(bool checked)
   width: 520; height: 51; radius: 12
-  color: highlighted || hover.hovered || activeFocus ? "#303030" : "#262626"
+  color: highlighted || hover.hovered || activeFocus ? Shell.Theme.palette.controlHover : Shell.Theme.palette.controlFill
   activeFocusOnTab: enabled
   Accessible.role: toggle ? Accessible.CheckBox : navigation ? Accessible.Button : Accessible.ComboBox
   Accessible.name: title + ", " + value
@@ -23,7 +23,7 @@ Rectangle {
   Text {
     id: label
     x: 20; anchors.verticalCenter: parent.verticalCenter
-    text: root.title; color: "#b3b3b3"
+    text: root.title; color: Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily; font.pixelSize: 15
   }
   Text {
@@ -32,7 +32,7 @@ Rectangle {
     horizontalAlignment: Text.AlignRight
     elide: Text.ElideRight
     visible: !root.toggle
-    text: root.value; color: "#b3b3b3"
+    text: root.value; color: Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily; font.pixelSize: 15
   }
   Image {

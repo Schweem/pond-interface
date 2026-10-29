@@ -13,8 +13,8 @@ Item {
   height: Math.min(maximumHeight, options.length * 40 + 16)
   Shell.Shadow { anchors.fill: parent; cornerRadius: 16; shadows: Shell.PanelStyle.controlShadows }
   Rectangle {
-    anchors.fill: parent; color: "#1d1d1d"; radius: 16
-    border.width: 0.5; border.color: "#3d3d3d"
+    anchors.fill: parent; color: Shell.PanelStyle.surface; radius: 16
+    border.width: 0.5; border.color: Shell.PanelStyle.border
     MouseArea { anchors.fill: parent }
     ListView {
       id: list
@@ -38,13 +38,13 @@ Item {
         required property int index
         objectName: "displayOption" + modelData.value
         width: list.width; height: 40; radius: 12
-        color: hover.hovered || (list.activeFocus && list.currentIndex === index) || String(modelData.value) === root.currentValue ? "#262626" : "transparent"
+        color: hover.hovered || (list.activeFocus && list.currentIndex === index) || String(modelData.value) === root.currentValue ? Shell.Theme.palette.controlFill : "transparent"
         Accessible.role: Accessible.MenuItem; Accessible.name: modelData.label
         Accessible.onPressAction: root.selected(String(modelData.value))
         Text {
           x: 12; width: parent.width - 24; anchors.verticalCenter: parent.verticalCenter
           text: option.modelData.label; elide: Text.ElideRight
-          color: "white"; font.family: Shell.Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Medium
+          color: Shell.Theme.palette.foregroundBright; font.family: Shell.Theme.fontFamily; font.pixelSize: 13; font.weight: Font.Medium
         }
         HoverHandler { id: hover; cursorShape: Qt.PointingHandCursor }
         TapHandler { onTapped: root.selected(String(option.modelData.value)) }

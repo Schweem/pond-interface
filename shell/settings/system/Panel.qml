@@ -33,7 +33,7 @@ Settings.Modal {
     }
     Text {
       width: parent.width; visible: !!System.State.error
-      text: System.State.error; color: "#ffb4ab"; wrapMode: Text.Wrap
+      text: System.State.error; color: Shell.Theme.palette.errorText; wrapMode: Text.Wrap
       font.family: Shell.Theme.fontFamily; font.pixelSize: 13
     }
   }

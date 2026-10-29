@@ -17,13 +17,13 @@ Settings.Modal {
     Text {
       x: 103; y: 83; height: 25
       text: "Theme:"; font.family: Shell.Theme.fontFamily; font.pixelSize: 15
-      color: "#b3b3b3"; verticalAlignment: Text.AlignVCenter
+      color: Shell.Theme.palette.foregroundMuted; verticalAlignment: Text.AlignVCenter
     }
     Text {
       x: 418; y: 83; height: 25
       text: Shell.Theme.palette.label
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
-      color: "#cba6f7"; opacity: 0.7; verticalAlignment: Text.AlignVCenter
+      color: Shell.PanelStyle.accent; opacity: 0.7; verticalAlignment: Text.AlignVCenter
     }
     Text {
       x: 418; y: 107; height: 25
@@ -31,7 +31,7 @@ Settings.Modal {
           : unthemed.hovered && !unthemed.selected ? "Unthemed"
           : pond.hovered && !pond.selected ? "Pond" : ""
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
-      color: "#b3b3b3"; verticalAlignment: Text.AlignVCenter
+      color: Shell.Theme.palette.foregroundMuted; verticalAlignment: Text.AlignVCenter
       opacity: text ? 1 : 0
       Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
     }
@@ -107,7 +107,7 @@ Settings.Modal {
         visible: !Appearance.State.brightnessAvailable
         y: 36; width: parent.width
         text: "This display does not expose brightness control."
-        color: "#b3b3b3"; font.family: Shell.Theme.fontFamily; font.pixelSize: 11
+        color: Shell.Theme.palette.foregroundMuted; font.family: Shell.Theme.fontFamily; font.pixelSize: 11
       }
     }
     Accordion {
@@ -122,7 +122,7 @@ Settings.Modal {
       visible: Appearance.State.error !== ""
       text: Appearance.State.error
       wrapMode: Text.Wrap
-      font.family: Shell.Theme.fontFamily; font.pixelSize: 13; color: "#ffb4ab"
+      font.family: Shell.Theme.fontFamily; font.pixelSize: 13; color: Shell.Theme.palette.errorText
     }
   }
 }

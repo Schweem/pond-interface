@@ -9,6 +9,6 @@ Text {
   font.family: Shell.Theme.fontFamily
   font.pixelSize: 11
   font.letterSpacing: 0.11
-  color: "#777777"
+  color: Shell.Theme.palette.foregroundFaint
   FontMetrics { id: metrics; font: root.font }
 }

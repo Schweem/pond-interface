@@ -92,4 +92,23 @@ QtObject {
   property color checkMark: "black"
   property color closeFill: root.panelHover
   property color closeHoverFill: root.panelPressed
+
+  // Settings window.
+  property color settingsOverlay: "#101010"
+  property color settingsCard: "#1D1D1D"
+  property color settingsHover: "#262626"
+  property color sessionControl: "#2C2C2C"
+  property color foregroundMuted: "#B3B3B3"
+  property color foregroundFaint: "#777777"
+  property color controlFill: "#262626"
+  property color controlHover: "#303030"
+  property color controlBorder: "#303030"
+  property color controlBorderHover: "#444444"
+  property color controlSelected: "#333333"
+  property color controlRaised: "#525252"
+  property color accentSurface: "#3F3847"
+  property color outlineStrong: "#4A4A4A"
+  property color outlineSubtle: "#343434"
+  property color sliderMark: "#D9D9D9"
+  property color errorText: "#FFB4AB"
 }

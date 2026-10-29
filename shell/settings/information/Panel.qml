@@ -30,17 +30,17 @@ Settings.Modal {
       x:30; y:modelData.y-82; width:520; height:24
       Rectangle {
         width:24; height:24; radius:12
-        color:"transparent"; border.width:1; border.color:"#343434"
+        color:"transparent"; border.width:1; border.color:Shell.Theme.palette.outlineSubtle
         Information.Label {
           x:0; width:24; capY:8; text:row.index+1
           font.family:"IBM Plex Mono"; font.weight:Font.DemiBold; font.letterSpacing:-0.22
-          horizontalAlignment:Text.AlignHCenter; color:"#80ffffff"
+          horizontalAlignment:Text.AlignHCenter; color:Qt.alpha(Shell.Theme.palette.overlay, 128 / 255)
         }
       }
       Information.Label {
         x:54; capY:7; text:row.modelData.label
         font.pixelSize:15; font.weight:Font.Medium; font.letterSpacing:0
-        color:"#99ffffff"
+        color:Qt.alpha(Shell.Theme.palette.overlay, 153 / 255)
       }
       Information.Label {
         id:valueText
@@ -48,7 +48,7 @@ Settings.Modal {
         x:130; capY:6; width:390
         text:Information.State.value(row.modelData.key)
         font.family:Shell.Theme.titleFontFamily; font.styleName:"Book"; font.pixelSize:17
-        font.letterSpacing:0; color:"white"; elide:Text.ElideRight
+        font.letterSpacing:0; color:Shell.Theme.palette.foregroundBright; elide:Text.ElideRight
         ToolTip.visible:valueHover.hovered && truncated
         ToolTip.text:text
         HoverHandler { id:valueHover }
@@ -56,7 +56,7 @@ Settings.Modal {
       Rectangle {
         visible:row.modelData.line>0
         y:row.modelData.line-row.modelData.y-1; width:520; height:1
-        color:"#343434"
+        color:Shell.Theme.palette.outlineSubtle
       }
     }
   }
@@ -66,7 +66,7 @@ Settings.Modal {
     x:30; y:376; width:520; height:64; radius:12
     // Stay opaque while easing so transparent black cannot darken the midpoint.
     color:manualHover.hovered || activeFocus ? Settings.Style.hover : root.color
-    border.width:1; border.color:"#343434"
+    border.width:1; border.color:Shell.Theme.palette.outlineSubtle
     activeFocusOnTab:true
     Accessible.role:Accessible.Button
     Accessible.name:"Manual"
@@ -79,7 +79,7 @@ Settings.Modal {
       source:Qt.resolvedUrl("../../assets/manual/book.svg")
     }
     Information.Label {
-      x:54; capY:26; text:"Manual"; color:"white"
+      x:54; capY:26; text:"Manual"; color:Shell.Theme.palette.foregroundBright
       font.family:Shell.Theme.titleFontFamily; font.styleName:"Book"; font.pixelSize:17; font.letterSpacing:0
     }
     HoverHandler { id:manualHover; cursorShape:Qt.PointingHandCursor }

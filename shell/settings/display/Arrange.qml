@@ -33,12 +33,12 @@ Settings.Modal {
     id: canvas
     objectName: "arrangeCanvas"
     x: 30; width: root.width-60; height: 470; radius: 16
-    color: "transparent"; border.width: 1; border.color: "#303030"
+    color: "transparent"; border.width: 1; border.color: Shell.Theme.palette.controlBorder
     clip: true
     Canvas {
       anchors.fill: parent
       onPaint: {
-        const c=getContext("2d"); c.clearRect(0,0,width,height); c.strokeStyle="#303030"; c.lineWidth=1;
+        const c=getContext("2d"); c.clearRect(0,0,width,height); c.strokeStyle=Shell.Theme.palette.controlBorder; c.lineWidth=1;
         c.beginPath();
         for(let x=width/10;x<width;x+=width/10) {c.moveTo(x,0);c.lineTo(x,height);}
         for(let y=height/10;y<height;y+=height/10) {c.moveTo(0,y);c.lineTo(width,y);}
@@ -104,7 +104,7 @@ Settings.Modal {
     id: done
     objectName: "arrangeDone"
     x: 30; y: 490; width: root.width-60; height: 50; radius: 12
-    color: doneHover.hovered || activeFocus ? "#d9bbfb" : "#cba6f7"
+    color: doneHover.hovered || activeFocus ? "#d9bbfb" : Shell.PanelStyle.accent
     opacity: enabled ? 1 : 0.4
     enabled: !root.stale && !Display.State.busy && Geometry.valid(root.draft)
     activeFocusOnTab: enabled
@@ -122,6 +122,6 @@ Settings.Modal {
     x: 30; y: 552; width: root.width - 60
     visible: root.stale || !!Display.State.error
     text: root.stale ? "Displays changed. Close and reopen Arrange to use the current layout." : Display.State.error
-    font.family: Shell.Theme.fontFamily; font.pixelSize: 13; color: "#ffb4ab"; wrapMode: Text.Wrap
+    font.family: Shell.Theme.fontFamily; font.pixelSize: 13; color: Shell.Theme.palette.errorText; wrapMode: Text.Wrap
   }
 }

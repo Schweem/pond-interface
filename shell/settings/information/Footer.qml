@@ -53,7 +53,7 @@ Item {
   }
   Rectangle {
     x:98; y:31; width:40; height:18; radius:9
-    color:"transparent"; border.width:1; border.color:"#4a4a4a"
+    color:"transparent"; border.width:1; border.color:Shell.Theme.palette.outlineStrong
     Label { x:9; capY:5; text:"V0.1" }
   }
   Label {
@@ -93,7 +93,7 @@ Item {
       }
       Rectangle {
         anchors.fill:parent; radius:width/2
-        color:"#cba6f7"
+        color:Shell.PanelStyle.accent
         opacity:root.activeContact===contact.modelData.key ? 1 : 0
         Behavior on opacity { NumberAnimation { duration:130; easing.type:Easing.OutCubic } }
         Plus {
@@ -134,7 +134,7 @@ Item {
       }
       Plus {
         anchors.centerIn:parent
-        ink:root.activeContact ? "#cba6f7" : "#777777"
+        ink:root.activeContact ? Shell.PanelStyle.accent : Shell.Theme.palette.foregroundFaint
       }
     }
   }
@@ -144,7 +144,7 @@ Item {
       required property var modelData
       objectName:"informationLabel" + modelData.key + "-" + modelData.value
       x:modelData.x; capY:modelData.y; text:modelData.value
-      color:modelData.accent ? "#cba6f7" : "#777777"
+      color:modelData.accent ? Shell.PanelStyle.accent : Shell.Theme.palette.foregroundFaint
       opacity:root.activeContact===modelData.key ? 1 : 0
       Behavior on opacity {
         SequentialAnimation {
@@ -157,7 +157,7 @@ Item {
 
   component Plus: Shape {
     id: root
-    property color ink: "#777777"
+    property color ink: Shell.Theme.palette.foregroundFaint
     implicitWidth: 8; implicitHeight: 8
     preferredRendererType: Shape.CurveRenderer
     ShapePath {

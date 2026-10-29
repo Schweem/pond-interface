@@ -8,14 +8,14 @@ Rectangle {
   property bool dragging: false
   property bool hovered: false
   radius: 12
-  color: selected || dragging ? "#3f3847" : hovered || activeFocus ? (arranging ? "#525252" : "#303030") : arranging ? "#303030" : "#262626"
+  color: selected || dragging ? Shell.Theme.palette.accentSurface : hovered || activeFocus ? (arranging ? Shell.Theme.palette.controlRaised : Shell.Theme.palette.controlHover) : arranging ? Shell.Theme.palette.controlHover : Shell.Theme.palette.controlFill
   border.width: selected || dragging ? 1 : 0
-  border.color: "#cba6f7"
+  border.color: Shell.PanelStyle.accent
   Text {
     anchors.centerIn: parent
     width: parent.width - 16
     text: root.label
-    color: root.selected || root.dragging ? "#cba6f7" : "#b3b3b3"
+    color: root.selected || root.dragging ? Shell.PanelStyle.accent : Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily
     font.pixelSize: 13; font.weight: Font.Medium
     horizontalAlignment: Text.AlignHCenter

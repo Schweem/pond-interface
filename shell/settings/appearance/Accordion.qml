@@ -12,7 +12,7 @@ Rectangle {
   signal toggled
   implicitHeight: expanded ? expandedHeight : 50
   radius: 16
-  color: header.containsMouse || activeFocus ? "#303030" : "#262626"
+  color: header.containsMouse || activeFocus ? Shell.Theme.palette.controlHover : Shell.Theme.palette.controlFill
   clip: true
   activeFocusOnTab: true
   Accessible.role: Accessible.Button
@@ -28,13 +28,13 @@ Rectangle {
   }
   Text {
     x: 20; y: 0; height: 50
-    text: root.title; color: "#b3b3b3"
+    text: root.title; color: Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily; font.pixelSize: 15
     verticalAlignment: Text.AlignVCenter
   }
   Text {
     x: parent.width * 0.48; y: 0; width: parent.width - x - 40; height: 50
-    text: root.summary; color: "#b3b3b3"
+    text: root.summary; color: Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily; font.pixelSize: 15
     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignRight
     elide: Text.ElideRight
