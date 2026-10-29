@@ -53,6 +53,7 @@ QtObject {
   property color foreground: "#F8F9F9"
   property color foregroundBright: "white"
   property color foregroundSecondary: "#B7B7B7"
+  property color iconTint: "white"
   property color mediaHover: "#262626"
   property color subtleFill: Qt.rgba(1, 1, 1, 0.08)
 }

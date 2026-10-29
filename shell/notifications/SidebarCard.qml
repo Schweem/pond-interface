@@ -39,7 +39,7 @@ Item {
         y: Math.round((Shell.Theme.sidebarSimpleRowHeight - height) / 2)
         height: Notifications.Style.summaryIconSize
 
-        Image {
+        Shell.Glyph {
           width: Notifications.Style.summaryIconSize
           height: Notifications.Style.summaryIconSize
           source: Qt.resolvedUrl("../assets/bell.svg")

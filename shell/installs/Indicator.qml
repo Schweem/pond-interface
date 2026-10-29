@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
+import ".." as Shell
 
 Item {
   id: root
@@ -37,7 +38,7 @@ Item {
       }
     }
   }
-  Image {
+  Shell.Glyph {
     anchors.fill: parent
     visible: root.status === "installed"
     source: Qt.resolvedUrl("../assets/installs/check.svg")

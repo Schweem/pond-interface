@@ -436,10 +436,11 @@ Shell.Card {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
               }
-              Image {
+              Shell.Glyph {
                 anchors.centerIn: parent
                 width: 2
                 height: 10
+                tint: Shell.Theme.palette.workspaceNumberText
                 visible: numberPointer.containsMouse || workspaceDrag.active
                 source: "../assets/navigation/drag-handle.svg"
               }

@@ -177,7 +177,7 @@ Shell.Card {
     implicitWidth: Shell.Theme.mediaControlSize
     implicitHeight: Shell.Theme.mediaControlSize
 
-    Image {
+    Shell.Glyph {
       anchors.fill: parent
       source: root.hovered ? root.hoverIconSource : root.iconSource
       sourceSize: Qt.size(Shell.Theme.mediaControlSize * 2,

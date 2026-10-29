@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Effects
+import ".." as Shell
 
 // Fill the battery outline continuously from 0–100%.
 Item {
@@ -9,12 +9,11 @@ Item {
   property color color: "white"
   readonly property real level: Math.max(0, Math.min(100, percentage)) / 100
   implicitWidth: 16; implicitHeight: 16
-  Image {
+  Shell.Glyph {
     anchors.fill: parent
     source: Qt.resolvedUrl("../assets/battery/outline.svg")
     sourceSize: Qt.size(width * 2, height * 2)
-    layer.enabled: !Qt.colorEqual(root.color, "white")
-    layer.effect: MultiEffect { colorization: 1; colorizationColor: root.color }
+    tint: root.color
   }
   Rectangle {
     x: root.width * 6 / 16

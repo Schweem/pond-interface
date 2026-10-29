@@ -221,7 +221,7 @@ Card {
       height: 19
       spacing: 4
       opacity: 0.6
-      Image {
+      Glyph {
         width: 14
         height: 14
         anchors.verticalCenter: parent.verticalCenter
@@ -250,7 +250,7 @@ Card {
       height: 19
       spacing: 4
       opacity: 0.6
-      Image {
+      Glyph {
         width: 14
         height: 14
         anchors.verticalCenter: parent.verticalCenter
@@ -328,7 +328,7 @@ Card {
 
       Repeater {
         model: action.slot === 3 ? 2 : 0
-        Image {
+        Glyph {
           required property int index
           anchors.centerIn: parent
           anchors.horizontalCenterOffset: -0.1667

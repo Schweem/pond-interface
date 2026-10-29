@@ -38,7 +38,7 @@ Item {
     Row {
       anchors.centerIn: parent
       spacing: 9
-      Image {
+      Glyph {
         width: 16
         height: 16
         source: "assets/brightness.svg"

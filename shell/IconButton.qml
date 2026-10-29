@@ -22,7 +22,7 @@ Item {
     HoverAnimation { easing.type: root.hoverEasing }
   }
 
-  Image {
+  Glyph {
     id: glyph
     anchors.centerIn: parent
     width: root.iconWidth

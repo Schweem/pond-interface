@@ -23,7 +23,7 @@ Item {
       ColorAnimation { duration: Shell.Theme.sidebarHoverDuration; easing.type: Easing.OutCubic }
     }
   }
-  Image {
+  Shell.Glyph {
     anchors.centerIn: parent
     width: Shell.Theme.workspaceIconSize
     height: width
