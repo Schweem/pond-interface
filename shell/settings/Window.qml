@@ -20,6 +20,9 @@ PanelWindow {
   property bool presented: false
   property int revealStep: -1
   property var revealRanks: []
+  // Closing from the cards walks revealStep back down so tiles leave in reverse.
+  property bool cardsClosing: false
+  property int closeSpan: Settings.Style.exitDuration
   readonly property int cardCount: primaryButtons.length + sessionButtons.length
   property string displayedPage: Settings.State.page || "appearance"
 
@@ -131,7 +134,7 @@ PanelWindow {
 
     Behavior on opacity {
       NumberAnimation {
-        duration: root.targetOpen ? Settings.Style.closeDuration : Settings.Style.exitDuration
+        duration: root.targetOpen ? Settings.Style.closeDuration : root.closeSpan
         easing.type: root.targetOpen ? Easing.OutCubic : Settings.Style.exitEasing
       }
     }
@@ -174,7 +177,7 @@ PanelWindow {
           if (modelData.page) Settings.State.openPage(modelData.page);
           else Settings.State.openBluetooth();
         }
-        revealed: root.cardsOpen
+        revealed: (root.cardsOpen || root.cardsClosing)
             && root.revealStep >= root.revealRanks[modelData.slot]
       }
     }
@@ -201,7 +204,7 @@ PanelWindow {
             : Updates.State.pending === modelData.action ? modelData.pendingName : modelData.updatingName
         labelWidth: modelData.labelWidth
         accessibleName: modelData.name
-        revealed: root.cardsOpen
+        revealed: (root.cardsOpen || root.cardsClosing)
             && root.revealStep >= root.revealRanks[modelData.slot]
         onClicked: afterUpdate ? Updates.State.after(modelData.action)
             : Settings.State.requestSessionAction(modelData.action)
@@ -349,10 +352,25 @@ PanelWindow {
   }
 
   Timer {
+    id: hideTimer
+    interval: Settings.Style.staggerInterval
+    repeat: true
+    onTriggered: {
+      if (root.revealStep < 0) {
+        stop();
+        return;
+      }
+      root.revealStep -= 1;
+    }
+  }
+
+  Timer {
     id: closeCleanup
     // Margin so the surface never unmaps on the fade's last frame.
-    interval: Settings.Style.exitDuration + 40
+    interval: root.closeSpan + 40
     onTriggered: {
+      hideTimer.stop();
+      root.cardsClosing = false;
       if (!root.targetOpen)
         root.presented = false;
     }
@@ -361,6 +379,8 @@ PanelWindow {
   function beginOpen() {
     closeCleanup.stop();
     revealTimer.stop();
+    hideTimer.stop();
+    cardsClosing = false;
     revealRanks = shuffledRanks();
     revealStep = -1;
     presented = true;
@@ -374,7 +394,18 @@ PanelWindow {
 
   function beginClose() {
     revealTimer.stop();
-    revealStep = -1;
+    const fromCards = presented && Settings.State.page === "" && revealStep >= 0;
+    closeSpan = fromCards
+        ? Math.max(Settings.Style.exitDuration,
+                   revealStep * Settings.Style.staggerInterval + Settings.Style.cardExitDuration)
+        : Settings.Style.exitDuration;
+    if (fromCards) {
+      cardsClosing = true;
+      revealStep -= 1;
+      hideTimer.restart();
+    } else {
+      revealStep = -1;
+    }
     if (presented)
       closeCleanup.restart();
   }

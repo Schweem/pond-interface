@@ -20,22 +20,22 @@ Item {
   implicitHeight: 264
   visible: opacity > 0.001
   opacity: revealed ? 1 : 0
-  scale: revealed ? 1 : 0.86
+  scale: revealed ? 1 : Settings.Style.cardExitScale
   transformOrigin: Item.Center
 
   Behavior on opacity {
     NumberAnimation {
       duration: root.revealed ? Settings.Style.revealDuration
-                              : Settings.Style.exitDuration
-      easing.type: root.revealed ? Easing.OutCubic : Settings.Style.exitEasing
+                              : Settings.Style.cardExitDuration
+      easing.type: root.revealed ? Easing.OutCubic : Easing.InCubic
     }
   }
 
   Behavior on scale {
     NumberAnimation {
       duration: root.revealed ? Settings.Style.revealDuration
-                              : Settings.Style.exitDuration
-      easing.type: root.revealed ? Easing.OutCubic : Settings.Style.exitEasing
+                              : Settings.Style.cardExitDuration
+      easing.type: Easing.OutCubic
     }
   }
 

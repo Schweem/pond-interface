@@ -16,5 +16,8 @@ QtObject {
   // Leaving eases in so the fade starts gently instead of dropping out at once.
   readonly property int exitDuration: 260
   readonly property int exitEasing: Easing.InOutCubic
+  readonly property int cardExitDuration: 140
+  // Tiles shrink first and fade late on exit so the shrink stays visible.
+  readonly property real cardExitScale: 0.8
   readonly property int hoverDuration: 100
 }
