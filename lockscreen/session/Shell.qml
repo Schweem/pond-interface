@@ -9,7 +9,15 @@ ShellRoot {
 
     readonly property Session session: locker.item as Session
 
+    // The shell's cover to open under, for the next lock only.
+    property var introRequest: null
+
     function lock() { locker.active = true; }
+    function lockFrom(request) {
+        if (!locker.active)
+            introRequest = request;
+        lock();
+    }
     function lockAndSuspend() {
         lock();
         suspendWait.checks = 0;
@@ -33,11 +41,13 @@ ShellRoot {
     Loader {
         id: locker
         active: false
+        onActiveChanged: if (!active) root.introRequest = null
         sourceComponent: Session {
             displayName: info.displayName
             wifiConnected: network.wifiConnected
             powerBackend: power
             presentationOutputs: (Quickshell.env("POND_LOCK_OUTPUTS") || "").split(",").filter(name => name.length > 0)
+            introRequest: root.introRequest
             onFinished: locker.active = false
         }
     }
@@ -59,6 +69,11 @@ ShellRoot {
     IpcHandler {
         target: "lockscreen"
         function lock(): void { root.lock(); }
+        // Lock under cells matching the shell's cover: its colors, and the
+        // screen and point its wave started from (centers on other screens).
+        function lockFrom(fill: string, edge: string, screen: string, x: real, y: real): void {
+            root.lockFrom({ fill, edge, screen, x, y });
+        }
         function lockAndSuspend(): void { root.lockAndSuspend(); }
         function isLocked(): bool { return locker.active; }
         function isSecure(): bool { return root.session !== null && root.session.secure; }
