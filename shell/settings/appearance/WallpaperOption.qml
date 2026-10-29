@@ -47,7 +47,7 @@ Rectangle {
       GradientStop { position: 1; color: "#141d2a" }
     }
   }
-  Image {
+  Shell.Glyph {
     visible: !root.dynamic && !Appearance.State.wallpaperPath
     x: parent.width - 44; y: 20; width: 24; height: 24
     source: Qt.resolvedUrl("../../assets/appearance/wallpaper.svg")

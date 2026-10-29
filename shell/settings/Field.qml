@@ -35,7 +35,7 @@ Rectangle {
     text: root.value; color: Shell.Theme.palette.foregroundMuted
     font.family: Shell.Theme.fontFamily; font.pixelSize: 15
   }
-  Image {
+  Shell.Glyph {
     anchors.right: parent.right; anchors.rightMargin: 20; anchors.verticalCenter: parent.verticalCenter
     width: 16; height: 16; visible: root.navigation
     source: Qt.resolvedUrl("../assets/appearance/chevron.svg")

@@ -22,6 +22,8 @@ Rectangle {
   implicitHeight: Math.min(contentHeight + bodyTop, availableHeight)
   radius: 32
   color: Settings.Style.card
+  border.width: Shell.Theme.palette.settingsBorderWidth
+  border.color: Shell.PanelStyle.border
 
   // Accordion heights already animate. Follow them directly so the shell and
   // hit targets stay in step instead of starting another animation each frame.

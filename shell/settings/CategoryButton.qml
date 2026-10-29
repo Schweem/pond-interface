@@ -44,6 +44,8 @@ Item {
     radius: Settings.Style.radius
     color: root.hovered ? Settings.Style.hover
                         : Settings.Style.card
+    border.width: Shell.Theme.palette.settingsBorderWidth
+    border.color: Shell.PanelStyle.border
     clip: true
 
     Behavior on color {
@@ -59,7 +61,7 @@ Item {
       x: 30
       y: 30
 
-      Image {
+      Shell.Glyph {
         anchors.centerIn: parent
         width: root.iconWidth
         height: root.iconHeight

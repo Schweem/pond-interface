@@ -50,8 +50,8 @@ Rectangle {
     width: parent.width - x - root.rightPadding
     color: root.password && !root.revealed
         ? PanelStyle.accent : Theme.palette.foregroundBright
-    selectionColor: PanelStyle.accentText
-    selectedTextColor: Theme.palette.foregroundBright
+    selectionColor: Theme.palette.selectionFill
+    selectedTextColor: Theme.palette.selectionText
     font.family: Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: root.password && !root.revealed ? 12 : 13

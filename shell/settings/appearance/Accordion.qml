@@ -39,7 +39,7 @@ Rectangle {
     verticalAlignment: Text.AlignVCenter; horizontalAlignment: Text.AlignRight
     elide: Text.ElideRight
   }
-  Image {
+  Shell.Glyph {
     x: parent.width - 36; y: 17; width: 16; height: 16
     source: Qt.resolvedUrl("../../assets/appearance/chevron.svg")
     objectName: "settingsRowChevron"

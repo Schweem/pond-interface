@@ -74,7 +74,7 @@ Settings.Modal {
     Keys.onReturnPressed:Settings.State.openPage("manual")
     Keys.onSpacePressed:Settings.State.openPage("manual")
     Behavior on color { ColorAnimation { duration:Settings.Style.hoverDuration; easing.type:Easing.OutCubic } }
-    Image {
+    Shell.Glyph {
       x:20; y:20; width:24; height:24
       source:Qt.resolvedUrl("../../assets/manual/book.svg")
     }

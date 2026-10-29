@@ -50,7 +50,7 @@ Settings.Modal {
           onMoved: System.State.setMouse(field.modelData.key, value)
           background: Rectangle {
             y: 4; width: slider.width; height: 16; radius: 8
-            color: Shell.PanelStyle.border
+            color: Shell.Theme.palette.panelTrack
             Rectangle {
               x: 1; y: 1; width: slider.leftPadding + slider.visualPosition * slider.availableWidth - 1
               height: 14; radius: 7
@@ -60,7 +60,7 @@ Settings.Modal {
           handle: Rectangle {
             x: slider.leftPadding + slider.visualPosition * slider.availableWidth - width / 2
             width: 24; height: 24; radius: 12
-            color: Shell.PanelStyle.sliderFill; border.width: 2; border.color: field.color
+            color: Shell.Theme.palette.sliderHandle; border.width: 2; border.color: field.color
           }
           HoverHandler { cursorShape: Qt.PointingHandCursor }
         }

@@ -69,7 +69,7 @@ Settings.Modal {
         width: 24; height: 24; radius: 6
         color: row.highlighted ? Shell.Theme.palette.controlHover : Shell.Theme.palette.controlFill
       }
-      Image {
+      Shell.Glyph {
         visible: row.chosen
         x: parent.width - (root.multiple ? 42 : 40); anchors.verticalCenter: parent.verticalCenter
         width: 20; height: 20; sourceSize: Qt.size(40, 40)
@@ -97,7 +97,7 @@ Settings.Modal {
         id: search
         x: 20; width: parent.width - 76; anchors.verticalCenter: parent.verticalCenter
         clip: true; color: Shell.Theme.palette.foregroundBright
-        selectionColor: Shell.PanelStyle.accentText; selectedTextColor: Shell.Theme.palette.foregroundBright
+        selectionColor: Shell.Theme.palette.selectionFill; selectedTextColor: Shell.Theme.palette.selectionText
         font.family: Shell.Theme.fontFamily; font.pixelSize: 15
         Accessible.role: Accessible.EditableText
         Accessible.name: root.placeholder
@@ -113,7 +113,7 @@ Settings.Modal {
         }
         onAccepted: if (root.query && root.rows.length) root.choose(root.rows[0].id)
       }
-      Image {
+      Shell.Glyph {
         x: parent.width - 36; anchors.verticalCenter: parent.verticalCenter
         width: 20; height: 20; sourceSize: Qt.size(40, 40)
         visible: !search.text
@@ -128,7 +128,7 @@ Settings.Modal {
         Accessible.role: Accessible.Button
         Accessible.name: "Clear search"
         Accessible.onPressAction: search.clear()
-        Image {
+        Shell.Glyph {
           anchors.centerIn: parent
           width: 20; height: 20; sourceSize: Qt.size(40, 40)
           source: Qt.resolvedUrl("../../assets/wifi/close.svg")

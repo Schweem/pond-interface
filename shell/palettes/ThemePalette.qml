@@ -111,4 +111,8 @@ QtObject {
   property color outlineSubtle: "#343434"
   property color sliderMark: "#D9D9D9"
   property color errorText: "#FFB4AB"
+  property real settingsBorderWidth: 0
+  property color selectionFill: "#4F3D64"
+  property color selectionText: "white"
+  property color sliderHandle: root.sliderFill
 }

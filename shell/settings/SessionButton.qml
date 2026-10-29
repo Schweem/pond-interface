@@ -67,6 +67,8 @@ Item {
     anchors.fill: parent
     radius: Settings.Style.radius
     color: root.hovered ? root.hoverColor : Settings.Style.card
+    border.width: Shell.Theme.palette.settingsBorderWidth
+    border.color: Shell.PanelStyle.border
     clip: true
 
     Behavior on color {
@@ -96,7 +98,9 @@ Item {
         height: width
         anchors.centerIn: parent
 
-        Image {
+        Shell.Glyph {
+          // The hovered control turns a dark shade of the category color.
+          tint: root.hovered ? "white" : Shell.Theme.palette.iconTint
           anchors.centerIn: parent
           width: root.iconWidth
           height: root.iconHeight
