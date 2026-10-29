@@ -57,7 +57,7 @@ Item {
                      root.backingAmount),
           1)
       border.color: PanelStyle.border
-      border.width: 0.5
+      border.width: Theme.palette.panelBorderWidth
       antialiasing: true
     }
 

@@ -4,7 +4,7 @@ Rectangle {
   color: PanelStyle.surface
   radius: PanelStyle.radius
   border.color: PanelStyle.border
-  border.width: 0.5
+  border.width: Theme.palette.panelBorderWidth
   antialiasing: true
   clip: true
 }

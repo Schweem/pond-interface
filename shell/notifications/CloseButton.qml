@@ -24,7 +24,7 @@ Rectangle {
     }
   }
 
-  Image {
+  Shell.Glyph {
     anchors.centerIn: parent
     width: root.compact ? 12 : Notifications.Style.closeIconSize
     height: width

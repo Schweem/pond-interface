@@ -9,12 +9,12 @@ Item {
   Rectangle {
     anchors.fill: parent
     radius: 12
-    color: closeHover.hovered ? PanelStyle.pressed : PanelStyle.hover
+    color: closeHover.hovered ? Theme.palette.closeHoverFill : Theme.palette.closeFill
     border.color: PanelStyle.border
-    border.width: 0.5
+    border.width: Theme.palette.panelBorderWidth
     antialiasing: true
 
-    Image {
+    Glyph {
       anchors.centerIn: parent
       width: 20
       height: 20

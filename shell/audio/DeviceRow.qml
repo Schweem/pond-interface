@@ -50,7 +50,8 @@ Item {
     border.color: Theme.palette.foregroundBright
     opacity: root.selected ? 1 : 0.3
 
-    Image {
+    Glyph {
+      sourceColor: "black"; tint: Theme.palette.checkMark
       anchors.centerIn: parent
       width: 12
       height: 12

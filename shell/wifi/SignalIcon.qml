@@ -7,7 +7,7 @@ Item {
   implicitWidth: 20
   implicitHeight: 20
 
-  Image {
+  Glyph {
     anchors.centerIn: parent
     width: 17.5
     height: 12.8

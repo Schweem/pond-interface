@@ -28,7 +28,7 @@ Controls.Button {
     font.weight: Font.Medium
     font.pixelSize: 13
   }
-  Image {
+  Glyph {
     anchors.right: parent.right
     anchors.rightMargin: 14
     anchors.verticalCenter: parent.verticalCenter

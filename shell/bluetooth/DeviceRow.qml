@@ -42,7 +42,7 @@ Bluetooth.Row {
       visible: root.hovered; enabled: root.interactive
       hoverEnabled: true; cursorShape: Qt.PointingHandCursor
       onClicked: root.infoClicked()
-      Image {
+      Shell.Glyph {
         anchors.centerIn: parent; width: 16; height: 16
         opacity: infoPointer.containsMouse ? 1 : 0.6
         source: Qt.resolvedUrl("../assets/bluetooth/info.svg")
@@ -55,7 +55,8 @@ Bluetooth.Row {
       color: root.device.connected ? Shell.Theme.palette.foregroundBright : "transparent"
       border.width: root.device.connected ? 0 : 1
       border.color: Qt.alpha(Shell.Theme.palette.overlay, 0.3)
-      Image {
+      Shell.Glyph {
+        sourceColor: "black"; tint: Shell.Theme.palette.checkMark
         anchors.centerIn: parent; width: 12; height: 12
         visible: !!root.device.connected
         source: Qt.resolvedUrl("../assets/bluetooth/check.svg")

@@ -7,7 +7,7 @@ Rectangle {
   implicitWidth: 146
   implicitHeight: 40
   radius: 10
-  color: pointer.containsMouse ? PanelStyle.border : PanelStyle.pressed
+  color: pointer.containsMouse ? Theme.palette.buttonHover : PanelStyle.pressed
   opacity: interactive ? 1 : 0.4
   Text {
     anchors.centerIn: parent

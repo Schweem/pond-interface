@@ -53,7 +53,7 @@ DeviceList {
       anchors.verticalCenter: parent.verticalCenter
       spacing: 12
       opacity: 0.5
-      Image {
+      Glyph {
         width: 20
         height: 20
         source: Qt.resolvedUrl("../assets/wifi/add.svg")

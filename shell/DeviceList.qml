@@ -24,7 +24,7 @@ Item {
 
   PanelBackground {
     anchors.fill: parent
-    Image {
+    Glyph {
       x: 19.5; y: 23.5; width: 20; height: 20
       visible: root.titleIcon.toString() !== ""; source: root.titleIcon
     }

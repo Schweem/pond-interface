@@ -4,6 +4,7 @@ import QtQuick
 // instantiates a ThemePalette; properties with a default here are shared by
 // the dark themes and only need setting when a theme departs from them.
 QtObject {
+  id: root
   property string label
 
   // Blur the wallpaper behind sidebar cards and feedback popups.
@@ -80,4 +81,11 @@ QtObject {
   property color todayFill: "#D1C9FF"
   property color todayText: "#643957"
   property color closeCompact: "#555555"
+  property real panelBorderWidth: 0.5
+  property color buttonHover: "#3D3D3D"
+  property color panelTrack: "#3D3D3D"
+  property color connectedRow: "transparent"
+  property color checkMark: "black"
+  property color closeFill: root.panelHover
+  property color closeHoverFill: root.panelPressed
 }

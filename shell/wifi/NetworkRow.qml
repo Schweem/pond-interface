@@ -15,7 +15,8 @@ Item {
   Rectangle {
     anchors.fill: parent
     radius: PanelStyle.rowRadius
-    color: hover.hovered ? PanelStyle.hover : "transparent"
+    readonly property color base: root.network.connected ? Theme.palette.connectedRow : "transparent"
+    color: hover.hovered ? Qt.tint(base, PanelStyle.hover) : base
   }
   MouseArea {
     anchors.fill: parent
@@ -34,7 +35,7 @@ Item {
     x: 12; y: 12; width: 20; height: 20
     bars: Number(root.network.bars || 1)
   }
-  Image {
+  Glyph {
     visible: !!root.network.wired
     x: 12; y: 12; width: 20; height: 20
     source: Qt.resolvedUrl("../assets/wifi/ethernet.svg")
@@ -52,7 +53,7 @@ Item {
     font.weight: Font.Medium
     font.pixelSize: 13
   }
-  Image {
+  Glyph {
     visible: !!root.network.locked && !root.network.connected
     x: 272
     anchors.verticalCenter: parent.verticalCenter
