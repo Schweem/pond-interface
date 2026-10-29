@@ -40,20 +40,20 @@ Settings.Modal {
       x: 243; y: 12; themeKey: "daylight"; label: "Daylight"
       idleRotation: 45; idleScale: 40 / 56
       selected: Shell.Theme.name === "daylight"
-      onClicked: Appearance.State.selectTheme("daylight")
+      onClicked: { Shell.ThemeTransition.startFrom(daylight); Appearance.State.selectTheme("daylight"); }
     }
     ThemeButton {
       id: unthemed; objectName: "themeUnthemed"
       x: 194; y: 103; themeKey: "unthemed"; label: "Unthemed"
       selected: Shell.Theme.name === "unthemed"
-      onClicked: Appearance.State.selectTheme("unthemed")
+      onClicked: { Shell.ThemeTransition.startFrom(unthemed); Appearance.State.selectTheme("unthemed"); }
     }
     ThemeButton {
       id: pond; objectName: "themePond"
       x: 294; y: 103; themeKey: "pond"; label: "Pond"
       idleRotation: 45; idleScale: 28 / 40
       selected: Shell.Theme.name === "pond"
-      onClicked: Appearance.State.selectTheme("pond")
+      onClicked: { Shell.ThemeTransition.startFrom(pond); Appearance.State.selectTheme("pond"); }
     }
     ThemeButton {
       id: upcoming; objectName: "themeComingSoon"
