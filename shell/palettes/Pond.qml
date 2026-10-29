@@ -9,6 +9,9 @@ ThemePalette {
   readonly property color slate: "#4C5164"
   readonly property color chartreuse: "#CEF058"
   readonly property color yellow: "#FFD330"
+  readonly property color lilac: "#CBA6F7"
+  readonly property color orange: "#FF9F67"
+  readonly property color brown: "#4F220C"
 
   label: "Pond"
   blur: false
@@ -56,4 +59,31 @@ ThemePalette {
   iconTint: root.ink
   mediaHover: Qt.tint(root.paper, Qt.alpha(root.ink, 0.04))
   subtleFill: Qt.alpha(root.ink, 0.06)
+
+  panelSurface: root.paper
+  panelBackSurface: "#CDD9E8"
+  panelBorder: root.ink
+  panelBorderWidth: 1
+  panelHover: Qt.alpha(root.ink, 0.06)
+  panelPressed: Qt.alpha(root.ink, 0.12)
+  panelDivider: root.ink
+  panelTrack: Qt.alpha(root.ink, 0.15)
+  buttonHover: Qt.alpha(root.ink, 0.2)
+  connectedRow: root.chartreuse
+  checkMark: root.paper
+  overlay: root.ink
+  shadows: false
+  enabledSurface: root.ink
+  enabledMark: root.chartreuse
+  disabledSurface: root.brown
+  disabledMark: root.orange
+  toggleOutline: root.ink
+  sliderFill: root.ink
+  sliderBubble: root.yellow
+  sliderBubbleText: root.ink
+  todayFill: root.lilac
+  todayText: root.ink
+  closeCompact: "#9BA7B5"
+  closeFill: root.lilac
+  closeHoverFill: Qt.lighter(root.lilac, 1.08)
 }
