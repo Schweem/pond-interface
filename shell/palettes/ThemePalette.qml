@@ -132,4 +132,8 @@ QtObject {
   // Theme picker: idle tile disc and the current theme's name.
   property color themeTileIdle: "#262626"
   property color themeLabel: root.accent
+
+  // Cells that hide a switch into this theme (ThemeTransition).
+  property color transitionFill: root.accent
+  property color transitionEdge: "#1D1D1D"
 }

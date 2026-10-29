@@ -83,6 +83,7 @@ ShellRoot {
       Battery.Notification { bar: sidebar; above: toast }
       PanelDismissWindow { bar: sidebar }
       Settings.Window { menuScreen: modelData }
+      ThemeTransitionOverlay { screen: modelData }
     }
   }
 }
