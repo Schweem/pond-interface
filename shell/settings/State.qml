@@ -5,6 +5,7 @@ import "." as Settings
 import "../bluetooth" as Bluetooth
 import ".." as Shell
 import Quickshell
+import Quickshell.Io
 
 Singleton {
   id: root
@@ -26,14 +27,26 @@ Singleton {
   Timer {
     id: sessionActionDelay
     interval: Settings.Style.exitDuration
-    onTriggered: {
-      const action = root.pendingSessionAction;
-      root.pendingSessionAction = "";
-      if (action === "")
-        return;
-      Quickshell.execDetached([
-        "python3", Quickshell.shellDir + "/settings/session.py", action
-      ]);
+    onTriggered: root.runSessionAction()
+  }
+
+  // Power actions run attached so a refusal can uncover the screen again.
+  Process {
+    id: powerAction
+    onExited: exitCode => { if (exitCode !== 0) Shell.ScreenTransition.release(); }
+  }
+
+  function runSessionAction() {
+    const action = root.pendingSessionAction;
+    root.pendingSessionAction = "";
+    const command = ["python3", Quickshell.shellDir + "/settings/session.py", action];
+    if (action === "reboot" || action === "shutdown") {
+      powerAction.command = command;
+      powerAction.running = true;
+    } else if (action !== "") {
+      Quickshell.execDetached(command);
+    } else {
+      Shell.ScreenTransition.release();
     }
   }
 
@@ -76,6 +89,10 @@ Singleton {
       return;
     pendingSessionAction = action;
     opened = false;
+    // Powering off ends the session, so the screens cover and stay covered.
+    const power = action === "reboot" || action === "shutdown";
+    if (power && Shell.ScreenTransition.run({ hold: true, covered: runSessionAction }))
+      return;
     sessionActionDelay.restart();
   }
 

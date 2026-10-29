@@ -9,6 +9,7 @@ import "manual" as Manual
 import "system" as System
 import "../battery" as Battery
 import "../updates" as Updates
+import ".." as Shell
 import Quickshell
 import Quickshell.Wayland
 
@@ -186,6 +187,7 @@ PanelWindow {
       model: root.sessionButtons
 
       delegate: SessionButton {
+        id: sessionButton
         required property var modelData
         readonly property bool afterUpdate: Updates.State.status === "updating" && !!modelData.updatingName
 
@@ -206,8 +208,14 @@ PanelWindow {
         accessibleName: modelData.name
         revealed: (root.cardsOpen || root.cardsClosing)
             && root.revealStep >= root.revealRanks[modelData.slot]
-        onClicked: afterUpdate ? Updates.State.after(modelData.action)
-            : Settings.State.requestSessionAction(modelData.action)
+        onClicked: {
+          if (afterUpdate) {
+            Updates.State.after(modelData.action);
+            return;
+          }
+          Shell.ScreenTransition.startFrom(sessionButton);
+          Settings.State.requestSessionAction(modelData.action);
+        }
       }
     }
   }
