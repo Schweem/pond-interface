@@ -47,9 +47,12 @@ Scope {
           height: width
           visible: ScreenTransition.phase === "cover" ? ring <= ScreenTransition.step
               : window.held || ring >= ScreenTransition.step
-          color: ScreenTransition.palette.transitionFill
+          // Still the base color until the band reaches it.
+          readonly property bool plain: ScreenTransition.hasBase
+              && (window.held || ring >= ScreenTransition.step + ScreenTransition.band)
+          color: plain ? ScreenTransition.base : ScreenTransition.palette.transitionFill
           border.width: 1
-          border.color: ScreenTransition.palette.transitionEdge
+          border.color: plain ? ScreenTransition.base : ScreenTransition.palette.transitionEdge
           antialiasing: false
         }
       }
