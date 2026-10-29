@@ -206,7 +206,7 @@ Shell.Card {
       height: 32
       radius: 4
       visible: root.low
-      color: Qt.alpha(Battery.State.lowColor, 0.1)
+      color: Qt.alpha(Battery.State.lowColor, Shell.Theme.palette.lowBannerOpacity)
 
       FontMetrics { id: bannerMetrics; font: bannerText.font }
 
@@ -215,7 +215,7 @@ Shell.Card {
         anchors.horizontalCenter: parent.horizontalCenter
         y: (parent.height - bannerMetrics.capitalHeight) / 2 + bannerMetrics.capitalHeight - baselineOffset
         text: "Battery at " + Battery.State.level + "%"
-        color: Battery.State.lowColor
+        color: Battery.State.lowText
         font.family: Shell.Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13

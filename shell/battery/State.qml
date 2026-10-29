@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
+import ".." as Shell
 
 Singleton {
   id: root
@@ -14,8 +15,11 @@ Singleton {
       ? "Battery " + Math.round(percentage) + "%, " + UPowerDeviceState.toString(device.state) : ""
   readonly property int level: Math.round(percentage)
   readonly property bool low: present && !charging && level <= 10
-  readonly property color lowColor: level <= 3 ? "#FD6164" : level <= 5 ? "#FF9F67" : "#FFDC67"
-  readonly property color lowSurface: level <= 3 ? "#3E2222" : level <= 5 ? "#342A24" : "#343024"
+  readonly property int lowStage: level <= 3 ? 2 : level <= 5 ? 1 : 0
+  readonly property color lowColor: Shell.Theme.palette.lowColors[lowStage]
+  readonly property color lowSurface: Shell.Theme.palette.lowSurfaces[lowStage]
+  // Warning text and icons drawn on lowSurface.
+  readonly property color lowText: Shell.Theme.palette.lowInkText ? Shell.Theme.palette.foreground : lowColor
   readonly property int alertLevel: !low ? 0 : level <= 3 ? 3 : level <= 5 ? 5 : 10
   property int alert: 0
   property int alerted: 0

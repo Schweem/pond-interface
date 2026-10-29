@@ -117,4 +117,11 @@ QtObject {
   property color selectionFill: "#4F3D64"
   property color selectionText: "white"
   property color sliderHandle: root.sliderFill
+
+  // Low battery, from warning (10%) to severe (5%) to critical (3%).
+  property var lowColors: ["#FFDC67", "#FF9F67", "#FD6164"]
+  property var lowSurfaces: ["#343024", "#342A24", "#3E2222"]
+  // Draw warning text in the foreground color on a filled warning surface.
+  property bool lowInkText: false
+  property real lowBannerOpacity: 0.1
 }

@@ -53,7 +53,7 @@ PanelWindow {
       x: 12
       y: (parent.height - metrics.capitalHeight) / 2 + metrics.capitalHeight - baselineOffset
       text: "Battery at " + Battery.State.level + "%"
-      color: Battery.State.lowColor
+      color: Battery.State.lowText
       font.family: Shell.Theme.fontFamily
       font.weight: Font.Medium
       font.pixelSize: 13
@@ -65,7 +65,7 @@ PanelWindow {
       width: 24
       height: 24
       radius: 4
-      color: dismiss.hovered ? Qt.alpha(Battery.State.lowColor, 0.1) : "transparent"
+      color: dismiss.hovered ? Qt.alpha(Battery.State.lowText, 0.1) : "transparent"
     }
 
     Shell.IconButton {
@@ -78,7 +78,7 @@ PanelWindow {
       restingOpacity: 0.3
       animateGlyphOpacity: false
       layer.enabled: true
-      layer.effect: MultiEffect { colorization: 1; colorizationColor: Battery.State.lowColor }
+      layer.effect: MultiEffect { colorization: 1; colorizationColor: Battery.State.lowText }
       onClicked: Battery.State.alert = 0
       Accessible.role: Accessible.Button
       Accessible.name: "Dismiss"
