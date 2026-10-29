@@ -65,6 +65,11 @@ ShellRoot {
         property: "plainColor"
         value: Theme.palette.wallpaperColor
       }
+      Binding {
+        target: wallpaper
+        property: "gridColor"
+        value: Theme.palette.wallpaperGrid
+      }
       Sidebar {
         id: sidebar
         screen: modelData

@@ -13,6 +13,8 @@ QtObject {
   property bool dimWallpaper
   // Solid wallpaper in place of the dynamic sky; transparent keeps the sky.
   property color wallpaperColor: "transparent"
+  // Dashed grid over the solid wallpaper; transparent draws none.
+  property color wallpaperGrid: "transparent"
   // Cards use cardFill rather than their own classicColor.
   property bool uniformCards
   // Window drags reveal workspace numbers and placeholders, preview the drop

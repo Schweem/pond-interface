@@ -17,6 +17,7 @@ ThemePalette {
   blur: false
   dimWallpaper: false
   wallpaperColor: root.paper
+  wallpaperGrid: Qt.alpha(root.ink, 0.08)
   uniformCards: true
   dragPreview: true
 
