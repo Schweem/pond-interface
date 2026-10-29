@@ -1,4 +1,5 @@
 import QtQuick
+import "../.." as Shell
 
 Item {
   id: root
@@ -26,9 +27,10 @@ Item {
   Keys.onReturnPressed: if (available) clicked()
   Keys.onSpacePressed: if (available) clicked()
 
-  Image {
+  Shell.Glyph {
     x: 2; y: 2; width: 90; height: 90
     visible: root.available
+    sourceColor: "#262626"; tint: Shell.Theme.palette.themeTileIdle
     source: root.available ? Qt.resolvedUrl("../../assets/appearance/" + root.themeKey + "-idle-background.svg") : ""
     opacity: 1 - root.emphasis
   }
@@ -50,7 +52,7 @@ Item {
     rotation: root.idleRotation * (1 - root.emphasis)
     scale: root.idleScale + (1 - root.idleScale) * root.emphasis
     opacity: (0.1 + 0.2 * root.emphasis) * (1 - root.selection) + root.selection
-    Image {
+    Shell.Glyph {
       anchors.fill: parent
       source: root.available ? Qt.resolvedUrl("../../assets/appearance/" + root.themeKey + "-symbol-white.svg") : ""
     }
@@ -63,11 +65,12 @@ Item {
   Rectangle {
     x: 2; y: 2; width: 90; height: 90; radius: 45
     visible: !root.available
-    color: root.hovered ? "#171717" : "transparent"
-    border.width: 1; border.color: "#262626"
+    color: root.hovered ? Shell.Theme.palette.placeholderHover : "transparent"
+    border.width: 1; border.color: Shell.Theme.palette.placeholderBorder
     Behavior on color { ColorAnimation { duration: 220; easing.type: Easing.InOutCubic } }
-    Image {
+    Shell.Glyph {
       anchors.centerIn: parent; width: 32.156; height: 42.002; rotation: 90
+      sourceColor: "#262626"; tint: Shell.Theme.palette.placeholderGlyph
       source: Qt.resolvedUrl("../../assets/appearance/coming-soon.svg")
     }
   }

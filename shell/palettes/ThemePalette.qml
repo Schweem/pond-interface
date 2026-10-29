@@ -124,4 +124,12 @@ QtObject {
   // Draw warning text in the foreground color on a filled warning surface.
   property bool lowInkText: false
   property real lowBannerOpacity: 0.1
+
+  // Unavailable ("coming soon") theme tile in the appearance picker.
+  property color placeholderBorder: "#262626"
+  property color placeholderHover: "#171717"
+  property color placeholderGlyph: "#262626"
+  // Theme picker: idle tile disc and the current theme's name.
+  property color themeTileIdle: "#262626"
+  property color themeLabel: root.accent
 }
