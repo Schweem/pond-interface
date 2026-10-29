@@ -1,0 +1,59 @@
+# Launcher colors for the Pond shell theme: paper and ink, chartreuse for the
+# selected result. Installed to /usr/share/vicinae/themes; the shell selects
+# it with `vicinae theme set pond` when Pond is applied.
+
+[meta]
+version = 1
+name = "Pond"
+description = "Paper, ink and chartreuse, to match the Pond shell theme"
+variant = "light"
+
+[colors.core]
+background = "#E1EBF7"
+foreground = "#111111"
+secondary_background = "#D5DFEB"
+border = "#111111"
+accent = "#CEF058"
+accent_foreground = "#111111"
+
+[colors.main_window]
+border = "#111111"
+footer = { background = "colors.core.secondary_background" }
+
+[colors.settings_window]
+border = "#111111"
+
+[colors.text]
+muted = "#4C5164"
+placeholder = "#6B7385"
+danger = "#C4314B"
+selection = { background = "#CBA6F7", foreground = "#111111" }
+
+[colors.input]
+border = { name = "#111111", opacity = 0.3 }
+border_focus = "#111111"
+border_error = "#C4314B"
+
+[colors.list.item.hover]
+background = { name = "#111111", opacity = 0.06 }
+foreground = "#111111"
+secondary_foreground = "#4C5164"
+
+# Selected result: chartreuse row with ink text, like the site's Wifi panel.
+[colors.list.item.selection]
+background = "#CEF058"
+foreground = "#111111"
+secondary_background = "#CEF058"
+secondary_foreground = "#111111"
+
+[colors.grid.item]
+background = "colors.core.secondary_background"
+hover = { outline = "#111111" }
+selection = { outline = "#111111" }
+
+[colors.scrollbars]
+background = { name = "#111111", opacity = 0.2 }
+
+[colors.loading]
+bar = "#CEF058"
+spinner = "#111111"

@@ -26,6 +26,8 @@ QtObject {
   property real idleIconOpacity
   // Sidebar expand/collapse, in milliseconds.
   property int collapseDuration: 300
+  // Vicinae theme (by file name) set alongside this one.
+  property string launcherTheme: "default"
 
   property color cardFill
   property color cardHoverFill

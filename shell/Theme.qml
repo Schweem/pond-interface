@@ -13,7 +13,11 @@ Singleton {
   property string requested: "daylight"
   property bool holdSwitch: false
   property bool loaded: false
-  function apply() { name = requested; }
+  function apply() {
+    name = requested;
+    // The launcher follows, live; it keeps its theme if vicinae isn't there.
+    Quickshell.execDetached(["vicinae", "theme", "set", palette.launcherTheme]);
+  }
   readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, pond: pondPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
