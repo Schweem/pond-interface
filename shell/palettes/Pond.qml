@@ -120,4 +120,6 @@ ThemePalette {
   placeholderGlyph: "#9BA7B5"
   themeTileIdle: Qt.tint(root.paper, Qt.alpha(root.ink, 0.08))
   themeLabel: root.ink
+  transitionFill: root.chartreuse
+  transitionEdge: root.ink
 }
