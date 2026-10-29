@@ -56,4 +56,19 @@ QtObject {
   property color iconTint: "white"
   property color mediaHover: "#262626"
   property color subtleFill: Qt.rgba(1, 1, 1, 0.08)
+
+  // Popover panels (PanelStyle) and the notification center.
+  property color panelSurface: "#1D1D1D"
+  property color panelBackSurface: "#131313"
+  property color panelBorder: "#3D3D3D"
+  property color panelHover: "#262626"
+  property color panelPressed: "#303030"
+  property color panelDivider: Qt.rgba(1, 1, 1, 0.1)
+  property color accent: "#CBA6F7"
+  property color accentText: "#4F3D64"
+  property color enabledSurface: "#0C3723"
+  property color enabledMark: "#B0FF4F"
+  property color sliderFill: "#E7E7E7"
+  property color sliderBubble: "#D1D1D1"
+  property bool shadows: true
 }
