@@ -16,6 +16,7 @@ ThemePalette {
   label: "Pond"
   blur: false
   dimWallpaper: false
+  wallpaperColor: root.paper
   uniformCards: true
   dragPreview: true
 

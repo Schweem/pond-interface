@@ -52,10 +52,18 @@ ShellRoot {
     delegate: Scope {
       required property var modelData
       Wallpaper.Window {
+        id: wallpaper
         screen: modelData
         custom: Appearance.State.wallpaperMode === "custom"
         dimmed: Theme.palette.dimWallpaper
         imageSource: Appearance.State.wallpaperUrl
+      }
+      // pond-wallpaper ships separately; older versions lack plainColor and
+      // keep the sky rather than failing to load the shell.
+      Binding {
+        target: wallpaper
+        property: "plainColor"
+        value: Theme.palette.wallpaperColor
       }
       Sidebar {
         id: sidebar

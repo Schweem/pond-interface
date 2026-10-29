@@ -11,6 +11,8 @@ QtObject {
   property bool blur
   // Shade the wallpaper behind the sidebar.
   property bool dimWallpaper
+  // Solid wallpaper in place of the dynamic sky; transparent keeps the sky.
+  property color wallpaperColor: "transparent"
   // Cards use cardFill rather than their own classicColor.
   property bool uniformCards
   // Window drags reveal workspace numbers and placeholders, preview the drop
