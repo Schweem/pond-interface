@@ -6,16 +6,19 @@ Rectangle {
   property bool custom: false
   property bool dimmed: false
   property url imageSource: ""
+  // A solid color in place of the dynamic sky; transparent keeps the sky.
+  property color plainColor: "transparent"
+  readonly property bool plain: plainColor.a > 0
   property alias now: sky.now
   property alias live: sky.live
-  color: "#0b101c"
+  color: root.plain ? root.plainColor : "#0b101c"
   layer.enabled: root.dimmed
   layer.format: ShaderEffectSource.RGBA16F
 
   Sky {
     id: sky
     anchors.fill: parent
-    visible: !root.custom
+    visible: !root.custom && !root.plain
   }
   Image {
     objectName: "wallpaperImage"

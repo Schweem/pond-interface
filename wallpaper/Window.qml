@@ -6,6 +6,7 @@ PanelWindow {
   property alias custom: background.custom
   property alias dimmed: background.dimmed
   property alias imageSource: background.imageSource
+  property alias plainColor: background.plainColor
   property alias now: background.now
   anchors { top: true; bottom: true; left: true; right: true }
   color: "#0b101c"

@@ -34,6 +34,7 @@ Item {
     custom: root.wallpaper.custom
     dimmed: root.wallpaper.dimmed
     imageSource: root.wallpaper.imageSource
+    plainColor: root.wallpaper.plainColor
     live: false
     now: root.wallpaper.now
     // The two surfaces can round to different physical widths at fractional scale.
