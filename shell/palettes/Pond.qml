@@ -24,6 +24,7 @@ ThemePalette {
   cardBorderWidth: 1
   compactCardRadius: 12
   idleIconOpacity: 1.0
+  collapseDuration: 200
 
   cardFill: root.paper
   cardHoverFill: Qt.tint(root.paper, Qt.alpha(root.ink, 0.04))

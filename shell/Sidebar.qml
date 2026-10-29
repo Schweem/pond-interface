@@ -135,7 +135,7 @@ PanelWindow {
   WlrLayershell.exclusionMode: ExclusionMode.Normal
   exclusiveZone: Theme.sidebarOuterMargin + (expanded
       ? Theme.sidebarCardExpandedWidth : Theme.sidebarCardCollapsedWidth)
-  Behavior on collapseProgress { Motion {} }
+  Behavior on collapseProgress { Motion { duration: Theme.palette.collapseDuration } }
 
   Column {
     id: mainStack

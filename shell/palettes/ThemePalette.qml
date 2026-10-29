@@ -24,6 +24,8 @@ QtObject {
   property int cardBorderWidth
   property int compactCardRadius
   property real idleIconOpacity
+  // Sidebar expand/collapse, in milliseconds.
+  property int collapseDuration: 300
 
   property color cardFill
   property color cardHoverFill
