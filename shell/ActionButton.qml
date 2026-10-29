@@ -12,7 +12,7 @@ Rectangle {
   Text {
     anchors.centerIn: parent
     text: root.text
-    color: "white"
+    color: Theme.palette.foregroundBright
     opacity: pointer.containsMouse ? 1 : 0.8
     font.family: Theme.fontFamily
     font.weight: Font.Medium

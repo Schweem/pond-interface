@@ -71,4 +71,13 @@ QtObject {
   property color sliderFill: "#E7E7E7"
   property color sliderBubble: "#D1D1D1"
   property bool shadows: true
+  property color overlay: "white"
+  property color accentHover: "#D8B8FA"
+  property color toggleOutline: Qt.rgba(231 / 255, 231 / 255, 231 / 255, 0.3)
+  property color disabledSurface: "#613129"
+  property color disabledMark: "#FB9B89"
+  property color sliderBubbleText: "black"
+  property color todayFill: "#D1C9FF"
+  property color todayText: "#643957"
+  property color closeCompact: "#555555"
 }

@@ -26,7 +26,7 @@ Item {
     Text {
       x: 19.5; y: 19.5; width: root.titleIcon ? 245 : 276
       elide: Text.ElideRight
-      text: root.title; color: "white"
+      text: root.title; color: Theme.palette.foregroundBright
       font.family: Theme.titleFontFamily; font.weight: Font.Normal; font.pixelSize: 20
     }
     Loader { x: 275.5; y: 23.5; width: 20; height: 20; sourceComponent: root.titleIcon }

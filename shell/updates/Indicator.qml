@@ -1,4 +1,5 @@
 import QtQuick
+import ".." as Shell
 
 Item {
   id: root
@@ -23,7 +24,7 @@ Item {
       width: 4
       height: 4
       radius: 2
-      color: index === root.frame ? modelData[2] : "#33ffffff"
+      color: index === root.frame ? modelData[2] : Qt.alpha(Shell.Theme.palette.overlay, 0.2)
     }
   }
 }

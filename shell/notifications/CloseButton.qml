@@ -12,7 +12,7 @@ Rectangle {
   implicitWidth: compact ? 16 : Notifications.Style.closeSize
   implicitHeight: implicitWidth
   radius: 4
-  color: compact ? "#555555" : pointer.containsMouse
+  color: compact ? Shell.Theme.palette.closeCompact : pointer.containsMouse
       ? Notifications.Style.closeHover : Shell.Theme.palette.control
   antialiasing: true
 

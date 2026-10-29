@@ -31,7 +31,7 @@ Item {
     Text {
       x: root.titleIcon.toString() !== "" ? 43.5 : 19.5
       y: 19.5
-      text: root.title; color: "white"
+      text: root.title; color: Theme.palette.foregroundBright
       font.family: Theme.titleFontFamily; font.weight: Font.Normal; font.pixelSize: 20
     }
     Loader { x: 241.5; y: 19.5; width: 54; height: 28; sourceComponent: root.headerControl }
@@ -50,7 +50,7 @@ Item {
     Text {
       x: 20; y: root.listTop + (root.footer ? 52 : 16); width: 276
       text: root.emptyText; visible: deviceList.count === 0
-      wrapMode: Text.Wrap; color: "white"; opacity: 0.5
+      wrapMode: Text.Wrap; color: Theme.palette.foregroundBright; opacity: 0.5
       font.family: Theme.fontFamily; font.pixelSize: 13
     }
     Text {

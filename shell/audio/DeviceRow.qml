@@ -17,7 +17,7 @@ Item {
     anchors.fill: parent
     radius: PanelStyle.rowRadius
     color: pointer.containsMouse ? PanelStyle.hover
-        : Qt.rgba(38 / 255, 38 / 255, 38 / 255, 0)
+        : Qt.alpha(PanelStyle.hover, 0)
 
     Behavior on color {
       ColorAnimation {
@@ -32,7 +32,7 @@ Item {
     width: 244
     anchors.verticalCenter: parent.verticalCenter
     text: Audio.State.displayName(root.device)
-    color: "white"
+    color: Theme.palette.foregroundBright
     elide: Text.ElideRight
     font.family: Theme.fontFamily
     font.weight: Font.Medium
@@ -45,9 +45,9 @@ Item {
     width: 16
     height: 16
     radius: 8
-    color: root.selected ? "white" : "transparent"
+    color: root.selected ? Theme.palette.foregroundBright : "transparent"
     border.width: root.selected ? 0 : 1
-    border.color: "white"
+    border.color: Theme.palette.foregroundBright
     opacity: root.selected ? 1 : 0.3
 
     Image {

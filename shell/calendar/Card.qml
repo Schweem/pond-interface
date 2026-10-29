@@ -46,7 +46,7 @@ Shell.PanelBackground {
     x: 18
     y: 20 + metrics.capitalHeight - baselineOffset
     text: root.monthTitle
-    color: "white"
+    color: Shell.Theme.palette.foregroundBright
     font.family: Shell.Theme.fontFamily
     font.pixelSize: 13
     font.weight: Font.Medium
@@ -87,7 +87,7 @@ Shell.PanelBackground {
       width: root.cellWidth
       text: modelData
       horizontalAlignment: Text.AlignHCenter
-      color: "white"
+      color: Shell.Theme.palette.foregroundBright
       opacity: 0.5
       font.family: Shell.Theme.fontFamily
       font.pixelSize: 13
@@ -100,7 +100,7 @@ Shell.PanelBackground {
     width: root.width - 20
     height: root.cellHeight
     radius: 8
-    color: Qt.rgba(1, 1, 1, 0.06)
+    color: Qt.alpha(Shell.Theme.palette.overlay, 0.06)
     visible: root.weekRow >= 0
   }
 
@@ -117,7 +117,7 @@ Shell.PanelBackground {
       width: root.cellWidth
       height: root.cellHeight
       radius: 8
-      color: isToday && root.isCurrentMonth ? "#D1C9FF" : "transparent"
+      color: isToday && root.isCurrentMonth ? Shell.Theme.palette.todayFill : "transparent"
       Accessible.role: Accessible.StaticText
       Accessible.name: Qt.formatDate(modelData, "dddd, MMMM d, yyyy")
           + (isToday ? ", today" : "")
@@ -140,7 +140,7 @@ Shell.PanelBackground {
 
         anchors.fill: parent
         radius: parent.radius
-        color: Qt.rgba(1, 1, 1, 0.15)
+        color: Qt.alpha(Shell.Theme.palette.overlay, 0.15)
         opacity: 0
       }
       // Animate only exits; pointer entry stops this and sets opacity directly.
@@ -158,7 +158,7 @@ Shell.PanelBackground {
         y: (cell.height - 10) / 2 + metrics.capitalHeight - baselineOffset
         text: cell.modelData.getDate()
         horizontalAlignment: Text.AlignHCenter
-        color: cell.isToday && root.isCurrentMonth ? "#643957" : "white"
+        color: cell.isToday && root.isCurrentMonth ? Shell.Theme.palette.todayText : Shell.Theme.palette.foregroundBright
         opacity: cell.inMonth ? 1 : 0.3
         font.family: Shell.Theme.fontFamily
         font.pixelSize: 13
@@ -182,7 +182,7 @@ Shell.PanelBackground {
       anchors.fill: parent
       z: -1
       radius: 4
-      color: Qt.rgba(1, 1, 1, root.hovered || root.activeFocus ? 0.15 : 0)
+      color: Qt.alpha(Shell.Theme.palette.overlay, root.hovered || root.activeFocus ? 0.15 : 0)
     }
   }
 }

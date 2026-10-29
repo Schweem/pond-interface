@@ -91,7 +91,7 @@ Item {
         width: 2
         padding: 0
         policy: size < 1 ? Controls.ScrollBar.AlwaysOn : Controls.ScrollBar.AlwaysOff
-        contentItem: Rectangle { radius: 2; color: Qt.rgba(1, 1, 1, 0.2) }
+        contentItem: Rectangle { radius: 2; color: Qt.alpha(Theme.palette.overlay, 0.2) }
         background: null
       }
       delegate: Rectangle {
@@ -109,7 +109,7 @@ Item {
           x: 12
           anchors.verticalCenter: parent.verticalCenter
           text: optionRow.modelData.label
-          color: "white"
+          color: Theme.palette.foregroundBright
           font.family: Theme.fontFamily
           font.weight: Font.Medium
           font.pixelSize: 13

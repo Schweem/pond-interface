@@ -97,7 +97,7 @@ Shell.PanelBackground {
     width: 240
     height: 20
     radius: 6
-    color: Qt.rgba(1, 1, 1, 0.1)
+    color: Qt.alpha(Shell.Theme.palette.overlay, 0.1)
 
     Rectangle {
       width: parent.width * Battery.State.percentage / 100
@@ -120,7 +120,7 @@ Shell.PanelBackground {
     x: 260 - width
     capTop: 136
     text: root.hoveredProfile || root.selectedProfile
-    color: "white"
+    color: Shell.Theme.palette.foregroundBright
   }
 
   Repeater {
@@ -147,7 +147,7 @@ Shell.PanelBackground {
         z: -1
         radius: 8
         color: button.selected ? Qt.alpha(button.modelData.accent, 0.1)
-            : button.highlighted ? Qt.rgba(1, 1, 1, 0.12) : Qt.rgba(1, 1, 1, 0.08)
+            : button.highlighted ? Qt.alpha(Shell.Theme.palette.overlay, 0.12) : Qt.alpha(Shell.Theme.palette.overlay, 0.08)
       }
     }
   }

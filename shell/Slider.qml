@@ -50,7 +50,7 @@ T.Slider {
       radius: 6
       color: root.muted ? "transparent" : root.trackColor
       border.width: root.muted ? 1 : 0
-      border.color: Qt.rgba(1, 1, 1, 0.2)
+      border.color: Qt.alpha(Theme.palette.overlay, 0.2)
     }
 
     Rectangle {
@@ -59,7 +59,7 @@ T.Slider {
       width: Math.max(0, root.handleCenterX - x)
       height: root.muted ? 2 : 10
       radius: height / 2
-      color: root.muted ? Qt.rgba(1, 1, 1, 0.2) : PanelStyle.sliderFill
+      color: root.muted ? Qt.alpha(Theme.palette.overlay, 0.2) : PanelStyle.sliderFill
     }
   }
 
@@ -86,10 +86,10 @@ T.Slider {
     height: root.handleSize
     radius: width / 2
     color: root.pressed ? PanelStyle.accent
-        : root.muted ? Qt.rgba(1, 1, 1, 0.1) : PanelStyle.sliderFill
+        : root.muted ? Qt.alpha(Theme.palette.overlay, 0.1) : PanelStyle.sliderFill
     border.width: 1
     border.color: root.handleHovered && !root.pressed ? PanelStyle.accent
-        : root.muted ? Qt.rgba(1, 1, 1, 0.5) : PanelStyle.border
+        : root.muted ? Qt.alpha(Theme.palette.overlay, 0.5) : PanelStyle.border
     antialiasing: true
 
     Behavior on width {
@@ -157,7 +157,7 @@ T.Slider {
       Text {
         anchors.centerIn: parent
         text: Math.round(root.visualValue * 100)
-        color: "black"
+        color: Theme.palette.sliderBubbleText
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13

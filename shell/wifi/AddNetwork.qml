@@ -44,7 +44,7 @@ Item {
       x: 19.5
       y: 19.5
       text: "Add network"
-      color: "white"
+      color: Theme.palette.foregroundBright
       font.family: Theme.titleFontFamily
       font.weight: Font.Normal
       font.pixelSize: 20
@@ -60,7 +60,7 @@ Item {
       Text {
         x: 19.5
         text: "Network name (SSID)"
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
@@ -76,7 +76,7 @@ Item {
         x: 19.5
         y: 85
         text: "Security"
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
@@ -98,7 +98,7 @@ Item {
         y: 170
         text: "Password"
         visible: root.needsPassword
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
@@ -133,7 +133,7 @@ Item {
         x: 51.5
         anchors.verticalCenter: hidden.verticalCenter
         text: "Hidden network"
-        color: "white"
+        color: Theme.palette.foregroundBright
         font.family: Theme.fontFamily
         font.weight: Font.Medium
         font.pixelSize: 13
@@ -149,7 +149,7 @@ Item {
       radius: 100
       visible: opacity > 0
       opacity: root.canConnect ? 1 : 0
-      color: connectHover.hovered ? "#D8B8FA" : PanelStyle.accent
+      color: connectHover.hovered ? Theme.palette.accentHover : PanelStyle.accent
 
       function trigger() {
         if (root.canConnect)

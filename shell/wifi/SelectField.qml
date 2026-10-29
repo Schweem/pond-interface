@@ -23,7 +23,7 @@ Controls.Button {
     text: root.text
     verticalAlignment: Text.AlignVCenter
     elide: Text.ElideRight
-    color: "white"
+    color: Theme.palette.foregroundBright
     font.family: Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: 13

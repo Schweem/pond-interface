@@ -32,7 +32,7 @@ Rectangle {
     height: 5
     radius: height / 2
     color: "transparent"
-    border.color: Qt.rgba(231 / 255, 231 / 255, 231 / 255, 0.3)
+    border.color: Theme.palette.toggleOutline
     border.width: 1
   }
 
@@ -43,7 +43,7 @@ Rectangle {
     height: 13
     radius: width / 2
     color: "transparent"
-    border.color: Qt.rgba(231 / 255, 231 / 255, 231 / 255, 0.3)
+    border.color: Theme.palette.toggleOutline
     border.width: 1
   }
 
@@ -59,7 +59,7 @@ Rectangle {
     rotation: Math.max(0, Math.min(rollingDistance,
       travelDistance * root.position - redSideTravel)) / radius * 180 / Math.PI
     antialiasing: true
-    color: root.checked ? PanelStyle.enabledSurface : "#613129"
+    color: root.checked ? PanelStyle.enabledSurface : Theme.palette.disabledSurface
     Behavior on color {
       ColorAnimation {
         duration: root.animationDuration
@@ -74,7 +74,7 @@ Rectangle {
       height: 4
       radius: height / 2
       antialiasing: true
-      color: root.checked ? PanelStyle.enabledMark : "#FB9B89"
+      color: root.checked ? PanelStyle.enabledMark : Theme.palette.disabledMark
       Behavior on color {
         ColorAnimation {
           duration: root.animationDuration

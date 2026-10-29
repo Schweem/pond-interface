@@ -46,7 +46,7 @@ Item {
       width: 260
       elide: Text.ElideRight
       text: "Join “" + String(root.selection.ssid || "Wifi Network") + "”"
-      color: "white"
+      color: Theme.palette.foregroundBright
       font.family: Theme.titleFontFamily
       font.weight: Font.Normal
       font.pixelSize: 20
@@ -56,7 +56,7 @@ Item {
       y: 79.5
       text: "Password"
       visible: !root.isEnterprise
-      color: "white"
+      color: Theme.palette.foregroundBright
       font.family: Theme.fontFamily
       font.weight: Font.Medium
       font.pixelSize: 15
@@ -94,7 +94,7 @@ Item {
       radius: 100
       visible: opacity > 0
       opacity: root.canConnect ? 1 : 0
-      color: connectHover.hovered ? "#D8B8FA" : PanelStyle.accent
+      color: connectHover.hovered ? Theme.palette.accentHover : PanelStyle.accent
 
       function trigger() {
         if (root.canConnect)
