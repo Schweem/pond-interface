@@ -62,6 +62,7 @@ ShellRoot {
       Wallpaper.Window {
         id: wallpaper
         screen: modelData
+        visible: loginReveal.ready
         custom: Appearance.State.wallpaperMode === "custom"
         dimmed: Theme.palette.dimWallpaper
         imageSource: Appearance.State.wallpaperUrl
@@ -82,6 +83,7 @@ ShellRoot {
       Sidebar {
         id: sidebar
         screen: modelData
+        visible: loginReveal.ready
         expanded: root.expanded
         onToggleRequested: root.expanded = !root.expanded
         FirstFrame { onDrawn: loginReveal.drawn() }
@@ -93,7 +95,10 @@ ShellRoot {
       Battery.Notification { bar: sidebar; above: toast }
       PanelDismissWindow { bar: sidebar }
       Settings.Window { menuScreen: modelData }
-      ScreenTransitionOverlay { screen: modelData }
+      ScreenTransitionOverlay {
+        screen: modelData
+        onShown: loginReveal.covered()
+      }
     }
   }
 }

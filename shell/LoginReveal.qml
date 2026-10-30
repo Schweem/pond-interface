@@ -3,10 +3,11 @@ import Quickshell
 import Quickshell.Io
 
 // Opens each login on covered screens that clear once the shell has drawn,
-// hiding its windows mapping in one by one. The cover starts in the greeter's
-// color, which niri's backdrop also uses, so the handoff from the greeter
-// shows no seam. A runtime flag, gone at logout, keeps shell restarts within
-// a session from covering again.
+// hiding its windows mapping in one by one. The wallpaper and sidebar stay
+// unmapped until every screen's cover has drawn, so neither can beat it to
+// the screen. The cover starts in the greeter's color, which niri's backdrop
+// also uses, so the handoff from the greeter shows no seam. A runtime flag,
+// gone at logout, keeps shell restarts within a session from covering again.
 Scope {
   id: root
   // The greeter's background, carried through the compositor handoff.
@@ -15,7 +16,18 @@ Scope {
   // every screen.
   readonly property int expected: Quickshell.screens.length * 2
   property int drawnCount: 0
+  property int coveredCount: 0
+  property bool decided: false
   property bool holding: false
+  // Whether the shell's windows may map: once the cover is up, or straight
+  // away when there is none.
+  readonly property bool ready: decided
+      && (!holding || coveredCount >= Quickshell.screens.length)
+
+  // Report from each screen's cover once it has drawn.
+  function covered() {
+    if (holding) coveredCount++;
+  }
 
   // Report from a FirstFrame in each expected window.
   function drawn() {
@@ -47,8 +59,10 @@ Scope {
     }
   }
   Component.onCompleted: {
-    if (flag.text() !== "") return;
-    flag.setText("revealed\n");
-    holding = ScreenTransition.hold({ base: handoff });
+    if (flag.text() === "") {
+      flag.setText("revealed\n");
+      holding = ScreenTransition.hold({ base: handoff });
+    }
+    decided = true;
   }
 }

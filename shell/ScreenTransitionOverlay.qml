@@ -7,6 +7,8 @@ import Quickshell.Wayland
 Scope {
   id: root
   required property var screen
+  // Each time the cells first reach the screen.
+  signal shown
 
   LazyLoader {
     active: ScreenTransition.running
@@ -31,6 +33,8 @@ Scope {
       readonly property var grid: ScreenTransition.layout(width, height,
           ScreenTransition.originOn(root.screen, width, height))
       readonly property int size: ScreenTransition.cellSize
+
+      FirstFrame { onDrawn: root.shown() }
 
       Repeater {
         model: window.width > 0 ? window.grid.cols * window.grid.rows : 0

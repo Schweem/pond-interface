@@ -32,8 +32,11 @@ Singleton {
     path: StandardPaths.writableLocation(StandardPaths.ConfigLocation) + "/pond-interface/theme.json"
     watchChanges: true
     printErrors: false
-    // Read the first load in place so the shell's first frame is in its theme.
+    // Read the first load in place so the shell's first frame is in its theme:
+    // loaded only arrives once the windows exist, so reading text() at
+    // creation is what applies it in time.
     blockLoading: true
+    blockAllReads: true
     onFileChanged: reload()
     onLoaded: {
       try {
@@ -45,6 +48,7 @@ Singleton {
       }
       catch (error) { console.warn("Could not read theme selection:", error); }
     }
+    Component.onCompleted: text()
   }
 
   readonly property int sidebarOuterMargin: 10
