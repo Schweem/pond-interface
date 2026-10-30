@@ -7,7 +7,7 @@ Item {
 
     required property var exitTransition
     property Item background: null
-    property color coverColor: "#1a1409"
+    property color coverColor: "black"
 
     readonly property int splitX: Math.round(width * 1000 / 1920)
     readonly property int splitY: Math.round(height * 400 / 1080)

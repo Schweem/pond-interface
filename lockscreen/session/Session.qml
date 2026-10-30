@@ -11,6 +11,7 @@ Item {
 
     required property var powerBackend
     property string displayName: ""
+    property string paletteName: "marsh"
     property bool wifiConnected: false
     property list<string> presentationOutputs: []
     // Cells handed over by the shell's cover; see Intro.
@@ -29,6 +30,10 @@ Item {
         request: root.introRequest
     }
     Authentication { id: auth }
+    Frontend.Theme {
+        id: lockTheme
+        name: root.paletteName
+    }
     Session.Transition {
         id: handoff
         controller: ui.controller
@@ -36,6 +41,7 @@ Item {
         released: flow.phase === "exiting"
         displayName: root.displayName
         wifiConnected: root.wifiConnected
+        theme: lockTheme
         presentationOutputs: Quickshell.screens.filter(screen => root.showsPresentation(screen)).map(screen => screen.name)
     }
     Frontend.Controller {
@@ -59,7 +65,7 @@ Item {
         WlSessionLockSurface {
             id: surface
             readonly property bool showPresentation: root.showsPresentation(screen)
-            color: showPresentation ? "#1a1409" : "black"
+            color: showPresentation ? lockTheme.paper : "black"
 
             // Under an intro the lock screen loads without blocking, so the
             // cells (and the secure lock) are up straight away.
@@ -69,6 +75,7 @@ Item {
                 asynchronous: intro.phase === "held"
                 sourceComponent: Frontend.Screen {
                     controller: ui
+                    theme: lockTheme
                     showPresentation: surface.showPresentation
                     displayName: root.displayName
                     wifiConnected: root.wifiConnected

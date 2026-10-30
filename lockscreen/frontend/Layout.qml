@@ -1,9 +1,8 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Window
-import QtQuick.VectorImage
 import "form"
-import Pond.Daylight as Daylight
+import "Glyphs.js" as Glyphs
 
 Item {
     id: root
@@ -25,11 +24,13 @@ Item {
     property var compositors: []
     property int compositorIndex: -1
     property date now: new Date()
+    // What the header and footer call this screen: locked, or signing in.
+    property string status: "LOCKED"
+    property Theme theme: Theme {}
     property Component backgroundComponent: Component {
-        Daylight.Sky {
-            live: false
-            now: root.now
-            pixelRatio: root.pixelScale
+        Scenery {
+            theme: root.theme
+            gridCenterY: root.gridCenterY
         }
     }
     readonly property Item background: backgroundLoader.item as Item
@@ -43,6 +44,8 @@ Item {
     clip: true
 
     readonly property real canvasHeight: 1080
+    // Form places the grid at y 320; 200 down is its centre.
+    readonly property real gridCenterY: 520
     // Uniform scaling keeps the lock centered while wide layouts retain true
     // physical screen edges for the reveal/power controls and footer copy.
     readonly property real layoutScale: Math.min(height / canvasHeight, width / 960)
@@ -59,14 +62,11 @@ Item {
             inputTarget.forceActiveFocus();
     }
 
-    Theme {
-        id: theme
-    }
-
     Item {
         id: canvas
         objectName: "lockCanvas"
-        width: root.width / root.layoutScale
+        // A surface starts at 0x0; keep the canvas finite until it has a size.
+        width: root.layoutScale > 0 ? root.width / root.layoutScale : 0
         height: root.canvasHeight
         x: 0
         y: (root.height - height * root.layoutScale) / 2
@@ -96,20 +96,6 @@ Item {
                 active: root.backgroundComponent !== null
                 sourceComponent: root.backgroundComponent
             }
-            Image {
-                id: moon
-                objectName: "moon"
-                x: (parent.width - width) / 2
-                y: 704
-                width: 1226
-                height: 1532
-                source: Qt.resolvedUrl("assets/moon.png")
-                fillMode: Image.PreserveAspectFit
-                asynchronous: false
-                opacity: root.exitTransition.moonVisible ? 1 : 0
-
-                Behavior on opacity { NumberAnimation { duration: 65 } }
-            }
         }
         ShaderEffectSource {
             id: backdropTexture
@@ -117,14 +103,8 @@ Item {
             textureSize: Qt.size(Math.ceil(canvas.width * root.pixelScale), Math.ceil(canvas.height * root.pixelScale))
             sourceItem: backdrop
             hideSource: true
-            // Keep the texture available to the footer blend during handoff.
+            // Once the reveal starts, DesktopCover draws the backdrop per quadrant.
             opacity: root.exitTransition.revealedQuadrantCount === 0 ? 1 : 0
-        }
-        Image {
-            x: (canvas.width - 1226) / 2; y: 704
-            width: 1226; height: 1532
-            source: Qt.resolvedUrl("assets/moon.png")
-            visible: root.exitTransition.revealedQuadrantCount > 0 && root.exitTransition.moonVisible
         }
 
         Item {
@@ -139,11 +119,13 @@ Item {
             UserHeader {
                 objectName: "identityHeader"
                 width: parent.width
-                theme: theme
+                theme: root.theme
+                status: root.status
                 displayName: root.displayName
                 multipleUsers: root.multipleUsers
                 compositors: root.compositors
                 compositorIndex: root.compositorIndex
+                wifiConnected: root.wifiConnected
                 enabled: root.interactive
                 onUserStepRequested: direction => root.userStepRequested(direction)
                 onCompositorRequested: index => root.compositorRequested(index)
@@ -152,74 +134,63 @@ Item {
             Text {
                 id: passwordTooltip
                 objectName: "passwordTooltip"
-                renderType: Text.CurveRendering
                 visible: root.passwordTooltipVisible && root.interactive && lockDisplay.dateTimeVisible
                     && root.controller.visibleCellCount === 13
                 x: (canvas.width - width) / 2
-                y: 238 - (baselineOffset - tooltipMetrics.capitalHeight)
-                width: 87
-                text: "Enter\nPassword"
-                horizontalAlignment: Text.AlignHCenter
-                color: theme.text
-                font.family: theme.displayFont
-                font.styleName: "Book"
-                font.pixelSize: 20
-                lineHeightMode: Text.FixedHeight
-                lineHeight: 20
-                FontMetrics { id: tooltipMetrics; font: passwordTooltip.font }
+                y: 284
+                text: "ENTER PASSWORD"
+                color: root.theme.ink
+                font.family: root.theme.monoFont
+                font.weight: Font.DemiBold
+                font.pixelSize: 11
+                font.letterSpacing: 2
             }
 
-            Text {
-                renderType: Text.CurveRendering
-                objectName: "lockDate"
-                opacity: lockDisplay.dateTimeVisible ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 150 } }
-                x: (80 + (canvas.width - 400) / 2) / 2 - 19 - width / 2
-                y: 506
-                text: Qt.formatDate(root.now, "ddd, MMM d")
-                color: theme.text
-                font.family: theme.displayFont
-                font.styleName: "Book"
-                font.pixelSize: 20
-            }
-
-            Text {
-                renderType: Text.CurveRendering
-                objectName: "lockTime"
-                opacity: lockDisplay.dateTimeVisible ? 1 : 0
-                Behavior on opacity { NumberAnimation { duration: 150 } }
-                x: ((canvas.width + 400) / 2 + canvas.width - 80) / 2 - 24 - width / 2
-                y: 506
-                text: Qt.formatTime(root.now, "h:mm AP")
-                color: theme.text
-                font.family: theme.displayFont
-                font.styleName: "Book"
-                font.pixelSize: 20
-            }
-
-            VectorImage {
-                objectName: "wifiStatus"
-                x: 10
-                y: 10
-                width: 24
-                height: 24
-                source: Qt.resolvedUrl("assets/wifi.svg")
-                preferredRendererType: VectorImage.CurveRenderer
-                visible: root.wifiConnected
-            }
-
+            // Readouts sit midway between the edge controls and the widest grid.
             Item {
+                id: readouts
+                readonly property real gridLeft: (canvas.width - 400) / 2 - 160
+                readonly property real centre: (80 + gridLeft) / 2
+                readonly property real boxWidth: Math.max(180, Math.min(260, gridLeft - 80 - 48))
+                anchors.fill: parent
+                opacity: lockDisplay.dateTimeVisible ? 1 : 0
+                Behavior on opacity { NumberAnimation { duration: 150 } }
+
+                Readout {
+                    objectName: "lockDate"
+                    x: readouts.centre - width / 2
+                    y: root.gridCenterY - height / 2
+                    width: readouts.boxWidth
+                    theme: root.theme
+                    label: "DATE"
+                    value: Qt.formatDate(root.now, "ddd, MMM d")
+                }
+                Readout {
+                    objectName: "lockTime"
+                    x: canvas.width - readouts.centre - width / 2
+                    y: root.gridCenterY - height / 2
+                    width: readouts.boxWidth
+                    theme: root.theme
+                    label: "LOCAL"
+                    value: Qt.formatTime(root.now, "h:mm AP")
+                }
+            }
+
+            Rectangle {
                 objectName: "revealButton"
                 x: 0
-                y: 480
+                y: root.gridCenterY - 40
                 width: 80
                 height: 80
+                color: root.showPassword ? root.theme.ink
+                    : revealMouse.containsMouse ? root.theme.accent : root.theme.paper
+                border.color: root.theme.ink
+                border.width: 2
 
-                VectorImage {
+                Glyph {
                     anchors.fill: parent
-                    source: Qt.resolvedUrl(revealMouse.containsMouse ? "assets/reveal-hover.svg"
-                        : root.showPassword ? "assets/reveal-open.svg" : "assets/reveal.svg")
-                    preferredRendererType: VectorImage.CurveRenderer
+                    glyph: root.showPassword ? Glyphs.eyeOpen : Glyphs.eyeClosed
+                    color: root.showPassword ? root.theme.paper : root.theme.ink
                 }
 
                 MouseArea {
@@ -238,8 +209,8 @@ Item {
             PowerMenu {
                 objectName: "powerMenu"
                 x: canvas.width - 80
-                y: 480
-                theme: theme
+                y: root.gridCenterY - 40
+                theme: root.theme
                 enabled: root.powerInteractive
                 restartEnabled: root.restartInteractive
                 onShutdownRequested: {
@@ -254,32 +225,9 @@ Item {
                 }
             }
 
-            SoftLightText {
-                pixelScale: root.pixelScale
-                backgroundTexture: backdropTexture
-                backgroundSize: Qt.size(canvas.width, canvas.height)
-                x: 10
-                y: 1026
-                text: "Pre-release version"
-                font.family: theme.displayFont
-                font.styleName: "Regular"
-                font.pixelSize: 39
-                font.letterSpacing: -1.17
-            }
-
-            SoftLightText {
-                pixelScale: root.pixelScale
-                backgroundTexture: backdropTexture
-                backgroundSize: Qt.size(canvas.width, canvas.height)
-                x: canvas.width - 240
-                y: 1041
-                width: 228
-                text: "Some features may not work as expected. Please report any issues or bugs."
-                font.family: theme.uiFont
-                font.styleName: "Medium"
-                font.pixelSize: 11
-                font.letterSpacing: 0.11
-                wrapMode: Text.WordWrap
+            Footer {
+                anchors.fill: parent
+                theme: root.theme
             }
         }
 
@@ -290,7 +238,7 @@ Item {
             anchors.fill: parent
             controller: root.controller
             exitStep: root.exitTransition.exitStep
-            theme: theme
+            theme: root.theme
             revealText: root.revealText
             showPassword: root.showPassword
             interactive: root.interactive

@@ -14,6 +14,7 @@ Item {
     property bool released: false
     property string displayName: ""
     property bool wifiConnected: false
+    required property var theme
     property list<string> presentationOutputs: []
     property var readyOutputs: ({})
     property string releasedTopology: ""
@@ -88,7 +89,7 @@ Item {
                 Frontend.DesktopCover {
                     anchors.fill: parent
                     exitTransition: overlayExit
-                    coverColor: overlay.showPresentation ? "#1a1409" : "black"
+                    coverColor: overlay.showPresentation ? root.theme.paper : "black"
                     background: overlay.showPresentation ? view.background : null
                 }
                 Frontend.Layout {
@@ -96,6 +97,7 @@ Item {
                     anchors.fill: parent
                     controller: root.controller
                     exitTransition: overlayExit
+                    theme: root.theme
                     interactive: false
                     wifiConnected: root.wifiConnected
                     displayName: root.displayName

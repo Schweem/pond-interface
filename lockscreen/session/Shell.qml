@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtCore
 import Quickshell
 import Quickshell.Io
 import Pond.WifiStatus
@@ -31,6 +32,20 @@ ShellRoot {
     }
 
     SessionInfo { id: info }
+    // The shell's theme choice, for the lock screen's palette.
+    FileView {
+        id: themeFile
+        property string name: "marsh"
+        path: StandardPaths.writableLocation(StandardPaths.ConfigLocation) + "/pond-interface/theme.json"
+        watchChanges: true
+        printErrors: false
+        blockLoading: true
+        onFileChanged: reload()
+        onLoaded: {
+            try { name = JSON.parse(text()).theme || "marsh"; }
+            catch (error) { console.warn("Could not read theme selection:", error); }
+        }
+    }
     NetworkStatus { id: network }
     QtObject {
         id: power
@@ -44,6 +59,7 @@ ShellRoot {
         onActiveChanged: if (!active) root.introRequest = null
         sourceComponent: Session {
             displayName: info.displayName
+            paletteName: themeFile.name
             wifiConnected: network.wifiConnected
             powerBackend: power
             presentationOutputs: (Quickshell.env("POND_LOCK_OUTPUTS") || "").split(",").filter(name => name.length > 0)

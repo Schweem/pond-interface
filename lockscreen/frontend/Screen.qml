@@ -13,6 +13,8 @@ Item {
     property alias compositors: view.compositors
     property alias compositorIndex: view.compositorIndex
     property alias passwordTooltipVisible: view.passwordTooltipVisible
+    property alias status: view.status
+    property alias theme: view.theme
 
     signal userStepRequested(int direction)
     signal compositorRequested(int index)

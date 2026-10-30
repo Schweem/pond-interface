@@ -1,6 +1,6 @@
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.VectorImage
+import "Glyphs.js" as Glyphs
 
 Item {
     id: root
@@ -21,36 +21,43 @@ Item {
         onHoveredChanged: { if (!hovered) root.expanded = false; }
     }
 
-    component ActionButton: Item {
+    component ActionButton: Rectangle {
         id: action
         required property string label
-        required property string iconName
+        required property var glyph
         readonly property bool hovered: mouse.containsMouse && enabled
         signal clicked
         width: 80
         height: 80
+        color: hovered ? root.theme.accent : root.theme.paper
+        border.color: root.theme.ink
+        border.width: 2
 
-        VectorImage {
+        Glyph {
             objectName: action.objectName + "Icon"
             anchors.fill: parent
-            source: Qt.resolvedUrl("assets/" + action.iconName + (action.hovered ? "-hover" : "") + ".svg")
-            preferredRendererType: VectorImage.CurveRenderer
+            glyph: action.glyph
+            color: root.theme.ink
         }
-        Text {
-            renderType: Text.CurveRendering
-            objectName: action.objectName + "Label"
+        Rectangle {
             x: -10 - width
             y: 26
+            width: labelText.implicitWidth + 16
             height: 28
-            text: action.label
-            font.family: root.theme.displayFont
-            font.styleName: "Book"
-            font.pixelSize: 20
-            lineHeightMode: Text.FixedHeight
-            lineHeight: 28
-            color: root.theme.powerLabel
+            color: root.theme.ink
             opacity: action.hovered ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 120 } }
+            Text {
+                id: labelText
+                objectName: action.objectName + "Label"
+                anchors.centerIn: parent
+                text: action.label
+                color: root.theme.paper
+                font.family: root.theme.monoFont
+                font.weight: Font.DemiBold
+                font.pixelSize: 11
+                font.letterSpacing: 2
+            }
         }
         MouseArea {
             id: mouse
@@ -63,16 +70,16 @@ Item {
 
     ActionButton {
         objectName: "shutdownButton"
-        label: "Shut down"
-        iconName: "power"
+        label: "SHUT DOWN"
+        glyph: Glyphs.power
         onHoveredChanged: { if (hovered && root.restartEnabled) root.expanded = true; }
         onClicked: root.shutdownRequested()
     }
     ActionButton {
         objectName: "restartButton"
-        y: 80
-        label: "Restart"
-        iconName: "restart"
+        y: 78
+        label: "RESTART"
+        glyph: Glyphs.restart
         enabled: root.restartShown
         opacity: root.restartShown ? 1 : 0
         visible: root.restartShown || opacity > 0

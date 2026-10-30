@@ -27,7 +27,7 @@ Item {
     }
     function edgeColor(owners) {
         let priority = 0;
-        let color = theme.grid;
+        let color = theme.ink;
         for (const cellIndex of owners) {
             if (cellOpacity(cellIndex) <= 0) continue;
             const mode = controller.cellVisual(cellIndex, exitStep).mode;
@@ -35,7 +35,7 @@ Item {
                 : mode === "errorOutline" ? 2 : mode === "errorFill" ? 1 : 0;
             if (rank > priority) {
                 priority = rank;
-                color = rank === 3 ? theme.success : rank === 2 ? theme.lavender : theme.error;
+                color = rank === 2 ? theme.error : theme.ink;
             }
         }
         return color;
@@ -95,7 +95,7 @@ Item {
             required property var modelData
             x: modelData.x; y: modelData.y
             width: modelData.w; height: modelData.h
-            color: root.ready ? root.edgeColor(modelData.owners) : root.theme.grid
+            color: root.ready ? root.edgeColor(modelData.owners) : root.theme.ink
             opacity: root.ready ? root.edgeOpacity(modelData.owners) : 0
         }
     }

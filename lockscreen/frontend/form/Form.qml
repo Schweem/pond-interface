@@ -1,7 +1,8 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Window
-import QtQuick.VectorImage
+import ".."
+import "../Glyphs.js" as Glyphs
 import "RevealLayout.js" as Layout
 
 Item {
@@ -102,7 +103,7 @@ Item {
                     objectName: "revealedText" + character.index
                     anchors.centerIn: parent
                     text: root.revealContentVisible ? root.revealText.charAt(character.index) : ""
-                    color: "white"
+                    color: root.theme.ink
                     font.family: root.theme.displayFont; font.styleName: "Book"; font.pixelSize: 20
                 }
             }
@@ -112,14 +113,15 @@ Item {
             objectName: "revealSubmitButton"
             x: root.arrangement.submitX; y: root.arrangement.submitY
             width: 80; height: 80
-            color: root.theme.orange
+            color: root.theme.accent
             opacity: root.displayPhase === "revealIn" ? Layout.revealFade(root.elapsedMs, 10)
                 : root.displayPhase === "revealOut" ? 1 - Layout.progress(root.elapsedMs, 40, 120) : 1
-            VectorImage {
-                preferredRendererType: VectorImage.CurveRenderer
+            Glyph {
                 anchors.centerIn: parent
                 width: 22; height: 22
-                source: Qt.resolvedUrl("../assets/enter-glyph.svg")
+                glyph: Glyphs.enter
+                color: root.theme.ink
+                cutColor: root.theme.accent
             }
             MouseArea {
                 anchors.fill: parent
@@ -134,6 +136,7 @@ Item {
             pixelScale: root.pixelScale * root.revealScale
             originX: revealed.x * root.pixelScale
             originY: revealed.y * root.pixelScale
+            color: root.theme.ink
         }
     }
 }

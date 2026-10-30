@@ -84,6 +84,7 @@ Item {
         anchors.fill: parent
         controller: ui
         passwordTooltipVisible: root.accountModel.lastUser === ""
+        status: "SIGN IN"
         displayName: root.selectedUser ? root.selectedUser.realName || root.selectedUser.name : ""
         multipleUsers: users.count > 1
         wifiConnected: network.wifiConnected

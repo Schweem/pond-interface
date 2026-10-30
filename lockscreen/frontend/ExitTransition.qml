@@ -11,7 +11,6 @@ Item {
     readonly property bool complete: exitStep > 4
     readonly property int revealedQuadrantCount: Math.min(4, exitStep)
     readonly property bool peripheryVisible: exitStep <= 1
-    readonly property bool moonVisible: exitStep <= 2
 
     signal started
     signal finished

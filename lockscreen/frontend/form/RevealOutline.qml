@@ -9,6 +9,7 @@ Item {
     property real pixelScale: 1
     property real originX: 0
     property real originY: 0
+    property color color: "black"
     readonly property var segments: Layout.strokeSegments(boxes, pixelScale, originX, originY)
     // A stable pool avoids recreating delegates as edges move.
     // At most 22 boxes contribute 176 endpoints, bounding the segment count below 256.
@@ -21,7 +22,7 @@ Item {
             width: segment.w; height: segment.h
             opacity: segment.alpha
             visible: opacity > 0
-            color: "white"
+            color: root.color
             antialiasing: false
         }
     }

@@ -1,5 +1,6 @@
 import QtQuick
-import QtQuick.VectorImage
+import ".."
+import "../Glyphs.js" as Glyphs
 
 Item {
     id: root
@@ -15,47 +16,43 @@ Item {
         return visual.mode === "shape" || visual.mode === "delete";
     }
 
-    function shapeSource(shape) {
-        const index = Math.max(0, Math.min(3, shape));
-        const names = ["flower", "hexagon", "lily", "leaf"];
-        const prefix = visual.mode === "delete" && index > 0 ? "glyph" : "shape";
-        return Qt.resolvedUrl("../assets/" + prefix + "-" + names[index] + ".svg");
-    }
-
     Rectangle {
         anchors.fill: parent
         color: {
-            if (root.visual.mode === "caretOn" || root.visual.mode === "caretEnter")
-                return root.theme.orange;
-            if (root.visual.mode === "shape")
-                return root.theme.lavender;
-            if (root.visual.mode === "delete" || root.visual.mode === "errorFill")
+            const mode = root.visual.mode;
+            if (mode === "caretOn" || mode === "caretEnter")
+                return root.theme.ink;
+            if (mode === "shape" || mode === "successFill")
+                return root.theme.accent;
+            if (mode === "delete" || mode === "errorFill")
                 return root.theme.error;
-            if (root.visual.mode === "successFill")
-                return root.theme.success;
+            // Idle cells are paper so the sighting rule passes behind them;
+            // outlines stay open over whatever the reveal uncovers.
+            if (mode === "empty" || mode === "caretOff" || mode === "idleDot")
+                return root.theme.paper;
             return "transparent";
         }
         // Shared edges are drawn once by CellGrid.
         border.width: 0
     }
 
-    VectorImage {
+    Glyph {
         anchors.centerIn: parent
         width: root.visual.shape === 0 ? 36 : 80
-        height: root.visual.shape === 0 ? 36 : 80
-        source: root.shapeSource(root.visual.shape)
-        fillMode: VectorImage.PreserveAspectFit
-        preferredRendererType: VectorImage.CurveRenderer
+        height: width
+        glyph: Glyphs.shapes[Math.max(0, Math.min(3, root.visual.shape))]
+        color: root.theme.ink
         visible: root.isShapeMode()
     }
 
-    VectorImage {
+    Glyph {
         objectName: "enterBlinker"
         anchors.centerIn: parent
         width: 27
         height: 27
-        source: Qt.resolvedUrl("../assets/blinker-enter-glyph.svg")
-        preferredRendererType: VectorImage.CurveRenderer
+        glyph: Glyphs.enter
+        color: root.theme.accent
+        cutColor: root.theme.ink
         visible: root.visual.mode === "caretEnter"
     }
 
@@ -64,7 +61,7 @@ Item {
         height: 10
         radius: 5
         anchors.centerIn: parent
-        color: root.visual.mode === "caretOn" ? root.theme.orangeDot : root.theme.lavender
+        color: root.visual.mode === "caretOn" ? root.theme.accent : root.theme.ink
         visible: root.visual.mode === "idleDot" || root.visual.mode === "caretOn" || root.visual.mode === "caretOff"
     }
 
