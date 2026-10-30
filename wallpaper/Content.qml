@@ -1,32 +1,23 @@
 import QtQuick
-import Pond.Daylight
 
 Rectangle {
   id: root
   property bool custom: false
   property bool dimmed: false
   property url imageSource: ""
-  // A solid color in place of the dynamic sky; transparent keeps the sky.
+  // The solid color under the grid; transparent falls back to the base.
   property color plainColor: "transparent"
-  readonly property bool plain: plainColor.a > 0
   // Dashed grid over the plain color; transparent draws none.
   property alias gridColor: grid.color
   property alias gridSpacing: grid.spacing
-  property alias now: sky.now
-  property alias live: sky.live
-  color: root.plain ? root.plainColor : "#0b101c"
+  color: root.plainColor.a > 0 ? root.plainColor : "#0b101c"
   layer.enabled: root.dimmed
   layer.format: ShaderEffectSource.RGBA16F
 
-  Sky {
-    id: sky
-    anchors.fill: parent
-    visible: !root.custom && !root.plain
-  }
   DashGrid {
     id: grid
     anchors.fill: parent
-    visible: root.plain && !root.custom
+    visible: !root.custom
   }
   Image {
     objectName: "wallpaperImage"

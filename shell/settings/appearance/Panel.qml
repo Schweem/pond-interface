@@ -27,20 +27,13 @@ Settings.Modal {
     }
     Text {
       x: 440; y: 107; height: 25
-      text: upcoming.hovered ? "Coming soon" : daylight.hovered && !daylight.selected ? "Daylight"
+      text: upcoming.hovered ? "Coming soon"
           : unthemed.hovered && !unthemed.selected ? "Unthemed"
           : marsh.hovered && !marsh.selected ? "Marsh" : ""
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
       color: Shell.Theme.palette.foregroundMuted; verticalAlignment: Text.AlignVCenter
       opacity: text ? 1 : 0
       Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-    }
-    ThemeButton {
-      id: daylight; objectName: "themeDaylight"
-      x: 243; y: 12; themeKey: "daylight"; label: "Daylight"
-      idleRotation: 45; idleScale: 40 / 56
-      selected: Shell.Theme.name === "daylight"
-      onClicked: { Shell.ScreenTransition.startFrom(daylight); Appearance.State.selectTheme("daylight"); }
     }
     ThemeButton {
       id: unthemed; objectName: "themeUnthemed"
@@ -57,7 +50,7 @@ Settings.Modal {
     }
     ThemeButton {
       id: upcoming; objectName: "themeComingSoon"
-      x: 343; y: 12; available: false; label: "Coming soon"
+      x: 243; y: 12; available: false; label: "Coming soon"
     }
   }
   Column {
@@ -66,7 +59,7 @@ Settings.Modal {
     Accordion {
       objectName: "wallpaperSection"
       width: parent.width; title: "Wallpaper"
-      summary: Appearance.State.wallpaperMode === "dynamic" ? "Dynamic" : "Custom"
+      summary: Appearance.State.wallpaperMode === "dynamic" ? "Theme" : "Custom"
       expanded: Appearance.State.expandedSection === "wallpaper"
       expandedHeight: 202
       onToggled: Appearance.State.toggleSection("wallpaper")

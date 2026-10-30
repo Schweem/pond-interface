@@ -27,7 +27,7 @@ Item {
     }
   }
 
-  // Use the desktop's full dimensions and clock so the cropped strip lines up.
+  // Use the desktop's full dimensions so the cropped strip lines up.
   Content {
     width: root.wallpaper.width
     height: root.wallpaper.height
@@ -37,8 +37,6 @@ Item {
     plainColor: root.wallpaper.plainColor
     gridColor: root.wallpaper.gridColor
     gridSpacing: root.wallpaper.gridSpacing
-    live: false
-    now: root.wallpaper.now
     // The two surfaces can round to different physical widths at fractional scale.
     transform: Scale {
       xScale: root.Window.width > 0 && root.wallpaper.width > 0

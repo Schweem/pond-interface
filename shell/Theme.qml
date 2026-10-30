@@ -7,10 +7,10 @@ import "palettes" as Palettes
 
 Singleton {
   id: root
-  property string name: "daylight"
+  property string name: "marsh"
   // The theme chosen in theme.json. It applies straight away unless something
   // holds the switch (a transition), which calls apply() when it is ready.
-  property string requested: "daylight"
+  property string requested: "marsh"
   property bool holdSwitch: false
   property bool loaded: false
   function apply() {
@@ -18,10 +18,9 @@ Singleton {
     // The launcher follows, live; it keeps its theme if vicinae isn't there.
     Quickshell.execDetached(["vicinae", "theme", "set", palette.launcherTheme]);
   }
-  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, marsh: marshPalette })
+  readonly property var palettes: ({ unthemed: unthemedPalette, marsh: marshPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
-  Palettes.Daylight { id: daylightPalette }
   Palettes.Unthemed { id: unthemedPalette }
   Palettes.Marsh { id: marshPalette }
 
@@ -41,7 +40,7 @@ Singleton {
     onLoaded: {
       try {
         const theme = JSON.parse(text()).theme;
-        root.requested = root.palettes.hasOwnProperty(theme) ? theme : "daylight";
+        root.requested = root.palettes.hasOwnProperty(theme) ? theme : "marsh";
         // The first read applies directly so the shell starts in its theme.
         if (!root.holdSwitch || !root.loaded) root.apply();
         root.loaded = true;

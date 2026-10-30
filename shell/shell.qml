@@ -60,25 +60,14 @@ ShellRoot {
     delegate: Scope {
       required property var modelData
       Wallpaper.Window {
-        id: wallpaper
         screen: modelData
         visible: loginReveal.ready
         custom: Appearance.State.wallpaperMode === "custom"
         dimmed: Theme.palette.dimWallpaper
         imageSource: Appearance.State.wallpaperUrl
+        plainColor: Theme.palette.wallpaperColor
+        gridColor: Theme.palette.wallpaperGrid
         FirstFrame { onDrawn: loginReveal.drawn() }
-      }
-      // pond-wallpaper ships separately; older versions lack plainColor and
-      // keep the sky rather than failing to load the shell.
-      Binding {
-        target: wallpaper
-        property: "plainColor"
-        value: Theme.palette.wallpaperColor
-      }
-      Binding {
-        target: wallpaper
-        property: "gridColor"
-        value: Theme.palette.wallpaperGrid
       }
       Sidebar {
         id: sidebar

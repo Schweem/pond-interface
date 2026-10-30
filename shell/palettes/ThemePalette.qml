@@ -11,7 +11,7 @@ QtObject {
   property bool blur
   // Shade the wallpaper behind the sidebar.
   property bool dimWallpaper
-  // Solid wallpaper in place of the dynamic sky; transparent keeps the sky.
+  // The wallpaper's solid color, under its grid.
   property color wallpaperColor: "transparent"
   // Dashed grid over the solid wallpaper; transparent draws none.
   property color wallpaperGrid: "transparent"

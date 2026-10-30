@@ -18,7 +18,7 @@ Rectangle {
   border.color: selected ? Shell.PanelStyle.accent : hover.hovered || activeFocus ? Shell.Theme.palette.controlBorderHover : Shell.PanelStyle.border
   activeFocusOnTab: true
   Accessible.role: Accessible.Button
-  Accessible.name: dynamic ? "Dynamic wallpaper" : "Choose a custom wallpaper"
+  Accessible.name: dynamic ? "Theme wallpaper" : "Choose a custom wallpaper"
   Accessible.checked: selected
   Keys.onReturnPressed: clicked()
   Keys.onSpacePressed: clicked()
@@ -27,25 +27,19 @@ Rectangle {
   Behavior on border.color { ColorAnimation { duration: 170; easing.type: Easing.OutCubic } }
   Text {
     x: 20; y: 15
-    text: root.dynamic ? "Dynamic" : "Custom"
+    text: root.dynamic ? "Theme" : "Custom"
     color: Shell.Theme.palette.foregroundBright; font.family: Shell.Theme.fontFamily; font.pixelSize: 13
   }
   Text {
     x: 20; y: 32
-    text: root.dynamic ? "Changes with the time of day" : "Set your own wallpaper"
+    text: root.dynamic ? "Follows the current theme" : "Set your own wallpaper"
     color: Qt.alpha(Shell.Theme.palette.overlay, 128 / 255); font.family: Shell.Theme.fontFamily; font.pixelSize: 13
   }
   Rectangle {
     visible: root.dynamic
     x: parent.width - 90; y: 19; width: 70; height: 26; radius: 4
-    gradient: Gradient {
-      orientation: Gradient.Horizontal
-      GradientStop { position: 0; color: "#484245" }
-      GradientStop { position: 0.26; color: "#665042" }
-      GradientStop { position: 0.5; color: "#3c4347" }
-      GradientStop { position: 0.81; color: "#273440" }
-      GradientStop { position: 1; color: "#141d2a" }
-    }
+    color: Shell.Theme.palette.wallpaperColor
+    border.width: 1; border.color: Shell.PanelStyle.border
   }
   Shell.Glyph {
     visible: !root.dynamic && !Appearance.State.wallpaperPath
