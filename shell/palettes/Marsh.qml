@@ -13,7 +13,7 @@ ThemePalette {
   readonly property color orange: "#FF9F67"
   readonly property color brown: "#4F220C"
 
-  label: "Pond"
+  label: "Marsh"
   blur: false
   dimWallpaper: false
   wallpaperColor: root.paper
@@ -25,7 +25,7 @@ ThemePalette {
   compactCardRadius: 12
   idleIconOpacity: 1.0
   collapseDuration: 200
-  launcherTheme: "pond"
+  launcherTheme: "marsh"
 
   cardFill: root.paper
   cardHoverFill: Qt.tint(root.paper, Qt.alpha(root.ink, 0.04))

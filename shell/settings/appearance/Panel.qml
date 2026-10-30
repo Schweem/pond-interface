@@ -29,7 +29,7 @@ Settings.Modal {
       x: 440; y: 107; height: 25
       text: upcoming.hovered ? "Coming soon" : daylight.hovered && !daylight.selected ? "Daylight"
           : unthemed.hovered && !unthemed.selected ? "Unthemed"
-          : pond.hovered && !pond.selected ? "Pond" : ""
+          : marsh.hovered && !marsh.selected ? "Marsh" : ""
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
       color: Shell.Theme.palette.foregroundMuted; verticalAlignment: Text.AlignVCenter
       opacity: text ? 1 : 0
@@ -49,11 +49,11 @@ Settings.Modal {
       onClicked: { Shell.ScreenTransition.startFrom(unthemed); Appearance.State.selectTheme("unthemed"); }
     }
     ThemeButton {
-      id: pond; objectName: "themePond"
-      x: 294; y: 103; themeKey: "pond"; label: "Pond"
+      id: marsh; objectName: "themeMarsh"
+      x: 294; y: 103; themeKey: "marsh"; label: "Marsh"
       idleRotation: 45; idleScale: 28 / 40
-      selected: Shell.Theme.name === "pond"
-      onClicked: { Shell.ScreenTransition.startFrom(pond); Appearance.State.selectTheme("pond"); }
+      selected: Shell.Theme.name === "marsh"
+      onClicked: { Shell.ScreenTransition.startFrom(marsh); Appearance.State.selectTheme("marsh"); }
     }
     ThemeButton {
       id: upcoming; objectName: "themeComingSoon"

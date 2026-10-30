@@ -18,12 +18,12 @@ Singleton {
     // The launcher follows, live; it keeps its theme if vicinae isn't there.
     Quickshell.execDetached(["vicinae", "theme", "set", palette.launcherTheme]);
   }
-  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, pond: pondPalette })
+  readonly property var palettes: ({ daylight: daylightPalette, unthemed: unthemedPalette, marsh: marshPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
   Palettes.Daylight { id: daylightPalette }
   Palettes.Unthemed { id: unthemedPalette }
-  Palettes.Pond { id: pondPalette }
+  Palettes.Marsh { id: marshPalette }
 
   function reload() { themeFile.reload(); }
 

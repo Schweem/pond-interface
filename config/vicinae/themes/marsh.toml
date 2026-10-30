@@ -1,11 +1,11 @@
-# Launcher colors for the Pond shell theme: paper and ink, chartreuse for the
+# Launcher colors for the Marsh shell theme: paper and ink, chartreuse for the
 # selected result. Installed to /usr/share/vicinae/themes; the shell selects
-# it with `vicinae theme set pond` when Pond is applied.
+# it with `vicinae theme set marsh` when Marsh is applied.
 
 [meta]
 version = 1
-name = "Pond"
-description = "Paper, ink and chartreuse, to match the Pond shell theme"
+name = "Marsh"
+description = "Paper, ink and chartreuse, to match the Marsh shell theme"
 variant = "light"
 
 [colors.core]
