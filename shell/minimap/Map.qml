@@ -332,6 +332,7 @@ Shell.Card {
                   Minimap.PlusButton {
                     anchors.fill: parent
                     revealed: workspaceSlot.plusRevealed
+                    accented: workspaceSlot.emptyWorkspaceActive && !workspaceSlot.previewDropTarget
                     enabled: expandedLayer.enabled && !dragSession.active
                     onActivated: root.addRequested(Number(expandedWorkspace.model.workspaceId))
                   }

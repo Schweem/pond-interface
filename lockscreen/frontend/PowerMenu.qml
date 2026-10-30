@@ -37,7 +37,7 @@ Item {
             objectName: action.objectName + "Icon"
             anchors.fill: parent
             glyph: action.glyph
-            color: root.theme.ink
+            color: action.hovered ? root.theme.onAccent : root.theme.ink
         }
         Rectangle {
             x: -10 - width

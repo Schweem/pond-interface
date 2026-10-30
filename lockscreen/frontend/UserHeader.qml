@@ -132,7 +132,7 @@ Item {
             text: root.displayName
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
-            color: root.theme.ink
+            color: root.theme.onAccent
             font.family: root.theme.displayFont
             font.styleName: "Medium"
             font.pixelSize: 20

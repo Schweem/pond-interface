@@ -299,6 +299,7 @@ Card {
       readonly property bool selected: slot === 0 ? root.wifiOpen : slot === 1 ? root.soundOpen : slot === 2 && root.settingsOpen
       restingOpacity: selected || (slot === 1 && root.keyboardVolumeVisible) ? 1 : 0.6
       iconSource: modelData.icon ? Qt.resolvedUrl("assets/" + modelData.icon) : ""
+      iconTint: selected ? Theme.palette.onAccent : Theme.palette.iconTint
       iconWidth: modelData.width
       iconHeight: modelData.height
       onClicked: {

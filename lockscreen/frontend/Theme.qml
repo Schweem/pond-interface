@@ -3,6 +3,7 @@ import QtQuick
 // The lock screen's colors, by palette name. The session lock follows the
 // shell's theme.json; the greeter can't read it and stays on the default.
 // A palette without a lock screen of its own falls back to Marsh.
+// Paper is the ground and ink draws on it, whichever is lighter.
 QtObject {
     id: root
     property string name: "marsh"
@@ -15,10 +16,26 @@ QtObject {
             muted: "#9BA7B5",
             accent: "#CEF058",
             water: "#CEF058",
-            error: "#FA6D80"
+            error: "#FA6D80",
+            onAccent: "#111111",
+            caret: "#CEF058"
+        },
+        "night-marsh": {
+            paper: "#111111",
+            ink: "#E1EBF7",
+            slate: "#9BA7B5",
+            muted: "#4C5164",
+            accent: "#CEF058",
+            // Chartreuse sunk into the ink, so the hatching reads over it.
+            water: "#282C1A",
+            error: "#FA6D80",
+            onAccent: "#111111",
+            // The caret cell is ink, here the light one: chartreuse would wash out.
+            caret: "#111111"
         }
     })
-    readonly property var palette: palettes[name] ?? palettes.marsh
+    // Unthemed was the dark theme before Night Marsh.
+    readonly property var palette: palettes[name === "unthemed" ? "night-marsh" : name] ?? palettes.marsh
 
     readonly property color paper: palette.paper
     readonly property color ink: palette.ink
@@ -27,6 +44,10 @@ QtObject {
     // Whatever is active: typed cells, success, hovered controls.
     readonly property color accent: palette.accent
     readonly property color water: palette.water
+    // Glyphs and text drawn on an accent fill.
+    readonly property color onAccent: palette.onAccent
+    // The mark inside the blinking caret cell.
+    readonly property color caret: palette.caret
     readonly property color error: palette.error
 
     readonly property string displayFont: "Pond Gramercy"

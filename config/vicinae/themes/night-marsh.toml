@@ -1,0 +1,60 @@
+# Launcher colors for the Night Marsh shell theme: ink ground, paper text,
+# slate lines, chartreuse for the selected result. Installed to
+# /usr/share/vicinae/themes; the shell selects it with
+# `vicinae theme set night-marsh` when Night Marsh is applied.
+
+[meta]
+version = 1
+name = "Night Marsh"
+description = "Ink, paper and chartreuse, to match the Night Marsh shell theme"
+variant = "dark"
+
+[colors.core]
+background = "#1A1B1D"
+foreground = "#E1EBF7"
+secondary_background = "#111111"
+border = "#4C5164"
+accent = "#CEF058"
+accent_foreground = "#111111"
+
+[colors.main_window]
+border = "#4C5164"
+footer = { background = "colors.core.secondary_background" }
+
+[colors.settings_window]
+border = "#4C5164"
+
+[colors.text]
+muted = "#9BA7B5"
+placeholder = "#6B7385"
+danger = "#FA6D80"
+selection = { background = "#CBA6F7", foreground = "#111111" }
+
+[colors.input]
+border = "#4C5164"
+border_focus = "#9BA7B5"
+border_error = "#FA6D80"
+
+[colors.list.item.hover]
+background = { name = "#E1EBF7", opacity = 0.06 }
+foreground = "#E1EBF7"
+secondary_foreground = "#9BA7B5"
+
+# Selected result: chartreuse row with ink text, as in Marsh.
+[colors.list.item.selection]
+background = "#CEF058"
+foreground = "#111111"
+secondary_background = "#CEF058"
+secondary_foreground = "#111111"
+
+[colors.grid.item]
+background = "colors.core.secondary_background"
+hover = { outline = "#9BA7B5" }
+selection = { outline = "#CEF058" }
+
+[colors.scrollbars]
+background = { name = "#E1EBF7", opacity = 0.2 }
+
+[colors.loading]
+bar = "#CEF058"
+spinner = "#E1EBF7"

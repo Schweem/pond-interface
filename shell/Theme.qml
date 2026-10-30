@@ -18,11 +18,11 @@ Singleton {
     // The launcher follows, live; it keeps its theme if vicinae isn't there.
     Quickshell.execDetached(["vicinae", "theme", "set", palette.launcherTheme]);
   }
-  readonly property var palettes: ({ unthemed: unthemedPalette, marsh: marshPalette })
+  readonly property var palettes: ({ marsh: marshPalette, "night-marsh": nightMarshPalette })
   readonly property Palettes.ThemePalette palette: palettes[name]
 
-  Palettes.Unthemed { id: unthemedPalette }
   Palettes.Marsh { id: marshPalette }
+  Palettes.NightMarsh { id: nightMarshPalette }
 
   function reload() { themeFile.reload(); }
 
@@ -39,7 +39,9 @@ Singleton {
     onFileChanged: reload()
     onLoaded: {
       try {
-        const theme = JSON.parse(text()).theme;
+        // Unthemed was the dark theme before Night Marsh.
+        const saved = JSON.parse(text()).theme;
+        const theme = saved === "unthemed" ? "night-marsh" : saved;
         root.requested = root.palettes.hasOwnProperty(theme) ? theme : "marsh";
         // The first read applies directly so the shell starts in its theme.
         if (!root.holdSwitch || !root.loaded) root.apply();

@@ -120,7 +120,7 @@ Item {
                 anchors.centerIn: parent
                 width: 22; height: 22
                 glyph: Glyphs.enter
-                color: root.theme.ink
+                color: root.theme.onAccent
                 cutColor: root.theme.accent
             }
             MouseArea {

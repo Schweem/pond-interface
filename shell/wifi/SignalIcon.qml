@@ -4,10 +4,12 @@ import ".."
 Item {
   id: root
   property int bars: 3
+  property alias tint: glyph.tint
   implicitWidth: 20
   implicitHeight: 20
 
   Glyph {
+    id: glyph
     anchors.centerIn: parent
     width: 17.5
     height: 12.8

@@ -4,6 +4,8 @@ import ".." as Shell
 Item {
   id: root
   property bool revealed: false
+  // Sitting on the accent fill of an active empty workspace.
+  property bool accented: false
   signal activated
 
   visible: opacity > 0
@@ -27,6 +29,7 @@ Item {
     anchors.centerIn: parent
     width: Shell.Theme.workspaceIconSize
     height: width
+    tint: root.accented && !pointer.containsMouse ? Shell.Theme.palette.onAccent : Shell.Theme.palette.iconTint
     source: "../assets/navigation/plus.svg"
     sourceSize: Qt.size(width * 2, height * 2)
   }

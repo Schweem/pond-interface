@@ -41,7 +41,7 @@ Item {
         width: root.visual.shape === 0 ? 36 : 80
         height: width
         glyph: Glyphs.shapes[Math.max(0, Math.min(3, root.visual.shape))]
-        color: root.theme.ink
+        color: root.theme.onAccent
         visible: root.isShapeMode()
     }
 
@@ -51,7 +51,7 @@ Item {
         width: 27
         height: 27
         glyph: Glyphs.enter
-        color: root.theme.accent
+        color: root.theme.caret
         cutColor: root.theme.ink
         visible: root.visual.mode === "caretEnter"
     }
@@ -61,7 +61,7 @@ Item {
         height: 10
         radius: 5
         anchors.centerIn: parent
-        color: root.visual.mode === "caretOn" ? root.theme.accent : root.theme.ink
+        color: root.visual.mode === "caretOn" ? root.theme.caret : root.theme.ink
         visible: root.visual.mode === "idleDot" || root.visual.mode === "caretOn" || root.visual.mode === "caretOff"
     }
 

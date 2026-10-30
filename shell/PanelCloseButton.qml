@@ -18,6 +18,7 @@ Item {
       anchors.centerIn: parent
       width: 20
       height: 20
+      tint: Theme.palette.onAccent
       source: Qt.resolvedUrl("assets/wifi/close.svg")
     }
   }

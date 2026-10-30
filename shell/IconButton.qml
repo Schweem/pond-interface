@@ -4,6 +4,7 @@ Item {
   id: root
   property alias iconSourceSize: glyph.sourceSize
   property alias mirrorIcon: glyph.mirror
+  property alias iconTint: glyph.tint
   property url iconSource
   property real iconWidth: 14
   property real iconHeight: 14

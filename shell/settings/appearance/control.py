@@ -129,7 +129,7 @@ def pick_wallpaper():
 
 
 def theme(name):
-    if name not in ("unthemed", "marsh"):
+    if name not in ("marsh", "night-marsh"):
         raise ValueError("Unknown theme")
     atomic_write(CONFIG / "pond-interface/theme.json", json.dumps({"theme": name}) + "\n")
     return {"theme": name}

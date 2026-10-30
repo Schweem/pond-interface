@@ -28,7 +28,7 @@ Settings.Modal {
     Text {
       x: 440; y: 107; height: 25
       text: upcoming.hovered ? "Coming soon"
-          : unthemed.hovered && !unthemed.selected ? "Unthemed"
+          : nightMarsh.hovered && !nightMarsh.selected ? "Night Marsh"
           : marsh.hovered && !marsh.selected ? "Marsh" : ""
       font.family: Shell.Theme.fontFamily; font.pixelSize: 15
       color: Shell.Theme.palette.foregroundMuted; verticalAlignment: Text.AlignVCenter
@@ -36,10 +36,11 @@ Settings.Modal {
       Behavior on opacity { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
     }
     ThemeButton {
-      id: unthemed; objectName: "themeUnthemed"
-      x: 194; y: 103; themeKey: "unthemed"; label: "Unthemed"
-      selected: Shell.Theme.name === "unthemed"
-      onClicked: { Shell.ScreenTransition.startFrom(unthemed); Appearance.State.selectTheme("unthemed"); }
+      id: nightMarsh; objectName: "themeNightMarsh"
+      x: 194; y: 103; themeKey: "night-marsh"; label: "Night Marsh"
+      idleRotation: 45; idleScale: 28 / 40
+      selected: Shell.Theme.name === "night-marsh"
+      onClicked: { Shell.ScreenTransition.startFrom(nightMarsh); Appearance.State.selectTheme("night-marsh"); }
     }
     ThemeButton {
       id: marsh; objectName: "themeMarsh"

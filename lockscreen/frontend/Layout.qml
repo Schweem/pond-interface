@@ -190,7 +190,8 @@ Item {
                 Glyph {
                     anchors.fill: parent
                     glyph: root.showPassword ? Glyphs.eyeOpen : Glyphs.eyeClosed
-                    color: root.showPassword ? root.theme.paper : root.theme.ink
+                    color: root.showPassword ? root.theme.paper
+                        : revealMouse.containsMouse ? root.theme.onAccent : root.theme.ink
                 }
 
                 MouseArea {

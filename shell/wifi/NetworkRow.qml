@@ -6,6 +6,8 @@ Item {
   property var network: ({})
   property bool interactive: true
   readonly property bool canDisconnect: !!network.connected && !network.wired
+  // The connected row sits on an accent fill.
+  readonly property color ink: network.connected ? Theme.palette.onAccent : Theme.palette.foregroundBright
   signal rowClicked
   signal detailsRequested
   signal disconnectClicked
@@ -34,10 +36,12 @@ Item {
     visible: !root.network.wired
     x: 12; y: 12; width: 20; height: 20
     bars: Number(root.network.bars || 1)
+    tint: root.network.connected ? Theme.palette.onAccent : Theme.palette.iconTint
   }
   Glyph {
     visible: !!root.network.wired
     x: 12; y: 12; width: 20; height: 20
+    tint: root.network.connected ? Theme.palette.onAccent : Theme.palette.iconTint
     source: Qt.resolvedUrl("../assets/wifi/ethernet.svg")
     sourceSize: Qt.size(40, 40)
     fillMode: Image.PreserveAspectFit
@@ -48,7 +52,7 @@ Item {
     width: (root.canDisconnect ? 202 : 264) - x
     elide: Text.ElideRight
     text: String(root.network.wired ? root.network.name : root.network.ssid || "")
-    color: Theme.palette.foregroundBright
+    color: root.ink
     font.family: Theme.fontFamily
     font.weight: Font.Medium
     font.pixelSize: 13
@@ -75,7 +79,7 @@ Item {
     Text {
       anchors.centerIn: parent
       text: "Disconnect"
-      color: Theme.palette.foregroundBright
+      color: root.ink
       opacity: disconnectHover.hovered ? 1 : 0.8
       font.family: Theme.fontFamily
       font.weight: Font.Medium

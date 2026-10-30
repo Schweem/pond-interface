@@ -63,6 +63,9 @@ QtObject {
   property color foregroundBright: "white"
   property color foregroundSecondary: "#B7B7B7"
   property color iconTint: "white"
+  // Icons and text drawn on an accent fill: a selected action, the connected
+  // network, the close button.
+  property color onAccent: root.iconTint
   property color mediaHover: "#262626"
   property color subtleFill: Qt.rgba(1, 1, 1, 0.08)
 
